@@ -10,7 +10,7 @@
     <img src="https://img.shields.io/badge/language-bash-green.svg">
  </a>
   <a href="https://github.com/pikpikcu/xrcross">
-    <img src="https://img.shields.io/badge/version-V1.0-green.svg">
+    <img src="https://img.shields.io/badge/version-V1.2-green.svg">
  </a>
    <a href="https://github.com/pikpikcu/xrcross/blob/master/LICENSE">
    <img src="https://img.shields.io/badge/LICENSE-red.svg">
@@ -30,21 +30,30 @@
 
         Example: XRCross -u/--url example.site
                  XRCross <arguments> example.site <arguments> 
-
+        
         Optional Arguments:
-            -s  --subdo    Check Subdomains 
-            -H  --host     Host Live Check
-            -sw --scrw     Scraping wayback for data
+               -s  --subdo    Check Subdomains 
+               -H  --host     Host Live Check
+               -sw --scrw     Scraping wayback for data
                         -js  Jsurls 
                         -php Phpurls
                         -asp ASP
                         -html Html
-            -D  --dir      Check Dir Status Response
-            -r  --redirec  Check open redirection
-            -Ss --ssrf     Blind SSRF testing
-            -xs --xss      Check Parameter XSS
-            -o             Outfile
-
+               -D  --dir      Check Dir Status Response
+               -r  normal     Check open redirection
+                        -redirec  Check redirec Parameters
+               -Ss --ssrf     Blind SSRF testing
+               -xs --xss      Check Parameter XSS
+               -cs --cors     CORS misconfiguration scanner
+               -gf            GF parameters grep
+                        -ssti Check SSTI Parameters
+                        -idor Check IDOR Parameters
+                        -rce  Check RCE Parameters
+                        -lfi  Check LFI Parameters
+                        -sqli Check SQLI Parameters   
+               -T --takeover  Grep takeover
+               -o             Outfile
+               
 #### ✔️ ***How to install XRCross***:
 
 > root@kali~# git clone https://github.com/pikpikcu/xrcross.git
@@ -62,3 +71,6 @@
 * [waybackurls](https://github.com/tomnomnom/waybackurls)
 * [lc](https://github.com/lc/gau)
 * [ffuf](https://github.com/ffuf/ffuf)
+* [subfinder](https://github.com/projectdiscovery/subfinder)
+* [CORS-Scanner](https://github.com/Tanmay-N/CORS-Scanner)
+* [Gf-Patterns](https://github.com/1ndianl33t/Gf-Patterns)
