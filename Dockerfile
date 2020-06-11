@@ -1,4 +1,5 @@
-FROM linux
+FROM kalilinux/kali-rolling
+
 LABEL maintener="pikpikcu"
 
 # Install
