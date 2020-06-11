@@ -289,8 +289,8 @@ ___ooo____ooooooo___oo________oo______oo___oo___oo_____oo___
 __oo_oo___oo____oo___oo____oo_oo______oo___oo_o___oo_o___oo_
 _oo___oo__oo_____oo____oooo___oo_______ooooo___oooo___oooo__
 ____________________________________________________________ ${blue}
-                            Codename:$codename ${red}
-                            Version:$ver ${white}
+                            Codename:${green}$codename ${red}
+                            Version:${green}$ver ${white}
             github:$follow
 "
 }
