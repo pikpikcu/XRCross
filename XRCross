@@ -6,7 +6,7 @@ green='\e[32m'
 blue='\e[34m'
 white='\e[97m'
 codename='Sniper'
-ver='1.0'
+ver='1.2'
 follow='pikpikcu'
 site=$1
 
@@ -82,6 +82,7 @@ subdo(){
         if [ "#" ];
             then
             assetfinder --subs-only $site > $output/subdo/$site.txt
+            subfinder -silent -d $site >> $output/subdo/$site.txt
             cat $output/subdo/$site.txt | sort -u > $output/subdo/subs.txt
             rm -rf $output/subdo/$site.txt
         fi
@@ -277,7 +278,133 @@ xss(){
     exit 1
     done
 } 
-
+cors(){
+    logo
+    echo -e "${red}Start ${green}[ Cors Scanner...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            assetfinder  $site > $output/cors/$site.txt
+            subfinder -silent -d $site >> $output/cors/$site.txt
+            cat $output/cors/$site.txt | httprobe > $output/cors/cors.txt
+            cat $output/cors/cors.txt | CORS-Scanner | tee $output/cors/$site-cors.txt
+            rm -rf $output/cors/$site.txt | rm -rf $output/cors/cors.txt
+        fi
+    echo -e "${red}Success Saved:${green}[$output/cors/$site-cors.txt]"
+    exit 1
+    done
+}
+ssti(){
+    logo
+    echo -e "${red}Start ${green}[ Check SSTI Parameters...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            assetfinder  $site > $output/ssti/$site.txt
+            subfinder -silent -d $site >> $output/ssti/$site.txt
+            cat $output/ssti/$site.txt | waybackurls | sort -u > $output/ssti/ssti.txt
+            cat $output/ssti/ssti.txt | gf ssti | tee -a > $output/ssti/$site-ssti.txt
+            rm -rf $output/ssti/$site.txt | rm -rf $output/ssti/ssti.txt
+        fi
+    echo -e "Found Check SSTI Parameters [${green}$(cat $output/ssti/$site-ssti.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/ssti/$site-ssti.txt]"
+    exit 1
+    done
+}
+check_r(){
+    logo
+    echo -e "${red}Start ${green}[ Check redirec Parameters...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            assetfinder  $site > $output/redirec/$site.txt
+            subfinder -silent -d $site >> $output/redirec/$site.txt
+            cat $output/redirec/$site.txt | waybackurls | sort -u > $output/redirec/redirec.txt
+            cat $output/redirec/redirec.txt | gf redirect | tee -a > $output/redirec/$site-redirec.txt
+            rm -rf $output/redirec/$site.txt | rm -rf $output/redirec/redirec.txt
+        fi
+    echo -e "Found Check redirec Parameters [${green}$(cat $output/redirec/$site-redirec.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/redirec/$site-redirec.txt]"
+    exit 1
+    done
+}
+idor(){
+    logo
+    echo -e "${red}Start ${green}[ Check IDOR Parameters...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            assetfinder  $site > $output/idor/$site.txt
+            subfinder -silent -d $site >> $output/idor/$site.txt
+            cat $output/idor/$site.txt | waybackurls | sort -u > $output/idor/idor.txt
+            cat $output/idor/idor.txt | gf idor | tee -a > $output/idor/$site-idor.txt
+            rm -rf $output/idor/$site.txt | rm -rf $output/idor/idor.txt
+        fi
+    echo -e "Found Check IDOR Parameters [${green}$(cat $output/idor/$site-idor.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/idor/$site-idor.txt]"
+    exit 1
+    done
+}
+rce(){
+    logo
+    echo -e "${red}Start ${green}[ Check RCE Parameters...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            assetfinder  $site > $output/rce/$site.txt
+            subfinder -silent -d $site >> $output/rce/$site.txt
+            cat $output/rce/$site.txt | waybackurls | sort -u > $output/rce/rce.txt
+            cat $output/rce/rce.txt | gf rce | tee -a > $output/idor/$site-rce.txt
+            rm -rf $output/rce/$site.txt | rm -rf $output/rce/rce.txt
+        fi
+    echo -e "Found Check RCE Parameters [${green}$(cat $output/rce/$site-rce.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/rce/$site-rce.txt]"
+    exit 1
+    done
+}
+lfi(){
+    logo
+    echo -e "${red}Start ${green}[ Check LFI Parameters...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            assetfinder  $site > $output/lfi/$site.txt
+            subfinder -silent -d $site >> $output/lfi/$site.txt
+            cat $output/lfi/$site.txt | waybackurls | sort -u > $output/lfi/lfi.txt
+            cat $output/lfi/lfi.txt | gf lfi | tee -a > $output/lfi/$site-lfi.txt
+            rm -rf $output/lfi/$site.txt | rm -rf $output/lfi/lfi.txt
+        fi
+    echo -e "Found Check LFI Parameters [${green}$(cat $output/lfi/$site-lfi.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/lfi/$site-lfi.txt]"
+    exit 1
+    done
+}
+sqli(){
+    logo
+    echo -e "${red}Start ${green}[ Check SQLI Parameters...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            assetfinder  $site > $output/sqli/$site.txt
+            subfinder -silent -d $site >> $output/sqli/$site.txt
+            cat $output/sqli/$site.txt | waybackurls | sort -u > $output/sqli/sqli.txt
+            cat $output/sqli/sqli.txt | gf sqli | tee -a > $output/lfi/$site-sqli.txt
+            rm -rf $output/sqli/$site.txt | rm -rf $output/sqli/sqli.txt
+        fi
+    echo -e "Found Check SQLI Parameters [${green}$(cat $output/sqli/$site-sqli.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/sqli/$site-sqli.txt]"
+    exit 1
+    done
+}
+take(){
+    logo
+    echo -e "${red}Start ${green}[ Check Takeover...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            assetfinder  $site > $output/takeover/$site.txt
+            subfinder -silent -d $site >> $output/takeover/$site.txt
+            cat $output/takeover/$site.txt | waybackurls | sort -u > $output/takeover/takeover.txt
+            cat $output/takeover/takeover.txt | gf takeovers | tee -a > $output/takeover/$site-takeover.txt
+            rm -rf $output/takeover/$site.txt | rm -rf $output/takeover/takeover.txt
+        fi
+    echo -e "Found Check Takeover  [${green}$(cat $output/takeover/$site-takeover.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/takeover/$site-takeover.txt]"
+    exit 1
+    done
+}
 
 logo(){
  echo -e "${red}
@@ -309,9 +436,18 @@ help(){
         echo   "                -asp ASP"
         echo   "                -html Html"
         echo   "       -D  --dir      Check Dir Status Response"
-        echo   "       -r  --redirec  Check open redirection"
+        echo   "       -r  normal     Check open redirection"
+        echo   "                -redirec  Check redirec Parameters"
         echo   "       -Ss --ssrf     Blind SSRF testing"
         echo   "       -xs --xss      Check Parameter XSS"
+        echo   "       -cs --cors     CORS misconfiguration scanner"
+        echo   "       -gf            GF parameters grep"
+        echo   "                -ssti Check SSTI Parameters"
+        echo   "                -idor Check IDOR Parameters"
+        echo   "                -rce  Check RCE Parameters"
+        echo   "                -lfi  Check LFI Parameters"
+        echo   "                -sqli Check SQLI Parameters"   
+        echo   "       -T --takeover  Grep takeover"
         echo   "       -o             Outfile"
         exit 1
 }
@@ -320,6 +456,64 @@ if [ -z "$site" ];then
 else
 while [ "$site" ]; do
     case "$site" in
+        "-T" | "--takeover") site="$2"
+            if [[ $3 == "-o" ]];
+                then
+                output="$4/$site"
+                mkdir -p "$output"/"takeover"
+                take $site
+            else
+                output="$site"
+                mkdir -p "$output"/"takeover"
+                take $site
+            fi
+            ;;
+        "-gf") site="$2"
+            if [[ $3 == "-ssti" ]];
+                then
+                output="$site"
+                mkdir -p "$output"/"ssti"
+                ssti $site
+            elif [[ $3 == "-idor" ]];
+                then
+                output="$site"
+                mkdir -p "$output"/"idor"
+                idor $site
+            elif [[ $3 == "-rce" ]];
+                then
+                output="$site"
+                mkdir -p "$output"/"rce"
+                rce $site
+            elif [[ $3 == "-lfi" ]];
+                then
+                output="$site"
+                mkdir -p "$output"/"lfi"
+                lfi $site
+            elif [[ $3 == "-sqli" ]];
+                then
+                output="$site"
+                mkdir -p "$output"/"sqli"
+                sqli $site
+            else
+                logo
+                exit 1
+            fi
+            ;;
+
+        "-cs" | "--cors") site="$2"
+            if [[ $3 == "-o" ]];
+                then
+                output="$4/$site"
+                mkdir -p "$output"/"cors"
+                cors $site
+
+            else
+                output="$site"
+                mkdir -p "$output"/"cors"
+                cors $site
+
+            fi
+            ;;
         "-xs" | "--xss") site="$2"
             if [[ $3 == "-o" ]];
                 then
@@ -359,12 +553,18 @@ while [ "$site" ]; do
                 ssrf $site
             fi
             ;;
-        "-r" | "--redirec") site="$2"
+        "-r" ) site="$2"
             if [[ $3 == "-o" ]]; 
                 then
                 output="$4/$site"
                 mkdir -p "$output"/"redirec"
                 redirec $site
+            elif [[ $3 == "-redirec" ]]; 
+                then
+                output="$site"
+                mkdir -p "$output"/"redirec"
+                check_r $site
+
             else
                 output="$site"
                 mkdir -p "$output"/"redirec"
