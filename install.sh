@@ -71,4 +71,27 @@ echo -e "${red}[+] Done Install qsreplace "
 echo -e "\n${red}[+]${green}Install ffuf "
 go get github.com/ffuf/ffuf
 echo -e "${red}[+] Done Install ffuf "
-echo
+# [subfinder]
+echo -e "\n${red}[+]${green}Install subfinder "
+go get -v github.com/projectdiscovery/subfinder/cmd/subfinder
+echo -e "${red}[+] Done Install subfinder"
+# [cors]
+echo -e "\n${red}[+]${green}Install CORS-Scanner "
+go get -u github.com/Tanmay-N/CORS-Scanner
+echo -e "${red}[+] Done Install CORS-Scanner"
+# [gf]
+echo -e "\n${red}[+]${green}Install gf "
+go get -u github.com/tomnomnom/gf
+echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.bash' >> ~/.bashrc
+echo 'source $GOPATH/src/github.com/tomnomnom/gf/gf-completion.zsh' >> ~/.zshrc
+cp -r $GOPATH/src/github.com/tomnomnom/gf/examples ~/.gf
+echo -e "${red}[+] Done Install gf"
+echo -e "\n${red}[+]${green}Install Gf-Patterns"
+git clone https://github.com/1ndianl33t/Gf-Patterns
+mv Gf-Patterns/*.json ~/.gf
+rm -rf Gf-Patterns
+echo -e "${red}[+] Done Install Gf-Patterns"
+
+
+
+
