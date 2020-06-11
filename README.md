@@ -1,6 +1,6 @@
 ## XRCross (Recon)
 
-<h4 align="center"><img src="https://raw.githubusercontent.com/pikpikcu/XRCross/master/logo.png" width="300px" height="300px">
+<h4 align="center"><img src="https://raw.githubusercontent.com/pikpikcu/xrcross/master/logo.png" width="300px" height="300px">
 
 </a>
 <h4 align="center">Details</h4>                
@@ -9,10 +9,10 @@
   <a href="https://ru.m.wikipedia.org/wiki/bash">
     <img src="https://img.shields.io/badge/language-bash-green.svg">
  </a>
-  <a href="https://github.com/pikpikcu/RecTools">
+  <a href="https://github.com/pikpikcu/xrcross">
     <img src="https://img.shields.io/badge/version-V1.0-green.svg">
  </a>
-   <a href="https://github.com/pikpikcu/XRCross/blob/master/LICENSE">
+   <a href="https://github.com/pikpikcu/xrcross/blob/master/LICENSE">
    <img src="https://img.shields.io/badge/LICENSE-red.svg">
    </a>
  </a>
