@@ -24,14 +24,14 @@
     XRCross is a Reconstruction, Scanner, and a tool for penetration / BugBounty testing. 
     This tool was built to test XSS / SSRF vulnerabilities 
 
-#### ✔️ ***Example***:
-
+#### ✔️ ***Options***:
 >   
 
         Example: XRCross -u/--url example.site
                  XRCross <arguments> example.site <arguments> 
         
         Optional Arguments:
+               -h  --help     show this help message and exit
                -s  --subdo    Check Subdomains 
                -H  --host     Host Live Check
                -sw --scrw     Scraping wayback for data
@@ -54,6 +54,52 @@
                -T --takeover  Grep takeover
                -o             Outfile
                
+#### ✔️ ***Example***:
+
+>  Check Subdomains
+
+      XRCross -s/--subdo  example.site 
+
+>  Host Live Check
+
+      XRCross -H/--host  example.site 
+
+>  Scraping wayback
+
+      XRCross -sw  example.site "(-js|-php|-asp|-html)"
+
+>  Check Dir Status
+
+      XRCross -D/--dir  example.site 
+
+>  Check open redirection
+
+      XRCross -r  example.site  "(-redirec)"
+
+>  Blind SSRF testing
+
+      XRCross -Ss/--ssrf  example.site  
+
+>  Check Parameter XSS
+
+      XRCross -xs/--xss  example.site  
+     
+>  CORS misconfiguration scanner
+
+      XRCross -cs/--cors  example.site  
+
+>  GF parameters grep
+
+      XRCross -gf example.site "(-ssti|-idor|-rce|-lfi|-sqli)"
+
+>  Grep takeover
+
+      XRCross -T/--takeover  example.site 
+
+>  Outfile
+
+      XRCross <Arguments>  example.site  -o File_OUT/
+
 #### ✔️ ***How to install XRCross***:
 
 > root@kali~# git clone https://github.com/pikpikcu/xrcross.git
