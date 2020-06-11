@@ -428,6 +428,7 @@ help(){
         echo "         $0 <arguments> example.site <arguments> "
         echo
         echo "Optional Arguments:"
+        echo   "       -h  --help     show this help message and exit"
         echo   "       -s  --subdo    Check Subdomains "
         echo   "       -H  --host     Host Live Check"
         echo   "       -sw --scrw     Scraping wayback for data"
