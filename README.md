@@ -29,7 +29,8 @@
 
 ### About XRCross 
 
-    XRCross is a Reconstruction, Scanner, and a tool for penetration / BugBounty testing. This tool was built to test XSS / SSRF vulnerabilities 
+    XRCross is a Reconstruction, Scanner, and a tool for penetration / BugBounty testing. 
+    This tool was built to test XSS / SSRF vulnerabilities 
 
 #### ✔️ ***Example***:
 
