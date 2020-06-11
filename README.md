@@ -47,7 +47,7 @@
 
 #### ✔️ ***How to install XRCross***:
 
-> root@kali~# git clone https://github.com/pikpikcu/XRCross.git
+> root@kali~# git clone https://github.com/pikpikcu/xrcross.git
 
 > root@kali~# ./install.sh
 
