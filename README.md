@@ -1,14 +1,6 @@
 ## XRCross (Recon)
 
->
-
-      oo_____oo_ooooooo______oooo_________________________________
-      _oo___oo__oo____oo___oo____oo_oo_ooo___ooooo___oooo___oooo__
-      __oo_oo___oo____oo__oo________ooo___o_oo___oo_oo___o_oo___o_
-      ___ooo____ooooooo___oo________oo______oo___oo___oo_____oo___
-      __oo_oo___oo____oo___oo____oo_oo______oo___oo_o___oo_o___oo_
-      _oo___oo__oo_____oo____oooo___oo_______ooooo___oooo___oooo__
-      ____________________________________________________________ 
+<h4 align="center"><img src="https://raw.githubusercontent.com/pikpikcu/XRCross/master/logo.png" width="300px" height="300px">
 
 </a>
 <h4 align="center">Details</h4>                
