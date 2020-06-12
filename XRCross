@@ -405,6 +405,20 @@ take(){
     exit 1
     done
 }
+ssrf2(){
+    logo
+    echo -e "${red}Start ${green}[ Check ssrf...]${white}"
+    while [ "$site" ];do
+        if [ "#" ]; then
+            echo -en "$site" | assetfinder | waybackurls | sort -u > $output/ssrf/ssrf.txt
+            cat $output/ssrf/ssrf.txt | gf ssrf | tee -a > $output/ssrf/$site-ssrf.txt
+            rm -rf $output/ssrf/$site.txt | rm -rf $output/ssrf/ssrf.txt
+        fi
+    echo -e "Found Check ssrf  [${green}$(cat $output/ssrf/$site-ssrf.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/ssrf/$site-ssrf.txt]"
+    exit 1
+    done
+}
 
 logo(){
  echo -e "${red}
@@ -447,7 +461,8 @@ help(){
         echo   "                -idor Check IDOR Parameters"
         echo   "                -rce  Check RCE Parameters"
         echo   "                -lfi  Check LFI Parameters"
-        echo   "                -sqli Check SQLI Parameters"   
+        echo   "                -sqli Check SQLI Parameters"
+        echo   "                -ssrf Check SQLI Parameters"   
         echo   "       -T --takeover  Grep takeover"
         echo   "       -o             Outfile"
         exit 1
@@ -495,6 +510,11 @@ while [ "$site" ]; do
                 output="$site"
                 mkdir -p "$output"/"sqli"
                 sqli $site
+            elif [[ $3 == "-ssrf" ]];
+                then
+                output="$site"
+                mkdir -p "$output"/"ssrf"
+                ssrf2 $site
             else
                 logo
                 exit 1
