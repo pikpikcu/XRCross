@@ -91,6 +91,14 @@ git clone https://github.com/1ndianl33t/Gf-Patterns
 mv Gf-Patterns/*.json ~/.gf
 rm -rf Gf-Patterns
 echo -e "${red}[+] Done Install Gf-Patterns"
+echo -e "\n${red}[+]${green}Install httpx"
+GO111MODULE=on go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
+echo -e "${red}[+] Done Install httpxs"
+echo -e "\n${red}[+]${green}Install jq"
+sudo apt install jq -y
+echo -e "${red}[+] Done Install httpxs"
+
+
 
 
 
