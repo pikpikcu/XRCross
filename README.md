@@ -52,6 +52,7 @@
                         -lfi  Check LFI Parameters
                         -sqli Check SQLI Parameters   
                -T --takeover  Grep takeover
+               -v --verbose   Verbose status code
                -o             Outfile
                
 #### ✔️ ***Example***:
@@ -99,6 +100,11 @@
 >  Outfile
 
       XRCross <Arguments>  example.site  -o File_OUT/
+
+
+> Verbose Status Code
+
+      XRCross -v/--verbose  example.com 
 
 #### ✔️ ***How to install XRCross***:
 
