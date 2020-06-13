@@ -21,6 +21,7 @@ echo
 # golang
 echo -e "\n${red}[+]${green}Setup Golang"
 export PATH=$PATH:/usr/local/go/bin
+export PATH=$PATH:~/go/bin
 GO111MODULE=on
 sleep 3
 echo -e "\n${red}[+]${green}Install Golang "
