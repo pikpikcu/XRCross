@@ -79,8 +79,16 @@ subdo(){
     logo
     echo -e "\n${red}Start ${green}[Subdomain Enumerate...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
+        if [ ! -f ~/go/bin/assetfinder ];
             then
+            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} Subfinder Not Install!\n"
+            exit 1            
+
+        else
             assetfinder --subs-only $site > $output/subdo/$site.txt
             subfinder -silent -d $site >> $output/subdo/$site.txt
             cat $output/subdo/$site.txt | sort -u > $output/subdo/subs.txt
@@ -95,8 +103,16 @@ hostlive(){
     logo
     echo -e "${red}Start ${green}[Check Host Live...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
-        then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/httprobe ];
+            then
+            echo -e "${red}[+]${green} httprobe Not Install!\n"
+            exit 1 
+
+        else
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -114,8 +130,16 @@ scraping(){
     logo
     echo -e "${red}Start ${green}[Scraping wayback for data...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
-        then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+
+        else
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -131,8 +155,16 @@ js(){
     logo
     echo -e "${red}Start ${green}[Scraping wayback for data js...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
-         then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+
+        else
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -150,8 +182,15 @@ php(){
     logo
     echo -e "${red}Start ${green}[Scraping wayback for data php...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
-         then    
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        else   
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -170,8 +209,15 @@ asp(){
     logo
     echo -e "${red}Start ${green}[Scraping wayback for data aspx...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
-          then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        else
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -189,8 +235,15 @@ html(){
     logo
     echo -e "${red}Start ${green}[Scraping wayback for data HTML...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
-          then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        else
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt | cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
@@ -206,8 +259,19 @@ dir(){
     logo
     echo -e "${red}Start ${green}[Check Status Response...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
-          then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/hakrawler ];
+            then
+            echo -e "${red}[+]${green} hakrawler Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/hakcheckurl ];
+            then
+            echo -e "${red}[+]${green} hakcheckurl Not Install!\n"
+            exit 1 
+        else
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt 
             rm -rf $output/$site.txt | cat $output/subs.txt | hakrawler -plain | hakcheckurl | grep -v 404 > $output/dir/$site-dir.txt 
@@ -223,8 +287,12 @@ redirec(){
     logo
     echo -e "${red}Start ${green}[Check Open Redirection...]${white}"
     while [ "$site" ];do
-        if [ "#" ];
+        if [ ! -f ~/go/bin/gau ];
             then
+            echo -e "${red}[+]${green} Gau Not Install!\n"
+            exit 1
+        
+        else
             gau -subs $site | grep "redirect" > $output/redirec/$site-redirectall.txt
             gau -subs $site | grep "redirect=" >  $output/redirec/$site-redirectequal.txt
             gau -subs $site | grep "url" > $output/redirec/$site_urlall.txt
@@ -250,7 +318,19 @@ ssrf(){
     echo -e "${red}Start ${green}[ Blind SSRF testing...]${white}"
     ssr=`cat callback.txt`
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} Waybackurls Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/gau ];
+            then
+            echo -e "${red}[+]${green} gau Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/qsreplace ];
+            then
+            echo -e "${red}[+]${green} qsreplace Not Install!\n"
+            exit 1 
+        else
            waybackurls $site > $output/ssrf/$site-ssrf.txt
            gau $site >> $output/ssrf/$site-ssrf.txt
            cat $output/ssrf/$site-ssrf.txt | sort | uniq | grep "?" | qsreplace -a | qsreplace $ssr > $output/ssrf/$site-ssrf2.txt
@@ -269,7 +349,23 @@ xss(){
     xsss=`cat xss.ht`
     linee=".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/hakrawler ];
+            then
+            echo -e "${red}[+]${green} hakrawler Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/dalfox ];
+            then
+            echo -e "${red}[+]${green} dalfox Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/qsreplace ];
+            then
+            echo -e "${red}[+]${green} qsreplace Not Install!\n"
+            exit 1 
+        else
             assetfinder  $site > $output/xss/$site.txt
             cat $output/xss/$site.txt | hakrawler -plain -usewayback -wayback | grep "=" | egrep -iv "$linee" | \
             qsreplace -a | dalfox pipe -b $xsss -o $output/xss/$site-xss.txt 
@@ -282,7 +378,23 @@ cors(){
     logo
     echo -e "${red}Start ${green}[ Cors Scanner...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/httprobe ];
+            then
+            echo -e "${red}[+]${green} httprobe Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/CORS-Scanner ];
+            then
+            echo -e "${red}[+]${green} CORS-Scanner Not Install!\n"
+            exit 1 
+        else
             assetfinder  $site > $output/cors/$site.txt
             subfinder -silent -d $site >> $output/cors/$site.txt
             cat $output/cors/$site.txt | httprobe > $output/cors/cors.txt
@@ -297,7 +409,23 @@ ssti(){
     logo
     echo -e "${red}Start ${green}[ Check SSTI Parameters...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+         if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${red}[+]${green} gf Not Install!\n"
+            exit 1 
+        else
             assetfinder  $site > $output/ssti/$site.txt
             subfinder -silent -d $site >> $output/ssti/$site.txt
             cat $output/ssti/$site.txt | waybackurls | sort -u > $output/ssti/ssti.txt
@@ -313,7 +441,23 @@ check_r(){
     logo
     echo -e "${red}Start ${green}[ Check redirec Parameters...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${red}[+]${green} gf Not Install!\n"
+            exit 1 
+        else
             assetfinder  $site > $output/redirec/$site.txt
             subfinder -silent -d $site >> $output/redirec/$site.txt
             cat $output/redirec/$site.txt | waybackurls | sort -u > $output/redirec/redirec.txt
@@ -329,7 +473,23 @@ idor(){
     logo
     echo -e "${red}Start ${green}[ Check IDOR Parameters...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${red}[+]${green} gf Not Install!\n"
+            exit 1 
+        else
             assetfinder  $site > $output/idor/$site.txt
             subfinder -silent -d $site >> $output/idor/$site.txt
             cat $output/idor/$site.txt | waybackurls | sort -u > $output/idor/idor.txt
@@ -345,7 +505,23 @@ rce(){
     logo
     echo -e "${red}Start ${green}[ Check RCE Parameters...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${red}[+]${green} gf Not Install!\n"
+            exit 1 
+        else
             assetfinder  $site > $output/rce/$site.txt
             subfinder -silent -d $site >> $output/rce/$site.txt
             cat $output/rce/$site.txt | waybackurls | sort -u > $output/rce/rce.txt
@@ -361,7 +537,23 @@ lfi(){
     logo
     echo -e "${red}Start ${green}[ Check LFI Parameters...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${red}[+]${green} gf Not Install!\n"
+            exit 1 
+        else
             assetfinder  $site > $output/lfi/$site.txt
             subfinder -silent -d $site >> $output/lfi/$site.txt
             cat $output/lfi/$site.txt | waybackurls | sort -u > $output/lfi/lfi.txt
@@ -377,7 +569,23 @@ sqli(){
     logo
     echo -e "${red}Start ${green}[ Check SQLI Parameters...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${red}[+]${green} gf Not Install!\n"
+            exit 1 
+        else
             assetfinder  $site > $output/sqli/$site.txt
             subfinder -silent -d $site >> $output/sqli/$site.txt
             cat $output/sqli/$site.txt | waybackurls | sort -u > $output/sqli/sqli.txt
@@ -393,7 +601,23 @@ take(){
     logo
     echo -e "${red}Start ${green}[ Check Takeover...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/subfinder ];
+            then
+            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${red}[+]${green} gf Not Install!\n"
+            exit 1 
+        else
             assetfinder $site > $output/takeover/$site.txt
             subfinder -silent -d $site >> $output/takeover/$site.txt
             cat $output/takeover/$site.txt | waybackurls | sort -u > $output/takeover/takeover.txt
@@ -409,6 +633,19 @@ ssrf2(){
     logo
     echo -e "${red}Start ${green}[ Check ssrf...]${white}"
     while [ "$site" ];do
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${red}[+]${green} gf Not Install!\n"
+            exit 1 
+        else
         if [ "#" ]; then
             echo -en "$site" | assetfinder | waybackurls | sort -u > $output/ssrf/ssrf.txt
             cat $output/ssrf/ssrf.txt | gf ssrf | tee -a > $output/ssrf/$site-ssrf.txt
@@ -423,7 +660,23 @@ verbose(){
     logo
     echo -e "${red}Start ${green}[ Verbose...]${white}"
     while [ "$site" ];do
-        if [ "#" ]; then
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/httpx ];
+            then
+            echo -e "${red}[+]${green} Httpx Not Install!\n"
+            exit 1
+        elif [ ! -f /usr/bin/jq ];
+            then
+            echo -e "${red}[+]${green} jq Not Install!\n"
+            exit 1 
+        else
             echo -en "$site" | assetfinder | waybackurls | sort -u > $output/verbose/out.txt
             cat $output/verbose/out.txt | httpx -silent -content-length -status-code -verbose -title -vhost -json | jq > $output/verbose/$site-out.json
             rm -rf $output/verbose/out.txt 
