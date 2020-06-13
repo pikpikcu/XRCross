@@ -126,3 +126,4 @@
 * [subfinder](https://github.com/projectdiscovery/subfinder)
 * [CORS-Scanner](https://github.com/Tanmay-N/CORS-Scanner)
 * [Gf-Patterns](https://github.com/1ndianl33t/Gf-Patterns)
+* [httpx](https://github.com/projectdiscovery/httpx)
