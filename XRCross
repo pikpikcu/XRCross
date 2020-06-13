@@ -646,7 +646,6 @@ ssrf2(){
             echo -e "${red}[+]${green} gf Not Install!\n"
             exit 1 
         else
-        if [ "#" ]; then
             echo -en "$site" | assetfinder | waybackurls | sort -u > $output/ssrf/ssrf.txt
             cat $output/ssrf/ssrf.txt | gf ssrf | tee -a > $output/ssrf/$site-ssrf.txt
             rm -rf $output/ssrf/$site.txt | rm -rf $output/ssrf/ssrf.txt
