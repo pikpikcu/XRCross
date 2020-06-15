@@ -700,7 +700,7 @@ help(){
         echo   "                -rce  Check RCE Parameters"
         echo   "                -lfi  Check LFI Parameters"
         echo   "                -sqli Check SQLI Parameters"
-        echo   "                -ssrf Check SQLI Parameters"   
+        echo   "                -ssrf Check SSRF Parameters"   
         echo   "       -T --takeover  Grep takeover"
         echo   "       -v --verbose   Verbose status code"
         echo   "       -o             Outfile"
