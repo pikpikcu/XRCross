@@ -14,63 +14,49 @@ site=$1
 all(){
     logo
     echo -e "\n${red}Start ${green}[Subdomain Enumerate...]${white}"
-    assetfinder --subs-only $site > $output/subdo/$site.txt
-    cat $output/subdo/$site.txt | sort -u > $output/subdo/subs.txt
-    rm -rf $output/subdo/$site.txt
-    echo -e "FOUND SUBDOMAINS [${green}$(cat $output/subdo/subs.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/subdo/subs.txt]"
+    assetfinder --subs-only $site > $output/$site.txt
+    cat $output/$site.txt | sort -u > $output/subs.txt
+    rm -rf $output/$site.txt
+    echo -e "FOUND SUBDOMAINS [${green}$(cat $output/subs.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/subs.txt]"
     echo -e "${red}Start ${green}[Check Host Live...]${white}"
-    cat $output/subs.txt | sort -u | httprobe | tee -a  > $output/live/$site-host.txt
-    echo -e "Resluts Live:[${green}$(cat $output/live/https.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/live/$site-host.txt]"
+    cat $output/subs.txt | sort -u | httprobe | tee -a  > $output/$site-host.txt
+    echo -e "Resluts Live:[${green}$(cat $output/$site-host.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/$site-host.txt]"
     echo -e "${red}Start ${green}[Check Status Response...]${white}"
-    cat $output/subs.txt | hakrawler -plain | hakcheckurl | grep -v 404 > $output/dir/$site-dir.txt 
-    echo -e "Found Status Dir [${green}$(cat $output/dir/$site-dir.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/dir/$site-dir.txt]"
+    cat $output/subs.txt | hakrawler -plain | hakcheckurl | grep -v 404 > $output/$site-dir.txt 
+    echo -e "Found Status Dir [${green}$(cat $output/$site-dir.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/$site-dir.txt]"
     echo -e "${red}Start ${green}[Scraping wayback for data...]${white}"
-    cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
-    echo -e "Found Scraping [${green}$(cat $output/scraping/$site-list.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-list.txt]"
+    cat $output/subs.txt | waybackurls | sort -u > $output/$site-list.txt
+    echo -e "Found Scraping [${green}$(cat $output/$site-list.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/$site-list.txt]"
     echo -e "${red}Start ${green}[Scraping wayback for data js...]${white}"
    # cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
-    cat $output/scraping/$site-list.txt | sort -u | grep -P "\w+\.js(\?|$)" | sort -u > $output/scraping/jsurls.txt
-    echo -e "Found Scraping [${green}$(cat $output/scraping/jsurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-jsurls.txt]"
+    cat $output/$site-list.txt | sort -u | grep -P "\w+\.js(\?|$)" | sort -u > $output/jsurls.txt
+    echo -e "Found Scraping [${green}$(cat $output/jsurls.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/jsurls.txt]"
     echo -e "${red}Start ${green}[Scraping wayback for data php...]${white}" 
-    cat $output/scraping/$site-list.txt | sort -u | grep -P "\w+\.php(\?|$)" | sort -u > $output/scraping/phpurls.txt
-    echo -e "Found Scraping [${green}$(cat $output/scraping/phpurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-phpurls.txt]"
+    cat $output/$site-list.txt | sort -u | grep -P "\w+\.php(\?|$)" | sort -u > $output/phpurls.txt
+    echo -e "Found Scraping [${green}$(cat $output/phpurls.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/phpurls.txt]"
     echo -e "${red}Start ${green}[Scraping wayback for data aspx...]${white}"
-    cat $output/scraping/$site-list.txt | sort -u | grep -P "\w+\.aspx(\?|$)" | sort -u > $output/scraping/aspurls.txt
-    echo -e "Found Scraping [${green}$(cat $output/scraping/aspurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-aspurls.txt]"
+    cat $output/$site-list.txt | sort -u | grep -P "\w+\.aspx(\?|$)" | sort -u > $output/spurls.txt
+    echo -e "Found Scraping [${green}$(cat $output/aspurls.txt | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/aspurls.txt]"
     echo -e "${red}Start ${green}[Check Open Redirection...]${white}"
-    gau -subs $site | grep "redirect" > $output/redirec/$site-redirectall.txt
-    gau -subs $site | grep "redirect=" >  $output/redirec/$site-redirectequal.txt
-    gau -subs $site | grep "url" > $output/redirec/$site_urlall.txt
-    gau -subs $site | grep "url=" > $output/redirec/$site_urlequal.txt
-    gau -subs $site | grep "next=" > $output/redirec/$site_next.txt
-    gau -subs $site | grep "dest=" > $output/redirec/$site_dest.txt
-    gau -subs $site | grep "destination" > $output/redirec/$site_destination.txt
-    gau -subs $site | grep "return" > $output/redirec/$site_return.txt
-    gau -subs $site | grep "go=" > $output/redirec/$site_go.txt
-    gau -subs $site | grep "redirect_uri" > $output/redirec/$site_redirecturi.txt
-    gau -subs $site | grep "continue=" > $output/redirec/$site_continue.txt
-    gau -subs $site | grep "return_path=" > $output/redirec/$site_path.txt
-    gau -subs $site | grep "externalLink=" > $output/redirec/$site_link.txt
-    gau -subs $site | grep "URL=" > $output/redirec/$site_URL.txt             
-    echo -e "Found Check URL Redirection [${green}$(ls $output/redirec/ | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/redirec/]"
+    cat $output/subs.txt | grep -e 'redirect\|redirect=\|url\|url=\|next=\|dest=\|destination\|return\|go\|redirect_uri\|continue=\|return_path=\|externalLink=\|URL' > $output/$site-redirect.txt          
+    echo -e "Found Check URL Redirection [${green}$(ls $output/$site-redirect.txt  | wc -l)${white}]"
+    echo -e "${red}Success Saved:${green}[$output/$site-redirect.txt ]"
     echo -e "${red}Start ${green}[ Blind SSRF testing...]${white}"
     ssr=`cat callback.txt`
-    cat $output/subdo/subs.txt | waybackurls > $output/ssrf/$site-ssrf.txt
-    cat $output/subdo/subs.txt | gau >> $output/ssrf/$site-ssrf.txt
-    cat $output/ssrf/$site-ssrf.txt | sort | uniq | grep "?" | qsreplace -a | qsreplace $ssr > $output/ssrf/$site-ssrf2.txt
+    cat $output/subs.txt | waybackurls > $output/$site-ssrf.txt
+    cat $output/subs.txt | gau >> $output/$site-ssrf.txt
+    cat $output/$site-ssrf.txt | sort | uniq | grep "?" | qsreplace -a | qsreplace $ssr > $output/$site-ssrf2.txt
     sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/ssrf/$site-ssrf2.txt
-    echo "Firing the requests - check your server for potential callbacks"
-    ffuf -w $output/ssrf/$site-ssrf2.txt -u FUZZ -t 50  > $output/ssrf/$site-ssrf3.txt
+    ffuf -w $output/$site-ssrf2.txt -u FUZZ -t 50  > $output/ssrf/$site-ssrf3.txt
     #echo -e "Found Check SSRF [${green}$(cat $output/ssrf/$site-ssrf3.txt | wc -l)${white}]"
-    echo -e "\n${red}Success Saved:${green}[$output/ssrf/$site-ssrf3.txt]"
+    echo -e "\n${red}Success Saved:${green}[$output/$site-ssrf3.txt]"
     echo
     
 }
@@ -323,7 +309,6 @@ ssrf(){
            gau $site >> $output/ssrf/$site-ssrf.txt
            cat $output/ssrf/$site-ssrf.txt | sort | uniq | grep "?" | qsreplace -a | qsreplace $ssr > $output/ssrf/$site-ssrf2.txt
            sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/ssrf/$site-ssrf2.txt
-           echo "Firing the requests - check your server for potential callbacks"
            ffuf -w $output/ssrf/$site-ssrf2.txt -u FUZZ -t 50  > $output/ssrf/$site-ssrf3.txt
         fi
     #echo -e "Found Check SSRF [${green}$(cat $output/ssrf/$site-ssrf3.txt | wc -l)${white}]"
