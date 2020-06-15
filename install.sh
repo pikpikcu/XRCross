@@ -34,14 +34,18 @@ if [[ -z "$XRCross" ]];then
                         if [ ! -f /usr/bin/go ];then
                               echo -e "\n${red}[+]${green}Install Golang "
                               sudo apt install golang -y
-                              export GOROOT=/usr/local/go
-                              export GOPATH=$HOME/go
-                              export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
-                              echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
-                              echo 'GOPATH=$HOME/go' >> ~/.bash_profile
-                              echo 'PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
-                              #export PATH=$PATH:/usr/local/go/bin
-                              #export PATH=$PATH:~/go/bin
+                              echo "export PATH=$PATH:/usr/local/go/bin" >> ~/.bashrc
+                              source ~/.bashrc
+                              echo "export GOPATH=$HOME/go" >> ~/.bashrc
+                              source ~/.bashrc
+                             #export GOROOT=/usr/local/go
+                             #export GOPATH=$HOME/go
+                             #export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+                             #echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
+                             #echo 'GOPATH=$HOME/go' >> ~/.bash_profile
+                             #echo 'PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
+                             #export PATH=$PATH:/usr/local/go/bin
+                             #export PATH=$PATH:~/go/bin
                               GO111MODULE=on
                               sleep 1
                               echo -e "${red}[+] Done Install Golang "
