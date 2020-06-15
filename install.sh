@@ -37,8 +37,8 @@ if [[ -z "$XRCross" ]];then
                               echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
                               echo 'GOPATH=$HOME/go' >> ~/.bash_profile
                               echo 'PATH=$GOPATH/bin:$GOROOT/bin:$PATH' >> ~/.bash_profile
-                              export PATH=$PATH:/usr/local/go/bin
-                              export PATH=$PATH:~/go/bin
+                              #export PATH=$PATH:/usr/local/go/bin
+                              #export PATH=$PATH:~/go/bin
                               GO111MODULE=on
                               sleep 1
                               echo -e "${red}[+] Done Install Golang "
@@ -123,9 +123,11 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install httpx"
                               GO111MODULE=on go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
                               echo -e "${red}[+] Done Install httpxs"
+                              
+                        elif [ ! -f /usr/bin/jq ];then
                               echo -e "\n${red}[+]${green}Install jq"
                               sudo apt install jq -y
-                              echo -e "${red}[+] Done Install httpxs"
+                              echo -e "${red}[+] Done Install jq"
                         else
                               echo -e "${green}\n[+] Donee Check Module.\n"
                         
