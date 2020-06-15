@@ -293,22 +293,10 @@ redirec(){
             exit 1
         
         else
-            gau -subs $site | grep "redirect" > $output/redirec/$site-redirectall.txt
-            gau -subs $site | grep "redirect=" >  $output/redirec/$site-redirectequal.txt
-            gau -subs $site | grep "url" > $output/redirec/$site_urlall.txt
-            gau -subs $site | grep "url=" > $output/redirec/$site_urlequal.txt
-            gau -subs $site | grep "next=" > $output/redirec/$site_next.txt
-            gau -subs $site | grep "dest=" > $output/redirec/$site_dest.txt
-            gau -subs $site | grep "destination" > $output/redirec/$site_destination.txt
-            gau -subs $site | grep "return" > $output/redirec/$site_return.txt
-            gau -subs $site | grep "go=" > $output/redirec/$site_go.txt
-            gau -subs $site | grep "redirect_uri" > $output/redirec/$site_redirecturi.txt
-            gau -subs $site | grep "continue=" > $output/redirec/$site_continue.txt
-            gau -subs $site | grep "return_path=" > $output/redirec/$site_path.txt
-            gau -subs $site | grep "externalLink=" > $output/redirec/$site_link.txt
-            gau -subs $site | grep "URL=" > $output/redirec/$site_URL.txt             
+            echo "$site" | assetfinder | gau --subs >  $output/redirec/$site.txt
+            cat $output/redirec/$site.txt | grep -e 'redirect\|redirect=\|url\|url=\|next=\|dest=\|destination\|return\|go\|redirect_uri\|continue=\|return_path=\|externalLink=\|URL' > $output/redirec/$site-redirect.txt
         fi
-    echo -e "Found Check URL Redirection [${green}$(ls $output/redirec/ | wc -l)${white}]"
+    echo -e "Found Check URL Redirection [${green}$(ls $output/redirec/$site-redirec.txt | wc -l)${white}]"
     echo -e "${red}Success Saved:${green}[$output/redirec/]"
     exit 1
     done
