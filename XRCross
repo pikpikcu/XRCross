@@ -279,7 +279,7 @@ redirec(){
             exit 1
         
         else
-            echo "$site" | assetfinder | gau --subs >  $output/redirec/$site.txt
+            echo "$site" | assetfinder | gau --subs | sort -u >  $output/redirec/$site.txt
             cat $output/redirec/$site.txt | grep -e 'redirect\|redirect=\|url\|url=\|next=\|dest=\|destination\|return\|go\|redirect_uri\|continue=\|return_path=\|externalLink=\|URL' > $output/redirec/$site-redirect.txt
         fi
     echo -e "Found Check URL Redirection [${green}$(ls $output/redirec/$site-redirec.txt | wc -l)${white}]"
@@ -305,7 +305,7 @@ ssrf(){
             echo -e "${red}[+]${green} qsreplace Not Install!\n"
             exit 1 
         else
-           waybackurls $site > $output/ssrf/$site-ssrf.txt
+           waybackurls $site | sort -u > $output/ssrf/$site-ssrf.txt
            gau $site >> $output/ssrf/$site-ssrf.txt
            cat $output/ssrf/$site-ssrf.txt | sort | uniq | grep "?" | qsreplace -a | qsreplace $ssr > $output/ssrf/$site-ssrf2.txt
            sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/ssrf/$site-ssrf2.txt
@@ -339,7 +339,7 @@ xss(){
             echo -e "${red}[+]${green} qsreplace Not Install!\n"
             exit 1 
         else
-            assetfinder  $site > $output/xss/$site.txt
+            assetfinder  $site  sort -u > $output/xss/$site.txt
             cat $output/xss/$site.txt | hakrawler -plain -usewayback -wayback | grep "=" | egrep -iv "$linee" | \
             qsreplace -a | dalfox pipe -b $xsss -o $output/xss/$site-xss.txt 
         fi
@@ -370,7 +370,8 @@ cors(){
         else
             assetfinder  $site > $output/cors/$site.txt
             subfinder -silent -d $site >> $output/cors/$site.txt
-            cat $output/cors/$site.txt | httprobe > $output/cors/cors.txt
+            cat $output/cors/$site.txt | sort -u > $output/cors/$site-1.txt
+            cat $output/cors/$site-1.txt | httprobe > $output/cors/cors.txt
             cat $output/cors/cors.txt | CORS-Scanner | tee $output/cors/$site-cors.txt
             rm -rf $output/cors/$site.txt | rm -rf $output/cors/cors.txt
         fi
@@ -401,7 +402,8 @@ ssti(){
         else
             assetfinder  $site > $output/ssti/$site.txt
             subfinder -silent -d $site >> $output/ssti/$site.txt
-            cat $output/ssti/$site.txt | waybackurls | sort -u > $output/ssti/ssti.txt
+            cat $output/ssti/$site.txt | sort -u > $output/ssti/$site-1.txt
+            cat $output/ssti/$site-1.txt | waybackurls | sort -u > $output/ssti/ssti.txt
             cat $output/ssti/ssti.txt | gf ssti | tee -a > $output/ssti/$site-ssti.txt
             rm -rf $output/ssti/$site.txt | rm -rf $output/ssti/ssti.txt
         fi
@@ -433,7 +435,8 @@ check_r(){
         else
             assetfinder  $site > $output/redirec/$site.txt
             subfinder -silent -d $site >> $output/redirec/$site.txt
-            cat $output/redirec/$site.txt | waybackurls | sort -u > $output/redirec/redirec.txt
+            cat $output/idor/$site.txt | sort -u $output/idor/$site-1.txt
+            cat $output/redirec/$site-1.txt | waybackurls | sort -u > $output/redirec/redirec.txt
             cat $output/redirec/redirec.txt | gf redirect | tee -a > $output/redirec/$site-redirec.txt
             rm -rf $output/redirec/$site.txt | rm -rf $output/redirec/redirec.txt
         fi
@@ -465,7 +468,8 @@ idor(){
         else
             assetfinder  $site > $output/idor/$site.txt
             subfinder -silent -d $site >> $output/idor/$site.txt
-            cat $output/idor/$site.txt | waybackurls | sort -u > $output/idor/idor.txt
+            cat $output/idor/$site.txt | sort -u > $output/idor/$site-1.txt
+            cat $output/idor/$site-1.txt | waybackurls | sort -u > $output/idor/idor.txt
             cat $output/idor/idor.txt | gf idor | tee -a > $output/idor/$site-idor.txt
             rm -rf $output/idor/$site.txt | rm -rf $output/idor/idor.txt
         fi
@@ -497,7 +501,8 @@ rce(){
         else
             assetfinder  $site > $output/rce/$site.txt
             subfinder -silent -d $site >> $output/rce/$site.txt
-            cat $output/rce/$site.txt | waybackurls | sort -u > $output/rce/rce.txt
+            cat $output/rce/$site.txt | sort -u > $output/rce/$site-1.txt
+            cat $output/rce/$site-1.txt | waybackurls | sort -u > $output/rce/rce.txt
             cat $output/rce/rce.txt | gf rce | tee -a > $output/idor/$site-rce.txt
             rm -rf $output/rce/$site.txt | rm -rf $output/rce/rce.txt
         fi
@@ -529,9 +534,10 @@ lfi(){
         else
             assetfinder  $site > $output/lfi/$site.txt
             subfinder -silent -d $site >> $output/lfi/$site.txt
-            cat $output/lfi/$site.txt | waybackurls | sort -u > $output/lfi/lfi.txt
+            cat $output/lfi/$site.txt | sort -u > $output/lfi/$site-1.txt
+            cat $output/lfi/$site-1.txt | waybackurls | sort -u > $output/lfi/lfi.txt
             cat $output/lfi/lfi.txt | gf lfi | tee -a > $output/lfi/$site-lfi.txt
-            rm -rf $output/lfi/$site.txt | rm -rf $output/lfi/lfi.txt
+            rm -rf $output/lfi/$site.txt | rm -rf $output/lfi/lfi.txt | rm -rf $output/lfi/$site.txt
         fi
     echo -e "Found Check LFI Parameters [${green}$(cat $output/lfi/$site-lfi.txt | wc -l)${white}]"
     echo -e "${red}Success Saved:${green}[$output/lfi/$site-lfi.txt]"
@@ -561,7 +567,8 @@ sqli(){
         else
             assetfinder  $site > $output/sqli/$site.txt
             subfinder -silent -d $site >> $output/sqli/$site.txt
-            cat $output/sqli/$site.txt | waybackurls | sort -u > $output/sqli/sqli.txt
+            cat $output/sqli/$site.txt | sort -u $output/sqli/$site-1.txt
+            cat $output/sqli/$site-1.txt | waybackurls | sort -u > $output/sqli/sqli.txt
             cat $output/sqli/sqli.txt | gf sqli | tee -a > $output/lfi/$site-sqli.txt
             rm -rf $output/sqli/$site.txt | rm -rf $output/sqli/sqli.txt
         fi
@@ -592,8 +599,9 @@ take(){
             exit 1 
         else
             assetfinder $site > $output/takeover/$site.txt
-            subfinder -silent -d $site >> $output/takeover/$site.txt
-            cat $output/takeover/$site.txt | waybackurls | sort -u > $output/takeover/takeover.txt
+            subfinder -silent -d $site >> $output/takeover/$site.txt 
+            cat $output/takeover/$site.txt | sort -u > $output/takeover/$site-1.txt
+            cat $output/takeover/$site-1.txt | waybackurls | sort -u > $output/takeover/takeover.txt
             cat $output/takeover/takeover.txt | gf takeovers | tee -a > $output/takeover/$site-takeover.txt
             rm -rf $output/takeover/$site.txt | rm -rf $output/takeover/takeover.txt
         fi
