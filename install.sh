@@ -1,4 +1,7 @@
 #!/bin/bash
+# Created By pikpikcu
+# Suport Me And Join Contributor:
+# Email:xzhack206@gmail.com
 
 # Color
 red='\e[31m'
@@ -42,7 +45,11 @@ if [[ -z "$XRCross" ]];then
                               GO111MODULE=on
                               sleep 1
                               echo -e "${red}[+] Done Install Golang "
-                              
+                        elif [ ! -f ~/go/bin/SubOver ]; then
+                              #SubOver
+                              echo -e "\n${red}[+]${green}Install SubOver "
+                              go get github.com/Ice3man543/SubOver
+                              echo -e "${red}[+] Done Install SubOver "
                         elif [ ! -f ~/go/bin/dalfox ];then
                               # [dalfox]
                               echo -e "\n${red}[+]${green}Install dalfox "
