@@ -1,4 +1,9 @@
 #!/bin/bash
+# Created By pikpikcu
+# ┌──[Suport Me And join Contributor:]
+# └──╼[Email] xzhack206@gmail.com
+# 
+###############################################
 
 # Color
 red='\e[31m'
@@ -601,12 +606,13 @@ take(){
             assetfinder $site > $output/takeover/$site.txt
             subfinder -silent -d $site >> $output/takeover/$site.txt 
             cat $output/takeover/$site.txt | sort -u > $output/takeover/$site-1.txt
-            cat $output/takeover/$site-1.txt | waybackurls | sort -u > $output/takeover/takeover.txt
-            cat $output/takeover/takeover.txt | gf takeovers | tee -a > $output/takeover/$site-takeover.txt
-            rm -rf $output/takeover/$site.txt | rm -rf $output/takeover/takeover.txt
+            SubOver -l $output/takeover/$site-1.txt -v -a -https | tee -a > $output/takeover/$site-takeover.txt
+           # cat $output/takeover/$site-1.txt | waybackurls | sort -u > $output/takeover/takeover.txt
+           # cat $output/takeover/takeover.txt | gf takeovers | tee -a > $output/takeover/$site-takeover.txt
+           # rm -rf $output/takeover/$site.txt | rm -rf $output/takeover/takeover.txt
         fi
     echo -e "Found Check Takeover  [${green}$(cat $output/takeover/$site-takeover.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/takeover/$site-takeover.txt]"
+    echo -e "\n${red}Success Saved:${green}[$output/takeover/$site-takeover.txt]"
     exit 1
     done
 }
@@ -709,7 +715,7 @@ help(){
         echo   "                -lfi  Check LFI Parameters"
         echo   "                -sqli Check SQLI Parameters"
         echo   "                -ssrf Check SSRF Parameters"   
-        echo   "       -T --takeover  Grep takeover"
+        echo   "       -T --takeover  Check Posible Takeover"
         echo   "       -v --verbose   Verbose status code"
         echo   "       -o             Outfile"
         exit 1
