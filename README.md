@@ -51,7 +51,7 @@
                         -rce  Check RCE Parameters
                         -lfi  Check LFI Parameters
                         -sqli Check SQLI Parameters   
-               -T --takeover  Grep takeover
+               -T --takeover  Check Posible Takeover
                -v --verbose   Verbose status code
                -o             Outfile
                
@@ -93,7 +93,7 @@
 
       XRCross -gf example.site "(-ssti|-idor|-rce|-lfi|-sqli)"
 
->  Grep takeover
+>  Check Posible Takeover
 
       XRCross -T/--takeover  example.site 
 
@@ -127,3 +127,4 @@
 * [CORS-Scanner](https://github.com/Tanmay-N/CORS-Scanner)
 * [Gf-Patterns](https://github.com/1ndianl33t/Gf-Patterns)
 * [httpx](https://github.com/projectdiscovery/httpx)
+* [SubOver](https://github.com/Ice3man543/SubOver)
