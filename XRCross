@@ -5,105 +5,115 @@
 # 
 ###############################################
 
-# Color
-red='\e[31m'
-green='\e[32m'
-blue='\e[34m'
-white='\e[97m'
+# Faforit Colors
+BK=$(tput setaf 0) # Black
+RD=$(tput setaf 1) # Red
+GR=$(tput setaf 2) # Green
+YW=$(tput setaf 3) # Yellow
+BG=$(tput setab 4) # Background Color
+PP=$(tput setaf 5) # purple
+CY=$(tput setaf 6) # Cyan
+WH=$(tput setaf 7) # White
+NT=$(tput sgr0) # Netral
+BD=$(tput bold) # Bold
+
 codename='Sniper'
 ver='1.2'
 follow='pikpikcu'
 site=$1
-
+IFS=$'\n'
+dat=$(date +"%m-%d-%y[%r]")
 
 all(){
-    logo
-    echo -e "\n${red}Start ${green}[Subdomain Enumerate...]${white}"
+    echo -e "\n${RD}Start ${GR}[Subdomain Enumerate...]${NT}"
     assetfinder --subs-only $site > $output/$site.txt
     cat $output/$site.txt | sort -u > $output/subs.txt
     rm -rf $output/$site.txt
-    echo -e "FOUND SUBDOMAINS [${green}$(cat $output/subs.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/subs.txt]"
-    echo -e "${red}Start ${green}[Check Host Live...]${white}"
+    echo -e "FOUND SUBDOMAINS [${GR}$(cat $output/subs.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/subs.txt]"
+    echo -e "${RD}Start ${GR}[Check Host Live...]${NT}"
     cat $output/subs.txt | sort -u | httprobe | tee -a  > $output/$site-host.txt
-    echo -e "Resluts Live:[${green}$(cat $output/$site-host.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/$site-host.txt]"
-    echo -e "${red}Start ${green}[Check Status Response...]${white}"
+    echo -e "Resluts Live:[${GR}$(cat $output/$site-host.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/$site-host.txt]"
+    echo -e "${RD}Start ${GR}[Check Status Response...]${NT}"
     cat $output/subs.txt | hakrawler -plain | hakcheckurl | grep -v 404 > $output/$site-dir.txt 
-    echo -e "Found Status Dir [${green}$(cat $output/$site-dir.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/$site-dir.txt]"
-    echo -e "${red}Start ${green}[Scraping wayback for data...]${white}"
+    echo -e "Found Status Dir [${GR}$(cat $output/$site-dir.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/$site-dir.txt]"
+    echo -e "${RD}Start ${GR}[Scraping wayback for data...]${NT}"
     cat $output/subs.txt | waybackurls | sort -u > $output/$site-list.txt
-    echo -e "Found Scraping [${green}$(cat $output/$site-list.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/$site-list.txt]"
-    echo -e "${red}Start ${green}[Scraping wayback for data js...]${white}"
+    echo -e "Found Scraping [${GR}$(cat $output/$site-list.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/$site-list.txt]"
+    echo -e "${RD}Start ${GR}[Scraping wayback for data js...]${NT}"
    # cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
     cat $output/$site-list.txt | sort -u | grep -P "\w+\.js(\?|$)" | sort -u > $output/jsurls.txt
-    echo -e "Found Scraping [${green}$(cat $output/jsurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/jsurls.txt]"
-    echo -e "${red}Start ${green}[Scraping wayback for data php...]${white}" 
+    echo -e "Found Scraping [${GR}$(cat $output/jsurls.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/jsurls.txt]"
+    echo -e "${RD}Start ${GR}[Scraping wayback for data php...]${NT}" 
     cat $output/$site-list.txt | sort -u | grep -P "\w+\.php(\?|$)" | sort -u > $output/phpurls.txt
-    echo -e "Found Scraping [${green}$(cat $output/phpurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/phpurls.txt]"
-    echo -e "${red}Start ${green}[Scraping wayback for data aspx...]${white}"
+    echo -e "Found Scraping [${GR}$(cat $output/phpurls.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/phpurls.txt]"
+    echo -e "${RD}Start ${GR}[Scraping wayback for data aspx...]${NT}"
     cat $output/$site-list.txt | sort -u | grep -P "\w+\.aspx(\?|$)" | sort -u > $output/spurls.txt
-    echo -e "Found Scraping [${green}$(cat $output/aspurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/aspurls.txt]"
-    echo -e "${red}Start ${green}[Check Open Redirection...]${white}"
+    echo -e "Found Scraping [${GR}$(cat $output/aspurls.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/aspurls.txt]"
+    echo -e "${RD}Start ${GR}[Check Open Redirection...]${NT}"
     cat $output/subs.txt | grep -e 'redirect\|redirect=\|url\|url=\|next=\|dest=\|destination\|return\|go\|redirect_uri\|continue=\|return_path=\|externalLink=\|URL' > $output/$site-redirect.txt          
-    echo -e "Found Check URL Redirection [${green}$(ls $output/$site-redirect.txt  | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/$site-redirect.txt ]"
-    echo -e "${red}Start ${green}[ Blind SSRF testing...]${white}"
+    echo -e "Found Check URL Redirection [${GR}$(ls $output/$site-redirect.txt  | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/$site-redirect.txt ]"
+    echo -e "${RD}Start ${GR}[ Blind SSRF testing...]${NT}"
     ssr=`cat callback.txt`
     cat $output/subs.txt | waybackurls > $output/$site-ssrf.txt
     cat $output/subs.txt | gau >> $output/$site-ssrf.txt
     cat $output/$site-ssrf.txt | sort | uniq | grep "?" | qsreplace -a | qsreplace $ssr > $output/$site-ssrf2.txt
     sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/ssrf/$site-ssrf2.txt
     ffuf -w $output/$site-ssrf2.txt -u FUZZ -t 50  > $output/ssrf/$site-ssrf3.txt
-    #echo -e "Found Check SSRF [${green}$(cat $output/ssrf/$site-ssrf3.txt | wc -l)${white}]"
-    echo -e "\n${red}Success Saved:${green}[$output/$site-ssrf3.txt]"
+    #echo -e "Found Check SSRF [${GR}$(cat $output/ssrf/$site-ssrf3.txt | wc -l)${NT}]"
+    echo -e "\n${RD}Success Saved:${GR}[$output/$site-ssrf3.txt]"
     echo
     
 }
 
 subdo(){
-    logo
-    echo -e "\n${red}Start ${green}[Subdomain Enumerate...]${white}"
-    while [ "$site" ];do
+       echo -e "\n${RD}Start ${GR}[Subdomain Enumerate...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} Subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Subfinder Not Install!\n"
             exit 1            
 
         else
-            assetfinder --subs-only $site > $output/subdo/$site.txt
-            subfinder -silent -d $site >> $output/subdo/$site.txt
-            cat $output/subdo/$site.txt | sort -u > $output/subdo/subs.txt
+            echo -e "${RD}[+] Start On target:${GR} $site"
+            assetfinder --subs-only $site > $output/subdo/$site.txt 
+            subfinder -silent -d $site >> $output/subdo/$site.txt 
+            cat $output/subdo/$site.txt | sort -u > $output/subdo/subs.txt 
             rm -rf $output/subdo/$site.txt
+            for run in $(cat $output/subdo/subs.txt);do
+                while [ $run ];do
+                echo -e "${RD}[${dat}]${GR}[+]subdomain-resluts:${NT} $run"
+                break
+                done
+            done
         fi
-    echo -e "FOUND SUBDOMAINS [${green}$(cat $output/subdo/subs.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/subdo/subs.txt]"
+    echo -e "\nFOUND SUBDOMAINS [${GR}$(cat $output/subdo/subs.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/subdo/subs.txt]"
     exit 1
-    done 2>/dev/null
 }
 hostlive(){
-    logo
-    echo -e "${red}Start ${green}[Check Host Live...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[Check Host Live...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/httprobe ];
             then
-            echo -e "${red}[+]${green} httprobe Not Install!\n"
+            echo -e "${RD}[+]${GR} httprobe Not Install!\n"
             exit 1 
 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -111,51 +121,61 @@ hostlive(){
             #cat $output/subs.txt | sort -u | httprobe -s -p https:443 | tr -d ":443" | tee -a  > $output/live/https.txt
             cat $output/subs.txt | sort -u | httprobe | tee -a  > $output/live/$site-host.txt
             rm -rf $output/$subs.txt 
+            for run in $(cat $output/live/$site-host.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done
         fi
-    echo -e "Resluts Live:[${green}$(cat $output/live/https.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/live/$site-host.txt]"
+    echo -e "\nResluts Live:[${GR}$(cat $output/live/$site-host.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/live/$site-host.txt]"
     exit 1
-    done 2>/dev/null
 }
 scraping(){
-    logo
-    echo -e "${red}Start ${green}[Scraping wayback for data...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[Scraping wayback for data...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
 
         else
-            assetfinder --subs-only $site > $output/$site.txt
-            cat $output/$site.txt | sort -u > $output/subs.txt
-            rm -rf $output/$site.txt
-            cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
-            rm -rf $output/$subs.txt 
+            echo -e "${RD}[+] Start On target:${GR} $site"
+            assetfinder --subs-only $site > $output/scraping/$site.txt
+            cat $output/scraping/$site.txt | sort -u > $output/scraping/subs.txt
+            rm -rf $output/scraping/$site.txt
+            cat $output/scraping/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
+            rm -rf $output/scraping/$subs.txt 
+            for run in $(cat $output/scraping/$site-list.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done
+                    
         fi
-    echo -e "Found Scraping [${green}$(cat $output/scraping/$site-list.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-list.txt]"
+    echo -e "\nFound Scraping [${GR}$(cat $output/scraping/$site-list.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/scraping/$site-list.txt]"
     exit 1
-    done 2>/dev/null
 }
 js(){
-    logo
-    echo -e "${red}Start ${green}[Scraping wayback for data js...]${white}"
+    echo -e "${RD}Start ${GR}[Scraping wayback for data js...]${NT}"
     while [ "$site" ];do
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -163,25 +183,32 @@ js(){
             rm -rf $output/$subs.txt
             cat $output/scraping/$site-list.txt | sort -u | grep -P "\w+\.js(\?|$)" | sort -u > $output/scraping/jsurls.txt
             rm -rf $output/scraping/$site-list.txt
+            for run in $(cat $output/scraping/jsurls.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done
+
         fi
-    echo -e "Found Scraping [${green}$(cat $output/scraping/jsurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-jsurls.txt]"
+    echo -e "\nound Scraping [${GR}$(cat $output/scraping/jsurls.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/scraping/$site-jsurls.txt]"
     exit 1
     done 2>/dev/null
 }
 php(){
-    logo
-    echo -e "${red}Start ${green}[Scraping wayback for data php...]${white}"
+    echo -e "${RD}Start ${GR}[Scraping wayback for data php...]${NT}"
     while [ "$site" ];do
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         else   
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -189,26 +216,32 @@ php(){
             rm -rf $output/$subs.txt
             cat $output/scraping/$site-list.txt | sort -u | grep -P "\w+\.php(\?|$)" | sort -u > $output/scraping/phpurls.txt
             rm -rf $output/scraping/$site-list.txt
+            for run in $(cat $output/scraping/phpurls.txt);do
+                while [ $run ];do
+                     echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                     break
+                done
+            done
         fi
-    echo -e "Found Scraping [${green}$(cat $output/scraping/phpurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-phpurls.txt]"
+    echo -e "\nFound Scraping [${GR}$(cat $output/scraping/phpurls.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/scraping/$site-phpurls.txt]"
     exit 1
     done 2>/dev/null
 }
 
 asp(){
-    logo
-    echo -e "${red}Start ${green}[Scraping wayback for data aspx...]${white}"
+    echo -e "${RD}Start ${GR}[Scraping wayback for data aspx...]${NT}"
     while [ "$site" ];do
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt
@@ -216,325 +249,376 @@ asp(){
             rm -rf $output/$subs.txt
             cat $output/scraping/$site-list.txt | sort -u | grep -P "\w+\.aspx(\?|$)" | sort -u > $output/scraping/aspurls.txt
             rm -rf $output/scraping/$site-list.txt
+            for run in $(cat $output/scraping/aspurls.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done
         fi
-    echo -e "Found Scraping [${green}$(cat $output/scraping/aspurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-aspurls.txt]"
+    echo -e "\nFound Scraping [${GR}$(cat $output/scraping/aspurls.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/scraping/$site-aspurls.txt]"
     exit 1
     done
 }
 html(){
-    logo
-    echo -e "${red}Start ${green}[Scraping wayback for data HTML...]${white}"
+    echo -e "${RD}Start ${GR}[Scraping wayback for data HTML...]${NT}"
     while [ "$site" ];do
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
             rm -rf $output/$site.txt | cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
             rm -rf $output/$subs.txt | cat $output/scraping/$site-list.txt | sort -u | grep -P "\w+\.html(\?|$)" | sort -u > $output/scraping/htmlurls.txt
             rm -rf $output/scraping/$site-list.txt
+            for run in $(cat $output/scraping/htmlurls.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done
         fi
-    echo -e "Found Scraping [${green}$(cat $output/scraping/htmlurls.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/scraping/$site-htmlurls.txt]"
+    echo -e "\nFound Scraping [${GR}$(cat $output/scraping/htmlurls.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/scraping/$site-htmlurls.txt]"
     exit 1
     done
 }
 dir(){
-    logo
-    echo -e "${red}Start ${green}[Check Status Response...]${white}"
+    echo -e "${RD}Start ${GR}[Check Status Response...]${NT}"
     while [ "$site" ];do
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} Assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/hakrawler ];
             then
-            echo -e "${red}[+]${green} hakrawler Not Install!\n"
+            echo -e "${RD}[+]${GR} hakrawler Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/hakcheckurl ];
             then
-            echo -e "${red}[+]${green} hakcheckurl Not Install!\n"
+            echo -e "${RD}[+]${GR} hakcheckurl Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt 
             rm -rf $output/$site.txt | cat $output/subs.txt | hakrawler -plain | hakcheckurl | grep -v 404 > $output/dir/$site-dir.txt 
-            rm -rf $output/$subs.txt  
+            rm -rf $output/$subs.txt 
+            for run in $(cat $output/dir/$site-dir.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi  
-    echo -e "Found Status Dir [${green}$(cat $output/dir/$site-dir.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/dir/$site-dir.txt]"
+    echo -e "\nFound Status Dir [${GR}$(cat $output/dir/$site-dir.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/dir/$site-dir.txt]"
     exit 1
     done
 }
 
 redirec(){
-    logo
-    echo -e "${red}Start ${green}[Check Open Redirection...]${white}"
+    echo -e "${RD}Start ${GR}[Check Open Redirection...]${NT}"
     while [ "$site" ];do
         if [ ! -f ~/go/bin/gau ];
             then
-            echo -e "${red}[+]${green} Gau Not Install!\n"
+            echo -e "${RD}[+]${GR} Gau Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
             exit 1
         
         else
-            echo "$site" | assetfinder | gau --subs | sort -u >  $output/redirec/$site.txt
+            echo -e "${RD}[+] Start On target:${GR} $site"
+            assetfinder $site | gau --subs | sort -u >  $output/redirec/$site.txt
             cat $output/redirec/$site.txt | grep -e 'redirect\|redirect=\|url\|url=\|next=\|dest=\|destination\|return\|go\|redirect_uri\|continue=\|return_path=\|externalLink=\|URL' > $output/redirec/$site-redirect.txt
+            for run in $(cat $output/redirec/$site-redirect.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check URL Redirection [${green}$(ls $output/redirec/$site-redirec.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/redirec/]"
+    echo -e "\nFound Check URL Redirection [${GR}$(cat $output/redirec/$site-redirec.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/redirec/]"
     exit 1
     done
 }
 ssrf(){
-    logo
-    echo -e "${red}Start ${green}[ Blind SSRF testing...]${white}"
+    echo -e "${RD}Start ${GR}[ Blind SSRF testing...]${NT}"
     ssr=`cat callback.txt`
     while [ "$site" ];do
         if [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} Waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} Waybackurls Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/gau ];
             then
-            echo -e "${red}[+]${green} gau Not Install!\n"
+            echo -e "${RD}[+]${GR} gau Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/qsreplace ];
             then
-            echo -e "${red}[+]${green} qsreplace Not Install!\n"
+            echo -e "${RD}[+]${GR} qsreplace Not Install!\n"
             exit 1 
         else
+           echo -e "${RD}[+] Start On target:${GR} $site"
            waybackurls $site | sort -u > $output/ssrf/$site-ssrf.txt
            gau $site >> $output/ssrf/$site-ssrf.txt
            cat $output/ssrf/$site-ssrf.txt | sort | uniq | grep "?" | qsreplace -a | qsreplace $ssr > $output/ssrf/$site-ssrf2.txt
            sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/ssrf/$site-ssrf2.txt
-           ffuf -w $output/ssrf/$site-ssrf2.txt -u FUZZ -t 50  > $output/ssrf/$site-ssrf3.txt
+           echo -e "${RD}[+] Start On FFUF:${NT}"
+           ffuf -w $output/ssrf/$site-ssrf2.txt -u FUZZ -t 50 -of md > $output/ssrf/$site-ssrf3.md
+           for run in $(cat $output/ssrf/$site-ssrf3.md);do
+                while [ $run ];do
+                    echo -e "$run\n"
+                    break
+                done
+            done 
         fi
-    #echo -e "Found Check SSRF [${green}$(cat $output/ssrf/$site-ssrf3.txt | wc -l)${white}]"
-    echo -e "\n${red}Success Saved:${green}[$output/ssrf/$site-ssrf3.txt]"
+    #echo -e "Found Check SSRF [${GR}$(cat $output/ssrf/$site-ssrf3.txt | wc -l)${NT}]"
+    echo -e "\n${RD}Success Saved:${GR}[$output/ssrf/$site-ssrf3.txt]\n"
     exit 1
     done
 }
 xss(){
-    logo
-    echo -e "${red}Start ${green}[ XSS testing...]${white}"
+    echo -e "${RD}Start ${GR}[ XSS testing...]${NT}"
     xsss=`cat xss.ht`
     linee=".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)"
     while [ "$site" ];do
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/hakrawler ];
             then
-            echo -e "${red}[+]${green} hakrawler Not Install!\n"
+            echo -e "${RD}[+]${GR} hakrawler Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/dalfox ];
             then
-            echo -e "${red}[+]${green} dalfox Not Install!\n"
+            echo -e "${RD}[+]${GR} dalfox Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/qsreplace ];
             then
-            echo -e "${red}[+]${green} qsreplace Not Install!\n"
+            echo -e "${RD}[+]${GR} qsreplace Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder  $site  sort -u > $output/xss/$site.txt
             cat $output/xss/$site.txt | hakrawler -plain -usewayback -wayback | grep "=" | egrep -iv "$linee" | \
             qsreplace -a | dalfox pipe -b $xsss -o $output/xss/$site-xss.txt 
         fi
-    echo -e "${red}Success Saved:${green}[$output/xss/$site-xss.txt]"
+    echo -e "${RD}Success Saved:${GR}[$output/xss/$site-xss.txt]"
     exit 1
     done
 } 
 cors(){
-    logo
-    echo -e "${red}Start ${green}[ Cors Scanner...]${white}"
+    echo -e "${RD}Start ${GR}[ Cors Scanner...]${NT}"
     while [ "$site" ];do
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} subfinder Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/httprobe ];
             then
-            echo -e "${red}[+]${green} httprobe Not Install!\n"
+            echo -e "${RD}[+]${GR} httprobe Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/CORS-Scanner ];
             then
-            echo -e "${red}[+]${green} CORS-Scanner Not Install!\n"
+            echo -e "${RD}[+]${GR} CORS-Scanner Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder  $site > $output/cors/$site.txt
             subfinder -silent -d $site >> $output/cors/$site.txt
             cat $output/cors/$site.txt | sort -u > $output/cors/$site-1.txt
             cat $output/cors/$site-1.txt | httprobe > $output/cors/cors.txt
             cat $output/cors/cors.txt | CORS-Scanner | tee $output/cors/$site-cors.txt
             rm -rf $output/cors/$site.txt | rm -rf $output/cors/cors.txt
+            for run in $(cat $output/cors/cors.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "${red}Success Saved:${green}[$output/cors/$site-cors.txt]"
+    echo -e "${RD}Success Saved:${GR}[$output/cors/$site-cors.txt]"
     exit 1
     done
 }
 ssti(){
-    logo
-    echo -e "${red}Start ${green}[ Check SSTI Parameters...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Check SSTI Parameters...]${NT}"
          if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} subfinder Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/gf ];
             then
-            echo -e "${red}[+]${green} gf Not Install!\n"
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder  $site > $output/ssti/$site.txt
             subfinder -silent -d $site >> $output/ssti/$site.txt
             cat $output/ssti/$site.txt | sort -u > $output/ssti/$site-1.txt
             cat $output/ssti/$site-1.txt | waybackurls | sort -u > $output/ssti/ssti.txt
             cat $output/ssti/ssti.txt | gf ssti | tee -a > $output/ssti/$site-ssti.txt
             rm -rf $output/ssti/$site.txt | rm -rf $output/ssti/ssti.txt
+            for run in $(cat $output/ssti/$site-ssti.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check SSTI Parameters [${green}$(cat $output/ssti/$site-ssti.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/ssti/$site-ssti.txt]"
-    exit 1
-    done
+    echo -e "Found Check SSTI Parameters [${GR}$(cat $output/ssti/$site-ssti.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/ssti/$site-ssti.txt]"
 }
 check_r(){
-    logo
-    echo -e "${red}Start ${green}[ Check redirec Parameters...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Check redirec Parameters...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} subfinder Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/gf ];
             then
-            echo -e "${red}[+]${green} gf Not Install!\n"
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder  $site > $output/redirec/$site.txt
             subfinder -silent -d $site >> $output/redirec/$site.txt
             cat $output/idor/$site.txt | sort -u $output/idor/$site-1.txt
             cat $output/redirec/$site-1.txt | waybackurls | sort -u > $output/redirec/redirec.txt
             cat $output/redirec/redirec.txt | gf redirect | tee -a > $output/redirec/$site-redirec.txt
             rm -rf $output/redirec/$site.txt | rm -rf $output/redirec/redirec.txt
+            for run in $(cat $output/redirec/redirec.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check redirec Parameters [${green}$(cat $output/redirec/$site-redirec.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/redirec/$site-redirec.txt]"
-    exit 1
-    done
+    echo -e "Found Check redirec Parameters [${GR}$(cat $output/redirec/$site-redirec.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/redirec/$site-redirec.txt]"
 }
 idor(){
-    logo
-    echo -e "${red}Start ${green}[ Check IDOR Parameters...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Check IDOR Parameters...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} subfinder Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/gf ];
             then
-            echo -e "${red}[+]${green} gf Not Install!\n"
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder  $site > $output/idor/$site.txt
             subfinder -silent -d $site >> $output/idor/$site.txt
             cat $output/idor/$site.txt | sort -u > $output/idor/$site-1.txt
             cat $output/idor/$site-1.txt | waybackurls | sort -u > $output/idor/idor.txt
             cat $output/idor/idor.txt | gf idor | tee -a > $output/idor/$site-idor.txt
             rm -rf $output/idor/$site.txt | rm -rf $output/idor/idor.txt
+            for run in $(cat $output/idor/$site-idor.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check IDOR Parameters [${green}$(cat $output/idor/$site-idor.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/idor/$site-idor.txt]"
-    exit 1
-    done
+    echo -e "Found Check IDOR Parameters [${GR}$(cat $output/idor/$site-idor.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/idor/$site-idor.txt]"
 }
 rce(){
-    logo
-    echo -e "${red}Start ${green}[ Check RCE Parameters...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Check RCE Parameters...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} subfinder Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/gf ];
             then
-            echo -e "${red}[+]${green} gf Not Install!\n"
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder  $site > $output/rce/$site.txt
             subfinder -silent -d $site >> $output/rce/$site.txt
             cat $output/rce/$site.txt | sort -u > $output/rce/$site-1.txt
             cat $output/rce/$site-1.txt | waybackurls | sort -u > $output/rce/rce.txt
             cat $output/rce/rce.txt | gf rce | tee -a > $output/idor/$site-rce.txt
             rm -rf $output/rce/$site.txt | rm -rf $output/rce/rce.txt
+            for run in $(cat $output/idor/$site-rce.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check RCE Parameters [${green}$(cat $output/rce/$site-rce.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/rce/$site-rce.txt]"
-    exit 1
-    done
+    echo -e "\nFound Check RCE Parameters [${GR}$(cat $output/rce/$site-rce.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/rce/$site-rce.txt]"
 }
 lfi(){
-    logo
-    echo -e "${red}Start ${green}[ Check LFI Parameters...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Check LFI Parameters...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} subfinder Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/gf ];
             then
-            echo -e "${red}[+]${green} gf Not Install!\n"
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
             assetfinder  $site > $output/lfi/$site.txt
@@ -543,31 +627,33 @@ lfi(){
             cat $output/lfi/$site-1.txt | waybackurls | sort -u > $output/lfi/lfi.txt
             cat $output/lfi/lfi.txt | gf lfi | tee -a > $output/lfi/$site-lfi.txt
             rm -rf $output/lfi/$site.txt | rm -rf $output/lfi/lfi.txt | rm -rf $output/lfi/$site.txt
+            for run in $(cat $output/lfi/$site.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check LFI Parameters [${green}$(cat $output/lfi/$site-lfi.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/lfi/$site-lfi.txt]"
-    exit 1
-    done
+    echo -e "\nFound Check LFI Parameters [${GR}$(cat $output/lfi/$site-lfi.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/lfi/$site-lfi.txt]"
 }
 sqli(){
-    logo
-    echo -e "${red}Start ${green}[ Check SQLI Parameters...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Check SQLI Parameters...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} subfinder Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/gf ];
             then
-            echo -e "${red}[+]${green} gf Not Install!\n"
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
             assetfinder  $site > $output/sqli/$site.txt
@@ -576,104 +662,115 @@ sqli(){
             cat $output/sqli/$site-1.txt | waybackurls | sort -u > $output/sqli/sqli.txt
             cat $output/sqli/sqli.txt | gf sqli | tee -a > $output/lfi/$site-sqli.txt
             rm -rf $output/sqli/$site.txt | rm -rf $output/sqli/sqli.txt
+            for run in $(cat $output/lfi/$site-sqli.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check SQLI Parameters [${green}$(cat $output/sqli/$site-sqli.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/sqli/$site-sqli.txt]"
-    exit 1
-    done
+    echo -e "Found Check SQLI Parameters [${GR}$(cat $output/sqli/$site-sqli.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/sqli/$site-sqli.txt]"
 }
 take(){
-    logo
-    echo -e "${red}Start ${green}[ Check Takeover...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Check Takeover...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/subfinder ];
             then
-            echo -e "${red}[+]${green} subfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} subfinder Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/gf ];
             then
-            echo -e "${red}[+]${green} gf Not Install!\n"
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
             assetfinder $site > $output/takeover/$site.txt
             subfinder -silent -d $site >> $output/takeover/$site.txt 
             cat $output/takeover/$site.txt | sort -u > $output/takeover/$site-1.txt
-            SubOver -l $output/takeover/$site-1.txt -v -a -https | tee -a > $output/takeover/$site-takeover.txt
+            SubOver -l $output/takeover/$site-1.txt -v -a -https > $output/takeover/$site-takeover.txt
            # cat $output/takeover/$site-1.txt | waybackurls | sort -u > $output/takeover/takeover.txt
            # cat $output/takeover/takeover.txt | gf takeovers | tee -a > $output/takeover/$site-takeover.txt
            # rm -rf $output/takeover/$site.txt | rm -rf $output/takeover/takeover.txt
+            for run in $(cat $output/takeover/$site-takeover.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check Takeover  [${green}$(cat $output/takeover/$site-takeover.txt | wc -l)${white}]"
-    echo -e "\n${red}Success Saved:${green}[$output/takeover/$site-takeover.txt]"
+    echo -e "\nFound Check Takeover  [${GR}$(cat $output/takeover/$site-takeover.txt | wc -l)${NT}]"
+    echo -e "\n${RD}Success Saved:${GR}[$output/takeover/$site-takeover.txt]"
     exit 1
-    done
 }
 ssrf2(){
-    logo
-    echo -e "${red}Start ${green}[ Check ssrf...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Check ssrf...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/gf ];
             then
-            echo -e "${red}[+]${green} gf Not Install!\n"
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
             echo -en "$site" | assetfinder | waybackurls | sort -u > $output/ssrf/ssrf.txt
             cat $output/ssrf/ssrf.txt | gf ssrf | tee -a > $output/ssrf/$site-ssrf.txt
             rm -rf $output/ssrf/$site.txt | rm -rf $output/ssrf/ssrf.txt
+            for run in $(cat $output/ssrf/$site-ssrf.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check ssrf  [${green}$(cat $output/ssrf/$site-ssrf.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/ssrf/$site-ssrf.txt]"
-    exit 1
-    done
+    echo -e "Found Check ssrf  [${GR}$(cat $output/ssrf/$site-ssrf.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/ssrf/$site-ssrf.txt]"
 }
 verbose(){
-    logo
-    echo -e "${red}Start ${green}[ Verbose...]${white}"
-    while [ "$site" ];do
+    echo -e "${RD}Start ${GR}[ Verbose...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
             then
-            echo -e "${red}[+]${green} assetfinder Not Install!\n"
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
             exit 1
         elif [ ! -f ~/go/bin/waybackurls ];
             then
-            echo -e "${red}[+]${green} waybackurls Not Install!\n"
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
             exit 1 
         elif [ ! -f ~/go/bin/httpx ];
             then
-            echo -e "${red}[+]${green} Httpx Not Install!\n"
+            echo -e "${RD}[+]${GR} Httpx Not Install!\n"
             exit 1
         elif [ ! -f /usr/bin/jq ];
             then
-            echo -e "${red}[+]${green} jq Not Install!\n"
+            echo -e "${RD}[+]${GR} jq Not Install!\n"
             exit 1 
         else
             echo -en "$site" | assetfinder | waybackurls | sort -u > $output/verbose/out.txt
             cat $output/verbose/out.txt | httpx -silent -content-length -status-code -verbose -title -vhost -json | jq > $output/verbose/$site-out.json
             rm -rf $output/verbose/out.txt 
+            for run in $(cat $output/verbose/$site-out.json);do
+                while [ $run ];do
+                    echo -e "$run"
+                    break
+                done
+            done 
         fi
-    echo -e "Found Check verbose  [${green}$(cat $output/ssrf/$site-ssrf.txt | wc -l)${white}]"
-    echo -e "${red}Success Saved:${green}[$output/ssrf/$site-ssrf.txt]"
-    exit 1
-    done
+    #echo -e "\nFound Check verbose  [${GR}$(cat $output/verbose/$site-out.json | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/verbose/$site-out.json]"
 }
 logo(){
- echo -e "${red}
+ echo -e "${RD}
 
 oo_____oo_ooooooo______oooo_________________________________
 _oo___oo__oo____oo___oo____oo_oo_ooo___ooooo___oooo___oooo__
@@ -681,15 +778,15 @@ __oo_oo___oo____oo__oo________ooo___o_oo___oo_oo___o_oo___o_
 ___ooo____ooooooo___oo________oo______oo___oo___oo_____oo___
 __oo_oo___oo____oo___oo____oo_oo______oo___oo_o___oo_o___oo_
 _oo___oo__oo_____oo____oooo___oo_______ooooo___oooo___oooo__
-____________________________________________________________ ${blue}
-                            Codename:${green}$codename ${red}
-                            Version:${green}$ver ${white}
+____________________________________________________________ ${CY}
+                            Codename:${GR}$codename ${RD}
+                            Version:${GR}$ver ${NT}
             github:$follow
 "
 }
 help(){
         logo
-        echo -e ${green}
+        echo -e ${GR}
         echo "Example: $0 -u/--url example.site"
         echo "         $0 <arguments> example.site <arguments> "
         echo
@@ -730,10 +827,12 @@ while [ "$site" ]; do
                 then
                 output="$4/$site"
                 mkdir -p "$output"/"verbose"
+                logo
                 verbose $site
             else
                 output="$site"
                 mkdir -p "$output"/"verbose"
+                logo
                 verbose $site
             fi
             ;;
@@ -742,10 +841,12 @@ while [ "$site" ]; do
                 then
                 output="$4/$site"
                 mkdir -p "$output"/"takeover"
+                logo
                 take $site
             else
                 output="$site"
                 mkdir -p "$output"/"takeover"
+                logo
                 take $site
             fi
             ;;
@@ -754,34 +855,63 @@ while [ "$site" ]; do
                 then
                 output="$site"
                 mkdir -p "$output"/"ssti"
+                logo
                 ssti $site
             elif [[ $3 == "-idor" ]];
                 then
                 output="$site"
                 mkdir -p "$output"/"idor"
+                logo
                 idor $site
             elif [[ $3 == "-rce" ]];
                 then
                 output="$site"
                 mkdir -p "$output"/"rce"
+                logo
                 rce $site
             elif [[ $3 == "-lfi" ]];
                 then
                 output="$site"
                 mkdir -p "$output"/"lfi"
+                logo
                 lfi $site
             elif [[ $3 == "-sqli" ]];
                 then
                 output="$site"
                 mkdir -p "$output"/"sqli"
+                logo
                 sqli $site
             elif [[ $3 == "-ssrf" ]];
                 then
                 output="$site"
                 mkdir -p "$output"/"ssrf"
+                logo
                 ssrf2 $site
             else
                 logo
+                output="$site"
+                mkdir -p "$output"/"ssti"
+                ssti $site
+
+                output="$site"
+                mkdir -p "$output"/"idor"
+                idor $site
+
+                output="$site"
+                mkdir -p "$output"/"rce"
+                rce $site
+
+                output="$site"
+                mkdir -p "$output"/"lfi"
+                lfi $site
+
+                output="$site"
+                mkdir -p "$output"/"sqli"
+                sqli $site
+
+                output="$site"
+                mkdir -p "$output"/"ssrf"
+                ssrf2 $site
                 exit 1
             fi
             ;;
@@ -791,11 +921,13 @@ while [ "$site" ]; do
                 then
                 output="$4/$site"
                 mkdir -p "$output"/"cors"
+                logo
                 cors $site
 
             else
                 output="$site"
                 mkdir -p "$output"/"cors"
+                logo
                 cors $site
 
             fi
@@ -805,11 +937,13 @@ while [ "$site" ]; do
                 then
                 output="$4/$site"
                 mkdir -p "$output"/"xss"
+                logo
                 xss $site
 
             else
                 output="$site"
                 mkdir -p "$output"/"xss"
+                logo
                 xss $site
 
             fi
@@ -819,10 +953,12 @@ while [ "$site" ]; do
                 then
                 output="$4/$site"
                 mkdir -p "$output"
+                logo
                 all $site
             else
                 output="$site"
                 mkdir -p "$output"
+                logo
                 all $site
             fi
             ;;
@@ -832,10 +968,12 @@ while [ "$site" ]; do
                 then
                 output="$4/$site"
                 mkdir -p "$output"/"ssrf"
+                logo
                 ssrf $site
             else
                 output="$site"
                 mkdir -p "$output"/"ssrf"
+                logo
                 ssrf $site
             fi
             ;;
@@ -844,16 +982,19 @@ while [ "$site" ]; do
                 then
                 output="$4/$site"
                 mkdir -p "$output"/"redirec"
+                logo
                 redirec $site
             elif [[ $3 == "-redirec" ]]; 
                 then
                 output="$site"
                 mkdir -p "$output"/"redirec"
+                logo
                 check_r $site
 
             else
                 output="$site"
                 mkdir -p "$output"/"redirec"
+                logo
                 redirec $site
             fi
             ;;
@@ -862,12 +1003,13 @@ while [ "$site" ]; do
             then
                 output="$4/$site"
                 mkdir -p "$output"/"subdo"
+                logo
                 subdo $site
             else
                 output="$site"
                 mkdir -p "$output"/"subdo"
+                logo
                 subdo $site
-                continue
             fi
             
             ;;
@@ -881,12 +1023,13 @@ while [ "$site" ]; do
                     then
                         output="$4/$site"
                         mkdir -p "$output"/"dir"
+                        logo
                         dir $site
                     else
                         output="$site"
                         mkdir -p "$output"/"dir"
+                        logo
                         dir $site
-                        continue
                     fi
             ;;
         "-H" | "--host") 
@@ -895,12 +1038,13 @@ while [ "$site" ]; do
                     then
                         output="$4/$site"
                         mkdir -p "$output"/"live"
+                        logo
                         hostlive $site
                     else
                         output="$site"
                         mkdir -p "$output"/"live"
+                        logo
                         hostlive $site
-                        continue
                     fi
             ;;
         "-sw" | "--scrw") 
@@ -909,34 +1053,37 @@ while [ "$site" ]; do
                     then
                         output="$4/$site"
                         mkdir -p "$output"/"scraping"
+                        logo
                         scraping $site
                     elif [[ $3 == "-js" ]]
                     then
                         output="$site"
                         mkdir -p "$output/scraping"
+                        logo
                         js $site
-                        continue
+                        
                     elif [[ $3 == "-php" ]]
                     then
                         output="$site"
                         mkdir -p "$output"/"scraping"
+                        logo
                         php $site
-                        continue
                     elif [[ $3 == "-asp" ]]
                     then
                         output="$site"
                         mkdir -p "$output"/"scraping"
+                        logo
                         asp $site
-                        continue
                     elif [[ $3 == "-html" ]]
                     then
                         output="$site"
                         mkdir -p "$output"/"scraping"
+                        logo
                         html $site
-                        continue
                     else
-                        output="$4/$site"
+                        output="$site"
                         mkdir -p "$output"/"scraping"
+                        logo
                         scraping $site
                     fi
             shift 
