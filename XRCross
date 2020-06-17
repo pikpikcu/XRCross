@@ -621,6 +621,7 @@ lfi(){
             echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder  $site > $output/lfi/$site.txt
             subfinder -silent -d $site >> $output/lfi/$site.txt
             cat $output/lfi/$site.txt | sort -u > $output/lfi/$site-1.txt
@@ -656,6 +657,7 @@ sqli(){
             echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder  $site > $output/sqli/$site.txt
             subfinder -silent -d $site >> $output/sqli/$site.txt
             cat $output/sqli/$site.txt | sort -u $output/sqli/$site-1.txt
@@ -691,6 +693,7 @@ take(){
             echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             assetfinder $site > $output/takeover/$site.txt
             subfinder -silent -d $site >> $output/takeover/$site.txt 
             cat $output/takeover/$site.txt | sort -u > $output/takeover/$site-1.txt
@@ -724,6 +727,7 @@ ssrf2(){
             echo -e "${RD}[+]${GR} gf Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             echo -en "$site" | assetfinder | waybackurls | sort -u > $output/ssrf/ssrf.txt
             cat $output/ssrf/ssrf.txt | gf ssrf | tee -a > $output/ssrf/$site-ssrf.txt
             rm -rf $output/ssrf/$site.txt | rm -rf $output/ssrf/ssrf.txt
@@ -756,6 +760,7 @@ verbose(){
             echo -e "${RD}[+]${GR} jq Not Install!\n"
             exit 1 
         else
+            echo -e "${RD}[+] Start On target:${GR} $site"
             echo -en "$site" | assetfinder | waybackurls | sort -u > $output/verbose/out.txt
             cat $output/verbose/out.txt | httpx -silent -content-length -status-code -verbose -title -vhost -json | jq > $output/verbose/$site-out.json
             rm -rf $output/verbose/out.txt 
