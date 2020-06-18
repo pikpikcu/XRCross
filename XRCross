@@ -18,7 +18,7 @@ NT=$(tput sgr0) # Netral
 BD=$(tput bold) # Bold
 
 codename='Sniper'
-ver='1.2'
+ver='1.4'
 follow='pikpikcu'
 site=$1
 IFS=$'\n'
@@ -261,6 +261,37 @@ asp(){
     exit 1
     done
 }
+#jvar(){
+#    echo -e "${RD}Start ${GR}[Scraping wayback for data js...]${NT}"
+#        if [ ! -f ~/go/bin/assetfinder ];
+#            then
+#            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
+#            exit 1
+#        elif [ ! -f ~/go/bin/waybackurls ];
+#            then
+#            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
+#            exit 1 
+#        elif [ ! -f ~/go/bin/gf ];
+#            then
+#            echo -e "${RD}[+]${GR} gf Not Install!\n"
+#            exit 1 
+#        else
+#            echo -e "${RD}[+] Start On target:${GR} $site"
+#            echo -en "$site" | assetfinder | waybackurls | sort -u > $output/scraping/jvar.txt
+#            cat $output/scraping/jvar.txt | gf jsvar | tee -a > $output/scraping/$site-jsvar.txt
+#            rm -rf $output/scraping/jvar.txt 
+#            for run in $(cat $output/scraping/$site-jsvar.txt);do
+#                while [ $run ];do
+#                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+#                    break
+#                done
+#            done 
+#        fi
+#    echo -e "Found Check ssrf  [${GR}$(cat $output/scraping/$site-jsvar.txt | wc -l)${NT}]"
+#    echo -e "${RD}Success Saved:${GR}[$output/scraping/$site-jsvar.txt]"
+#    exit 1
+#}
+
 html(){
     echo -e "${RD}Start ${GR}[Scraping wayback for data HTML...]${NT}"
     while [ "$site" ];do
@@ -493,6 +524,7 @@ ssti(){
         fi
     echo -e "Found Check SSTI Parameters [${GR}$(cat $output/ssti/$site-ssti.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/ssti/$site-ssti.txt]"
+    exit 1
 }
 check_r(){
     echo -e "${RD}Start ${GR}[ Check redirec Parameters...]${NT}"
@@ -529,6 +561,7 @@ check_r(){
         fi
     echo -e "Found Check redirec Parameters [${GR}$(cat $output/redirec/$site-redirec.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/redirec/$site-redirec.txt]"
+    exit 1
 }
 idor(){
     echo -e "${RD}Start ${GR}[ Check IDOR Parameters...]${NT}"
@@ -565,6 +598,7 @@ idor(){
         fi
     echo -e "Found Check IDOR Parameters [${GR}$(cat $output/idor/$site-idor.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/idor/$site-idor.txt]"
+    exit 1
 }
 rce(){
     echo -e "${RD}Start ${GR}[ Check RCE Parameters...]${NT}"
@@ -601,6 +635,7 @@ rce(){
         fi
     echo -e "\nFound Check RCE Parameters [${GR}$(cat $output/rce/$site-rce.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/rce/$site-rce.txt]"
+    exit 1
 }
 lfi(){
     echo -e "${RD}Start ${GR}[ Check LFI Parameters...]${NT}"
@@ -628,7 +663,7 @@ lfi(){
             cat $output/lfi/$site-1.txt | waybackurls | sort -u > $output/lfi/lfi.txt
             cat $output/lfi/lfi.txt | gf lfi | tee -a > $output/lfi/$site-lfi.txt
             rm -rf $output/lfi/$site.txt | rm -rf $output/lfi/lfi.txt | rm -rf $output/lfi/$site.txt
-            for run in $(cat $output/lfi/$site.txt);do
+            for run in $(cat $output/lfi/$site-lfi.txt);do
                 while [ $run ];do
                     echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
                     break
@@ -637,6 +672,7 @@ lfi(){
         fi
     echo -e "\nFound Check LFI Parameters [${GR}$(cat $output/lfi/$site-lfi.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/lfi/$site-lfi.txt]"
+    exit 1
 }
 sqli(){
     echo -e "${RD}Start ${GR}[ Check SQLI Parameters...]${NT}"
@@ -673,6 +709,7 @@ sqli(){
         fi
     echo -e "Found Check SQLI Parameters [${GR}$(cat $output/sqli/$site-sqli.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/sqli/$site-sqli.txt]"
+    exit 1
 }
 take(){
     echo -e "${RD}Start ${GR}[ Check Takeover...]${NT}"
@@ -712,6 +749,36 @@ take(){
     echo -e "\n${RD}Success Saved:${GR}[$output/takeover/$site-takeover.txt]"
     exit 1
 }
+api(){
+    echo -e "${RD}Start ${GR}[ Check api keys...]${NT}"
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
+            exit 1 
+        else
+            echo -e "${RD}[+] Start On target:${GR} $site"
+            echo -en "$site" | assetfinder | waybackurls | sort -u > $output/api/api.txt
+            cat $output/api/api.txt | gf api-keys | tee -a > $output/api/$site-api.txt
+            rm -rf $output/api/api.txt
+            for run in $(cat $output/api/$site-api.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
+        fi
+    echo -e "Found Check api keys [${GR}$(cat $output/api/$site-api.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/api/$site-api.txt]"
+    exit 1
+}
 ssrf2(){
     echo -e "${RD}Start ${GR}[ Check ssrf...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
@@ -730,7 +797,7 @@ ssrf2(){
             echo -e "${RD}[+] Start On target:${GR} $site"
             echo -en "$site" | assetfinder | waybackurls | sort -u > $output/ssrf/ssrf.txt
             cat $output/ssrf/ssrf.txt | gf ssrf | tee -a > $output/ssrf/$site-ssrf.txt
-            rm -rf $output/ssrf/$site.txt | rm -rf $output/ssrf/ssrf.txt
+            rm -rf $output/ssrf/ssrf.txt
             for run in $(cat $output/ssrf/$site-ssrf.txt);do
                 while [ $run ];do
                     echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
@@ -740,6 +807,67 @@ ssrf2(){
         fi
     echo -e "Found Check ssrf  [${GR}$(cat $output/ssrf/$site-ssrf.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/ssrf/$site-ssrf.txt]"
+    exit 1
+}
+ssrf2(){
+    echo -e "${RD}Start ${GR}[ Interestingparams...]${NT}"
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
+            exit 1 
+        else
+            echo -e "${RD}[+] Start On target:${GR} $site"
+            echo -en "$site" | assetfinder | waybackurls | sort -u > $output/int/int.txt
+            cat $output/int/int.txt | gf interestingparams | tee -a > $output/int/$site-int.txt
+            rm -rf $output/int/int.txt
+            for run in $(cat $output/int/$site-int.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
+        fi
+    echo -e "Found [${GR}$(cat $output/int/$site-int.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/int/$site-int.txt]"
+    exit 1
+}
+dt(){
+    echo -e "${RD}Start ${GR}[ Check directory traversal...]${NT}"
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/gf ];
+            then
+            echo -e "${RD}[+]${GR} gf Not Install!\n"
+            exit 1 
+        else
+            echo -e "${RD}[+] Start On target:${GR} $site"
+            echo "$site" | assetfinder | waybackurls | sort -u > $output/dt/dt.txt
+            #cat $output/dt/dt.txt | gf lfi | tee -a > $output/dt/$site-dt.txt
+            cat $output/dt/dt.txt | gf dir-traversal | tee -a > $output/dt/$site-dt1.txt
+            for run in $(cat $output/dt/$site-dt1.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
+        fi
+    echo -e "Found Check directory traversal  [${GR}$(cat $output/dt/$site-dt1.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/dt/$site-dt1.txt]"
+    exit 1
 }
 verbose(){
     echo -e "${RD}Start ${GR}[ Verbose...]${NT}"
@@ -773,6 +901,7 @@ verbose(){
         fi
     #echo -e "\nFound Check verbose  [${GR}$(cat $output/verbose/$site-out.json | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/verbose/$site-out.json]"
+    exit 1
 }
 logo(){
  echo -e "${RD}
@@ -800,9 +929,10 @@ help(){
         echo   "       -s  --subdo    Check Subdomains "
         echo   "       -H  --host     Host Live Check"
         echo   "       -sw --scrw     Scraping wayback for data"
-        echo   "                -js  Jsurls "
-        echo   "                -php Phpurls"
-        echo   "                -asp ASP"
+        echo   "                -js   Jsurls "
+        #echo   "                -jvar  "
+        echo   "                -php  Phpurls"
+        echo   "                -asp  ASP"
         echo   "                -html Html"
         echo   "       -D  --dir      Check Dir Status Response"
         echo   "       -r  normal     Check open redirection"
@@ -816,7 +946,10 @@ help(){
         echo   "                -rce  Check RCE Parameters"
         echo   "                -lfi  Check LFI Parameters"
         echo   "                -sqli Check SQLI Parameters"
-        echo   "                -ssrf Check SSRF Parameters"   
+        echo   "                -ssrf Check SSRF Parameters"
+        echo   "                -api  Api keys" 
+        echo   "                -int  "#interestingparams
+        echo   "                -dt   "#Directory Traversal  
         echo   "       -T --takeover  Check Posible Takeover"
         echo   "       -v --verbose   Verbose status code"
         echo   "       -o             Outfile"
@@ -868,6 +1001,24 @@ while [ "$site" ]; do
                 mkdir -p "$output"/"idor"
                 logo
                 idor $site
+            elif [[ $3 == "-int" ]];
+                then
+                output="$site"
+                mkdir -p "$output"/"int"
+                logo
+                int $site
+            elif [[ $3 == "-api" ]];
+                then
+                output="$site"
+                mkdir -p "$output"/"api"
+                logo
+                api $site
+            elif [[ $3 == "-dt" ]]
+                then
+                output="$site"
+                mkdir -p "$output"/"dt"
+                logo
+                dt $site
             elif [[ $3 == "-rce" ]];
                 then
                 output="$site"
@@ -1066,7 +1217,12 @@ while [ "$site" ]; do
                         mkdir -p "$output/scraping"
                         logo
                         js $site
-                        
+                   # elif [[ $3 == "-jvar" ]]
+                   # then
+                    #    output="$site"
+                     #   mkdir -p "$output/scraping"
+                     #   logo
+                      #  jvar $site
                     elif [[ $3 == "-php" ]]
                     then
                         output="$site"
