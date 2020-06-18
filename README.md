@@ -9,6 +9,9 @@
   <a href="https://ru.m.wikipedia.org/wiki/bash">
     <img src="https://img.shields.io/badge/language-bash-green.svg">
  </a>
+  <a href="https://t.me/WongNdes0">
+   <img src="https://img.shields.io/badge/telegram--blue.svg">
+   </a>
   <a href="https://github.com/pikpikcu/xrcross">
     <img src="https://img.shields.io/badge/version-V1.2-green.svg">
  </a>
