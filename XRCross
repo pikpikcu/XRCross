@@ -181,7 +181,7 @@ js(){
             rm -rf $output/$site.txt
             cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
             rm -rf $output/$subs.txt
-            cat $output/scraping/$site-list.txt | sort -u | grep -P "\w+\.js(\?|$)" | sort -u > $output/scraping/jsurls.txt
+            cat $output/scraping/$site-list.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $output/scraping/jsurls.txt
             rm -rf $output/scraping/$site-list.txt
             for run in $(cat $output/scraping/jsurls.txt);do
                 while [ $run ];do
@@ -191,11 +191,31 @@ js(){
             done
 
         fi
-    echo -e "\nound Scraping [${GR}$(cat $output/scraping/jsurls.txt | wc -l)${NT}]"
+    echo -e "\nFound Scraping [${GR}$(cat $output/scraping/jsurls.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/scraping/$site-jsurls.txt]"
     exit 1
     done 2>/dev/null
 }
+jstatus(){
+    echo -e "${RD}Start ${GR}[ Check for the status JavaScript...]${NT}"
+    echo -e "${RD}[+] Start On target:${GR} $site"
+    assetfinder --subs-only $site > $output/$site.txt
+    cat $output/$site.txt | sort -u > $output/subs.txt
+    rm -rf $output/$site.txt
+    cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$site-list.txt
+    rm -rf $output/$subs.txt
+    cat $output/scraping/$site-list.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $output/scraping/jsurls.txt
+    echo -e "=============================================="
+    echo -e "  Staus        |  Size          |  Links"
+    echo -e "=============================================="
+    for js in $(cat $output/scraping/jsurls.txt | parallel -j50 -q curl -w ${GR}"Status:${CY}%{http_code}\t ${GR}Size:${CY}%{size_download}\t ${GR}Url:${CY}%{url_effective}\n" -o /dev/null -sk | tee -a $output/scraping/$site-jstatus.txt );do           
+            echo -e "${RD}[${GR}*${RD}] $js"
+    done
+    echo -e "\nFound Check for the status JavaScript [${GR}$(cat $output/scraping/$site-jstatus.txt | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$output/scraping/$site-jstatus.txt]"
+    exit 1
+}
+
 php(){
     echo -e "${RD}Start ${GR}[Scraping wayback for data php...]${NT}"
     while [ "$site" ];do
@@ -928,6 +948,7 @@ help(){
         echo   "       -h  --help     show this help message and exit"
         echo   "       -s  --subdo    Check Subdomains "
         echo   "       -H  --host     Host Live Check"
+        echo   "       -jst           JavaScript Status"
         echo   "       -sw --scrw     Scraping wayback for data"
         echo   "                -js   Jsurls "
         #echo   "                -jvar  "
@@ -960,6 +981,22 @@ if [ -z "$site" ];then
 else
 while [ "$site" ]; do
     case "$site" in
+        "-jst") site="$2"
+            if [[ $3 == "-o" ]];
+                then
+                output="$4/$site"
+                mkdir -p "$output"/"scraping"
+                logo
+                jstatus $site
+                
+            else
+                output="$site"
+                mkdir -p "$output"/"scraping"
+                logo
+                jstatus $site
+                
+            fi
+            ;;
         "-v" | "--verbose") site="$2"
             if [[ $3 == "-o" ]];
                 then
