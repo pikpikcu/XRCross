@@ -127,6 +127,7 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install Gf-Patterns"
                               git clone https://github.com/1ndianl33t/Gf-Patterns
                               mv Gf-Patterns/*.json ~/.gf
+                              cp *.json ~/.gf
                               rm -rf Gf-Patterns
                               echo -e "${red}[+] Done Install Gf-Patterns"
                         
