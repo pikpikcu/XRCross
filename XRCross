@@ -969,8 +969,8 @@ help(){
         echo   "                -sqli Check SQLI Parameters"
         echo   "                -ssrf Check SSRF Parameters"
         echo   "                -api  Api keys" 
-        echo   "                -int  "#interestingparams
-        echo   "                -dt   "#Directory Traversal  
+        echo   "                -int  " #interestingparams
+        echo   "                -dt   " #Directory Traversal  
         echo   "       -T --takeover  Check Posible Takeover"
         echo   "       -v --verbose   Verbose status code"
         echo   "       -o             Outfile"
