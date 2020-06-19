@@ -85,19 +85,24 @@ subdo(){
             exit 1            
 
         else
-            echo -e "${RD}[+] Start On target:${GR} $site"
+            echo -e "${RD}[+] Start On target:${GR} $site\n"
             assetfinder --subs-only $site > $output/subdo/$site.txt 
             subfinder -silent -d $site >> $output/subdo/$site.txt 
             cat $output/subdo/$site.txt | sort -u > $output/subdo/subs.txt 
             rm -rf $output/subdo/$site.txt
             for run in $(cat $output/subdo/subs.txt);do
-                while [ $run ];do
-                echo -e "${RD}[${dat}]${GR}[+]subdomain-resluts:${NT} $run"
-                break
-                done
+                ping -c1 -W1 $run > /dev/null 2>&1
+                if [[ $? -eq 0 ]];
+                then
+                    echo -e "${RD}[${GR}*${RD}]${GR} VALID:${NT} $run" | tee -a $output/subdo/subs-valid.txt 
+
+                else
+                    echo -e "${RD}[${GR}*${RD}]${RD} NOTVALID:${NT} $run" | tee -a $output/subdo/subs-notvalid.txt
+                fi                
             done
         fi
-    echo -e "\nFOUND SUBDOMAINS [${GR}$(cat $output/subdo/subs.txt | wc -l)${NT}]"
+    echo -e "\nSUBDOMAINS Valid [${GR}$(cat $output/subdo/subs-valid.txt | wc -l)${NT}]"
+    echo -e "\nSUBDOMAINS NotValid [${GR}$(cat $output/subdo/subs-notvalid.txt | wc -l)${NT}]"
     echo -e "${RD}Success Saved:${GR}[$output/subdo/subs.txt]"
     exit 1
 }
