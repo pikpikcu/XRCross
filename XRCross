@@ -946,26 +946,20 @@ ____________________________________________________________ ${CY}
 help(){
         logo
         echo -e ${GR}
-        echo "Example: $0 -u/--url example.site"
+        echo "Example: $0 -u/--url example.site <arguments>"
         echo "         $0 <arguments> example.site <arguments> "
         echo
         echo "Optional Arguments:"
         echo   "       -h  --help     show this help message and exit"
-        echo   "       -s  --subdo    Check Subdomains "
-        echo   "       -H  --host     Host Live Check"
-        echo   "       -jst           JavaScript Status"
-        echo   "       -sw --scrw     Scraping wayback for data"
-        echo   "                -js   Jsurls "
-        #echo   "                -jvar  "
-        echo   "                -php  Phpurls"
-        echo   "                -asp  ASP"
-        echo   "                -html Html"
-        echo   "       -D  --dir      Check Dir Status Response"
-        echo   "       -r  normal     Check open redirection"
-        echo   "                -redirec  Check redirec Parameters"
-        echo   "       -Ss --ssrf     Blind SSRF testing"
-        echo   "       -xs --xss      Check Parameter XSS"
-        echo   "       -cs --cors     CORS misconfiguration scanner"
+        echo   "       -u  --url      URLs"
+        echo   "           --subdo    Check Subdomains"
+        echo   "           --host     Host Live Check"
+        echo   "           --jst      JavaScript Status"
+        echo   "           --dir      Check Dir Status Response"
+        echo   "           --ssrf     Blind SSRF testing"
+        echo   "           --cors     CORS misconfiguration scanner"
+        echo   "           --takeover Check Posible Takeover"
+        echo   "           --verbose   Verbose status code"
         echo   "       -gf            GF parameters grep"
         echo   "                -ssti Check SSTI Parameters"
         echo   "                -idor Check IDOR Parameters"
@@ -976,9 +970,16 @@ help(){
         echo   "                -api  Api keys" 
         echo   "                -int  " #interestingparams
         echo   "                -dt   " #Directory Traversal  
-        echo   "       -T --takeover  Check Posible Takeover"
-        echo   "       -v --verbose   Verbose status code"
+        echo   "       -sw --scrw     Scraping wayback for data"
+        echo   "                -js   Jsurls "
+        #echo   "                -jvar  "
+        echo   "                -php  Phpurls"
+        echo   "                -asp  ASP"
+        echo   "                -html Html"
+        echo   "       -r  normal     Check open redirection"
+        echo   "                -redirec  Check redirec Parameters"
         echo   "       -o             Outfile"
+        
         exit 1
 }
 if [ -z "$site" ];then
@@ -986,6 +987,146 @@ if [ -z "$site" ];then
 else
 while [ "$site" ]; do
     case "$site" in
+        "-u" | "--url") site="$2"
+            if [[ $3 == "-o" ]];
+                then
+                output="$4/$site"
+                mkdir -p "$output"
+                logo
+                all $site
+            elif [[ $3 == "-s" ]] || [[ $3 == "--subdo" ]];
+                then
+                    if [[ $4 == "-o" ]];
+                    then
+                        output="$5/$site"
+                        mkdir -p "$output"/"subdo"
+                        logo
+                        subdo $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"subdo"
+                        logo
+                        subdo $site
+                    fi
+            elif [[ $3 == "-H" ]] || [[ $3 == "--host" ]];
+                then
+                     if [[ $4 == "-o" ]];
+                        then
+                        output="$5/$site"
+                        mkdir -p "$output"/"live"
+                        logo
+                        hostlive $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"live"
+                        logo
+                        hostlive $site
+                    fi
+            elif [[ $3 == "--jst" ]];
+                then
+                     if [[ $4 == "-o" ]];
+                        then
+                        output="$5/$site"
+                        mkdir -p "$output"/"scraping"
+                        logo
+                        jstatus $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"scraping"
+                        logo
+                        jstatus $site
+                    fi
+            elif [[ $3 == "-D" ]] || [[ $3 == "--dir" ]];
+                then
+                     if [[ $4 == "-o" ]];
+                        then
+                        output="$5/$site"
+                        mkdir -p "$output"/"dir"
+                        logo
+                        dir $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"dir"
+                        logo
+                        dir $site
+                    fi
+            elif [[ $3 == "-xs" ]] || [[ $3 == "--xss" ]];
+                then
+                     if [[ $4 == "-o" ]];
+                        then
+                        output="$5/$site"
+                        mkdir -p "$output"/"xss"
+                        logo
+                        xss $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"xss"
+                        logo
+                        xss $site
+                    fi
+            elif [[ $3 == "-cs" ]] || [[ $3 == "--cors" ]];
+                then
+                     if [[ $4 == "-o" ]];
+                        then
+                        output="$5/$site"
+                        mkdir -p "$output"/"cors"
+                        logo
+                        cors $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"cors"
+                        logo
+                        cors $site
+                    fi
+            elif [[ $3 == "-Ss" ]] || [[ $3 == "--ssrf" ]];
+                then
+                     if [[ $4 == "-o" ]];
+                        then
+                        output="$5/$site"
+                        mkdir -p "$output"/"ssrf"
+                        logo
+                        ssrf $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"ssrf"
+                        logo
+                        ssrf $site
+                    fi
+            elif [[ $3 == "-T" ]] || [[ $3 == "--takeover" ]];
+                then
+                     if [[ $4 == "-o" ]];
+                        then
+                        output="$5/$site"
+                        mkdir -p "$output"/"takeover"
+                        logo
+                        take $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"takeover"
+                        logo
+                        take $site
+                    fi
+            elif [[ $3 == "-v" ]] || [[ $3 == "--verbose" ]];
+                then
+                     if [[ $4 == "-o" ]];
+                        then
+                        output="$5/$site"
+                        mkdir -p "$output"/"verbose"
+                        logo
+                        verbose $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"verbose"
+                        logo
+                        verbose $site
+                    fi
+            else
+                output="$site"
+                mkdir -p "$output"
+                logo
+                all $site
+            fi
+            ;;
         "-jst") site="$2"
             if [[ $3 == "-o" ]];
                 then
@@ -1033,58 +1174,136 @@ while [ "$site" ]; do
         "-gf") site="$2"
             if [[ $3 == "-ssti" ]];
                 then
-                output="$site"
-                mkdir -p "$output"/"ssti"
-                logo
-                ssti $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"ssti"
+                    logo
+                    ssti $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"ssti"
+                    logo
+                    ssti $site
+                fi
             elif [[ $3 == "-idor" ]];
                 then
-                output="$site"
-                mkdir -p "$output"/"idor"
-                logo
-                idor $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"idor"
+                    logo
+                    idor $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"idor"
+                    logo
+                    idor $site
+                fi
             elif [[ $3 == "-int" ]];
                 then
-                output="$site"
-                mkdir -p "$output"/"int"
-                logo
-                int $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"int"
+                    logo
+                    int $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"int"
+                    logo
+                    int $site
+                fi
             elif [[ $3 == "-api" ]];
                 then
-                output="$site"
-                mkdir -p "$output"/"api"
-                logo
-                api $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"api"
+                    logo
+                    api $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"api"
+                    logo
+                    api $site
+                fi
+               
             elif [[ $3 == "-dt" ]]
                 then
-                output="$site"
-                mkdir -p "$output"/"dt"
-                logo
-                dt $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"dt"
+                    logo
+                    dt $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"dt"
+                    logo
+                    dt $site
+                fi
+                
             elif [[ $3 == "-rce" ]];
                 then
-                output="$site"
-                mkdir -p "$output"/"rce"
-                logo
-                rce $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"rce"
+                    logo
+                    rce $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"rce"
+                    logo
+                    rce $site
+                fi
+                
             elif [[ $3 == "-lfi" ]];
                 then
-                output="$site"
-                mkdir -p "$output"/"lfi"
-                logo
-                lfi $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"lfi"
+                    logo
+                    lfi $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"lfi"
+                    logo
+                    lfi $site
+                fi
+                
             elif [[ $3 == "-sqli" ]];
                 then
-                output="$site"
-                mkdir -p "$output"/"sqli"
-                logo
-                sqli $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"sqli"
+                    logo
+                    sqli $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"sqli"
+                    logo
+                    sqli $site
+                fi
+                
             elif [[ $3 == "-ssrf" ]];
                 then
-                output="$site"
-                mkdir -p "$output"/"ssrf"
-                logo
-                ssrf2 $site
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"ssrf"
+                    logo
+                    ssrf $site
+                else
+                    output="$site"
+                    mkdir -p "$output"/"ssrf"
+                    logo
+                    ssrf $site
+                fi
+                
             else
                 logo
                 output="$site"
@@ -1144,20 +1363,6 @@ while [ "$site" ]; do
                 logo
                 xss $site
 
-            fi
-            ;;
-        "-u" | "--url") site="$2"
-            if [[ $3 == "-o" ]];
-                then
-                output="$4/$site"
-                mkdir -p "$output"
-                logo
-                all $site
-            else
-                output="$site"
-                mkdir -p "$output"
-                logo
-                all $site
             fi
             ;;
 
