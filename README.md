@@ -62,19 +62,19 @@
 
 >  Check Subdomains
 
-      XRCross -s/--subdo  example.site 
+      XRCross -u  example.site  (--subdo|-s)
 
 >  Host Live Check
 
-      XRCross -H/--host  example.site 
+      XRCross -u  example.site (--host|-H)
 
 >  Scraping wayback
 
-      XRCross -sw  example.site "(-js|-php|-asp|-html)"
+      XRCross -sw  example.site (-js|-php|-asp|-html)
 
 >  Check Dir Status
 
-      XRCross -D/--dir  example.site 
+      XRCross -u  example.site (-D|--dir)
 
 >  Check open redirection
 
