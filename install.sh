@@ -136,10 +136,16 @@ if [[ -z "$XRCross" ]];then
                               GO111MODULE=on go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
                               echo -e "${red}[+] Done Install httpxs"
                               
-                        elif [ ! -f /usr/bin/jq ];then
-                              echo -e "\n${red}[+]${green}Install jq"
-                              sudo apt install jq -y
-                              echo -e "${red}[+] Done Install jq"
+                        elif [ ! -f /usr/bin/anti-bur ];then
+                              echo -e "\n${red}[+]${green}Install anti-bur"
+                              go get -u github.com/tomnomnom/hacks/anti-bur
+                              echo -e "${red}[+] Done Install anti-bur"
+
+                        elif [ ! -f /usr/bin/js-beautify ];then
+                              echo -e "\n${red}[+]${green}Install jsbeautifier"
+                              pip install jsbeautifier
+                              echo -e "${red}[+] Done Install jsbeautifier"
+                        
                         else
                               echo -e "${green}\n[+] Donee Check Module.\n"
                         
