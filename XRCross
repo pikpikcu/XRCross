@@ -833,7 +833,7 @@ api(){
             exit 1 
         else
             echo -e "${RD}[+] Start On target:${GR} $site"
-            echo -en "$site" | assetfinder | waybackurls | sort -u > $output/api/api.txt
+            assetfinder $site| waybackurls | sort -u > $output/api/api.txt
             cat $output/api/api.txt | gf api-keys | tee -a > $output/api/$site-api.txt
             rm -rf $output/api/api.txt
             for run in $(cat $output/api/$site-api.txt);do
@@ -863,7 +863,7 @@ ssrf2(){
             exit 1 
         else
             echo -e "${RD}[+] Start On target:${GR} $site"
-            echo -en "$site" | assetfinder | waybackurls | sort -u > $output/ssrf/ssrf.txt
+            assetfinder $site | waybackurls | sort -u > $output/ssrf/ssrf.txt
             cat $output/ssrf/ssrf.txt | gf ssrf | tee -a > $output/ssrf/$site-ssrf.txt
             rm -rf $output/ssrf/ssrf.txt
             for run in $(cat $output/ssrf/$site-ssrf.txt);do
@@ -893,7 +893,7 @@ ssrf2(){
             exit 1 
         else
             echo -e "${RD}[+] Start On target:${GR} $site"
-            echo -en "$site" | assetfinder | waybackurls | sort -u > $output/int/int.txt
+            assetfinder $site | waybackurls | sort -u > $output/int/int.txt
             cat $output/int/int.txt | gf interestingparams | tee -a > $output/int/$site-int.txt
             rm -rf $output/int/int.txt
             for run in $(cat $output/int/$site-int.txt);do
@@ -907,36 +907,36 @@ ssrf2(){
     echo -e "${RD}Success Saved:${GR}[$output/int/$site-int.txt]"
     exit 1
 }
-dt(){
-    echo -e "${RD}Start ${GR}[ Check directory traversal...]${NT}"
-        if [ ! -f ~/go/bin/assetfinder ];
-            then
-            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
-            exit 1
-        elif [ ! -f ~/go/bin/waybackurls ];
-            then
-            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
-            exit 1 
-        elif [ ! -f ~/go/bin/gf ];
-            then
-            echo -e "${RD}[+]${GR} gf Not Install!\n"
-            exit 1 
-        else
-            echo -e "${RD}[+] Start On target:${GR} $site"
-            echo "$site" | assetfinder | waybackurls | sort -u > $output/dt/dt.txt
-            #cat $output/dt/dt.txt | gf lfi | tee -a > $output/dt/$site-dt.txt
-            cat $output/dt/dt.txt | gf dir-traversal | tee -a > $output/dt/$site-dt1.txt
-            for run in $(cat $output/dt/$site-dt1.txt);do
-                while [ $run ];do
-                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
-                    break
-                done
-            done 
-        fi
-    echo -e "Found Check directory traversal  [${GR}$(cat $output/dt/$site-dt1.txt | wc -l)${NT}]"
-    echo -e "${RD}Success Saved:${GR}[$output/dt/$site-dt1.txt]"
-    exit 1
-}
+#dt(){
+#    echo -e "${RD}Start ${GR}[ Check directory traversal...]${NT}"
+#        if [ ! -f ~/go/bin/assetfinder ];
+#            then
+#            echo -e "${RD}[+]${GR} assetfinder Not Install!\n"
+#            exit 1
+#        elif [ ! -f ~/go/bin/waybackurls ];
+#            then
+#            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
+#            exit 1 
+#        elif [ ! -f ~/go/bin/gf ];
+#            then
+#            echo -e "${RD}[+]${GR} gf Not Install!\n"
+#            exit 1 
+#        else
+#           echo -e "${RD}[+] Start On target:${GR} $site"
+#           assetfinder $site | waybackurls | sort -u > $output/dt/dt.txt
+#           #cat $output/dt/dt.txt | gf lfi | tee -a > $output/dt/$site-dt1.txt
+#           cat $output/dt/dt.txt | grep "file=\|document=\|folder=" |gf dir-traversal | tee -a > $output/dt/$site-dt2.txt
+#            for run in $(cat $output/dt/$site-dt2.txt);do
+#                while [ $run ];do
+#                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+#                    break
+#                done
+#            done 
+#        fi
+#    echo -e "Found Check directory traversal  [${GR}$(cat $output/dt/$site-dt2.txt | wc -l)${NT}]"
+#    echo -e "${RD}Success Saved:${GR}[$output/dt/$site-dt1.txt]"
+#    exit 1
+#}
 verbose(){
     echo -e "${RD}Start ${GR}[ Verbose...]${NT}"
         if [ ! -f ~/go/bin/assetfinder ];
@@ -1013,7 +1013,7 @@ help(){
         echo   "                -ssrf Check SSRF Parameters"
         echo   "                -api  Api keys" 
         echo   "                -int  " #interestingparams
-        echo   "                -dt   " #Directory Traversal  
+      #  echo   "                -dt   " #Directory Traversal  
         echo   "       -sw --scrw     Scraping wayback for data"
         echo   "                -js   Jsurls "
         #echo   "                -jvar  "
@@ -1287,20 +1287,20 @@ while [ "$site" ]; do
                     api $site
                 fi
                
-            elif [[ $3 == "-dt" ]]
-                then
-                if [[ $4 == "-o" ]];
-                    then
-                    output="$5/$site"
-                    mkdir -p "$output"/"dt"
-                    logo
-                    dt $site
-                else
-                    output="$site"
-                    mkdir -p "$output"/"dt"
-                    logo
-                    dt $site
-                fi
+          #  elif [[ $3 == "-dt" ]]
+          #      then
+          #      if [[ $4 == "-o" ]];
+          #          then
+          #          output="$5/$site"
+          #          mkdir -p "$output"/"dt"
+          #          logo
+          #          dt $site
+          #      else
+           #         output="$site"
+           #         mkdir -p "$output"/"dt"
+           #         logo
+           #         dt $site
+           #     fi
                 
             elif [[ $3 == "-rce" ]];
                 then
