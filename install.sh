@@ -136,7 +136,7 @@ if [[ -z "$XRCross" ]];then
                               GO111MODULE=on go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
                               echo -e "${red}[+] Done Install httpxs"
                               
-                        elif [ ! -f /usr/bin/anti-burl ];then
+                        elif [ ! -f ~/go/bin/anti-burl ];then
                               echo -e "\n${red}[+]${green}Install anti-burl"
                               go get -u github.com/tomnomnom/hacks/anti-burl
                               echo -e "${red}[+] Done Install anti-bur"
