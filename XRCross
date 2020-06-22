@@ -201,6 +201,49 @@ js(){
     exit 1
     done 2>/dev/null
 }
+jsurl(){
+    echo -e "${RD}Start ${GR}[downloading js files...]${NT}"
+    while [ "$site" ];do
+        if [ ! -f ~/go/bin/assetfinder ];
+            then
+            echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
+            exit 1
+        elif [ ! -f ~/go/bin/waybackurls ];
+            then
+            echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
+            exit 1 
+        elif [ ! -f ~/go/bin/anti-burl ];
+            then
+            echo -e "${RD}[+]${GR} anti-burl Not Install!\n"
+            exit 1 
+        elif [ ! -f /usr/bin/js-beautify ];
+            then
+            echo -e "${RD}[+]${GR} js-beautify Not Install!\n"
+            exit 1 
+
+        else
+            echo -e "${RD}[+]${GR} Start On target:${NT} $site"
+            #assetfinder --subs-only $site | sort -u > $output/subs.txt
+            echo $site > $output/subs.txt
+            echo -e "${RD}[*]${GR} downloading js files"
+            while read sub;do
+                gau -subs $sub | grep "\.js$" | anti-burl | grep -Eo "(http|https)://[a-zA-Z0-9./?=_-]*" | sort -u | tee -a > $output/js_file
+            done < $output/subs.txt
+            
+            while read line; do
+                for i in $(curl -s "$line" | js-beautify ); do
+                    echo "$i" | sed -e 's/[/]/_/g' | sed -e 's/:/./g'| tee >> $output/js/$output.js
+                done  
+            done < $output/js_file
+            for file in $output/./js/*; do
+                gf js $file      
+            done 
+        fi
+    echo -e "\nFound js Download [${GR}$(ls $output/js | wc -l)${NT}]"
+    echo -e "${RD}Success Saved:${GR}[$(pwd /$output/)]"
+    exit 1
+    done 2>/dev/null
+}
 jstatus(){
     echo -e "${RD}Start ${GR}[ Check for the status JavaScript...]${NT}"
     echo -e "${RD}[+] Start On target:${GR} $site"
@@ -959,7 +1002,8 @@ help(){
         echo   "           --ssrf     Blind SSRF testing"
         echo   "           --cors     CORS misconfiguration scanner"
         echo   "           --takeover Check Posible Takeover"
-        echo   "           --verbose   Verbose status code"
+        echo   "           --verbose  Verbose status code"
+        echo   "           --jsurl    Gathering all js urls"
         echo   "       -gf            GF parameters grep"
         echo   "                -ssti Check SSTI Parameters"
         echo   "                -idor Check IDOR Parameters"
@@ -994,6 +1038,20 @@ while [ "$site" ]; do
                 mkdir -p "$output"
                 logo
                 all $site
+            elif [[ $3 == "--jsurl" ]];
+                then
+                    if [[ $4 == "-o" ]];
+                    then
+                        output="$5/$site"
+                        mkdir -p "$output"/"js"
+                        logo
+                        jsurl $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"js"
+                        logo
+                        jsurl $site
+                    fi
             elif [[ $3 == "-s" ]] || [[ $3 == "--subdo" ]];
                 then
                     if [[ $4 == "-o" ]];
