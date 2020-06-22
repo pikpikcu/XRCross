@@ -137,8 +137,8 @@ if [[ -z "$XRCross" ]];then
                               echo -e "${red}[+] Done Install httpxs"
                               
                         elif [ ! -f /usr/bin/anti-bur ];then
-                              echo -e "\n${red}[+]${green}Install anti-bur"
-                              go get -u github.com/tomnomnom/hacks/anti-bur
+                              echo -e "\n${red}[+]${green}Install anti-burl"
+                              go get -u github.com/tomnomnom/hacks/anti-burl
                               echo -e "${red}[+] Done Install anti-bur"
 
                         elif [ ! -f /usr/bin/js-beautify ];then
