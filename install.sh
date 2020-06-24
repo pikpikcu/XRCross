@@ -52,28 +52,28 @@ if [[ -z "$XRCross" ]];then
                         elif [ ! -f ~/go/bin/SubOver ]; then
                               #SubOver
                               echo -e "\n${red}[+]${green}Install SubOver "
-                              go get github.com/Ice3man543/SubOver
+                              go get -u github.com/Ice3man543/SubOver
                               echo -e "${red}[+] Done Install SubOver "
                         elif [ ! -f ~/go/bin/dalfox ];then
                               # [dalfox]
                               echo -e "\n${red}[+]${green}Install dalfox "
-                              go get github.com/hahwul/dalfox
+                              GO111MODULE=on go get -u -v github.com/hahwul/dalfox
                               echo -e "${red}[+] Done Install dalfox "
 
                         elif [ ! -f ~/go/bin/hakcheckurl ];then
                               # [hakcheckurl]
                               echo -e "\n${red}[+]${green}Install hakcheckurl "
-                              go get github.com/hakluke/hakcheckurl
+                              go get -u github.com/hakluke/hakcheckurl
                               echo -e "${red}[+] Done Install hakcheckurl "
                         elif [ ! -f ~/go/bin/hakrawler ];then
                               # [hakrawler]
                               echo -e "\n${red}[+]${green}Install hakrawler "
-                              go get github.com/hakluke/hakrawler
+                              go get -u github.com/hakluke/hakrawler
                               echo -e "${red}[+] Done Install hakrawler "
                         elif [ ! -f ~/go/bin/waybackurls ];then
                               # [Waybackurls]
                               echo -e "\n${red}[+]${green}Install Waybackurls "
-                              go get github.com/tomnomnom/waybackurls
+                              go get -u github.com/tomnomnom/waybackurls
                               echo -e "${red}[+] Done Install Waybackurls "
                         elif [ ! -f ~/go/bin/gau ];then
                               # [ Gau]
@@ -99,7 +99,7 @@ if [[ -z "$XRCross" ]];then
                         elif [ ! -f ~/go/bin/ffuf ];then  
                               # [ffuf]
                               echo -e "\n${red}[+]${green}Install ffuf "
-                              go get github.com/ffuf/ffuf
+                              go get -u github.com/ffuf/ffuf
                               echo -e "${red}[+] Done Install ffuf "
                   
                         elif [ ! -f ~/go/bin/subfinder ];then 
