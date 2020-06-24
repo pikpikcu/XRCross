@@ -13,7 +13,7 @@
    <img src="https://img.shields.io/badge/telegram--blue.svg">
    </a>
   <a href="https://github.com/pikpikcu/xrcross">
-    <img src="https://img.shields.io/badge/version-V1.4-green.svg">
+    <img src="https://img.shields.io/badge/version-V1.5-green.svg">
  </a>
    <a href="https://github.com/pikpikcu/xrcross/blob/master/LICENSE">
    <img src="https://img.shields.io/badge/LICENSE-red.svg">
@@ -30,34 +30,44 @@
 #### ✔️ ***Options***:
 >   
 
-        Example: XRCross -u/--url example.site
-                 XRCross <arguments> example.site <arguments> 
-        
-        Optional Arguments:
-               -h  --help     show this help message and exit
-               -s  --subdo    Check Subdomains 
-               -H  --host     Host Live Check
-               -sw --scrw     Scraping wayback for data
-                        -js  Jsurls 
-                        -php Phpurls
-                        -asp ASP
-                        -html Html
-               -D  --dir      Check Dir Status Response
-               -r  normal     Check open redirection
-                        -redirec  Check redirec Parameters
-               -Ss --ssrf     Blind SSRF testing
-               -xs --xss      Check Parameter XSS
-               -cs --cors     CORS misconfiguration scanner
-               -gf            GF parameters grep
-                        -ssti Check SSTI Parameters
-                        -idor Check IDOR Parameters
-                        -rce  Check RCE Parameters
-                        -lfi  Check LFI Parameters
-                        -sqli Check SQLI Parameters   
-               -T --takeover  Check Posible Takeover
-               -v --verbose   Verbose status code
-               -o             Outfile
-               
+      Example: ./XRCross -u/--url example.site <arguments>
+            ./XRCross <arguments> example.site <arguments> 
+
+      Optional Arguments:
+            -h  --help     show this help message and exit
+
+            -u  --url      URLs
+                -rc        Check HTTP response codes 
+                --subdo    Check Subdomains
+                --host     Host Live Check
+                --jst      JavaScript Status
+                --ssrf     Blind SSRF testing
+                --cors     CORS misconfiguration scanner
+                --takeover Check Posible Takeover
+                --verbose  Verbose status code
+                --jsurl    Gathering all js urls
+
+            -gf            GF parameters grep
+                  -ssti Check SSTI Parameters
+                  -idor Check IDOR Parameters
+                  -rce  Check RCE Parameters
+                  -lfi  Check LFI Parameters
+                  -sqli Check SQLI Parameters
+                  -ssrf Check SSRF Parameters
+                  -api  Api keys
+                  -int  
+
+            -sw --scrw     Scraping wayback for data
+                  -js   Jsurls 
+                  -php  Phpurls
+                  -asp  ASP
+                  -html Html
+
+            -r  normal     Check open redirection
+                  -redirec Check redirec Parameters
+
+            -o             Outfile
+       
 #### ✔️ ***Example***:
 
 >  Check Subdomains
@@ -71,10 +81,6 @@
 >  Scraping wayback
 
       XRCross -sw  example.site (-js|-php|-asp|-html)
-
->  Check Dir Status
-
-      XRCross -u  example.site (-D|--dir)
 
 >  Check open redirection
 
