@@ -127,6 +127,10 @@
 #### ✔️ ***Go language dependency***:
 
 All the dependent libraries are compiled with go version 1.14.2. So go version 1.14.2 should be installed(strictly). Secondly, $GOPATH should be set to /root/go and it should be exported to PATH using "export PATH=$PATH:$GOROOT/bin/:$GOPATH/bin" and same should be present in profile or bash_profile or bashrc. XRCross checks for all the go dependencies under ~/go/bin.
+## Donate!
+
+(I love coffee and am very addicted to coffee:v)
+<br><a href="https://www.buymeacoffee.com/pikpikcu"><img src="https://cdn.buymeacoffee.com/buttons/default-black.png" alt="Buy Me A Coffee" height="50px"></a>
 
  Credits Thanks:
 ------------
