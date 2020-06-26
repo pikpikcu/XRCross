@@ -149,6 +149,10 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install github-subs"
                               go get -u github.com/theblackturtle/github-subs
                               echo -e "${red}[+] Done Install github-subs"
+                        elif [ ! -f ~/go/bin/s3enum ];then
+                              echo -e "\n${red}[+]${green}Install s3enum"
+                              go get -u github.com/koenrh/s3enum
+                              echo -e "${red}[+] Done Install s3enum"
                         
                         else
                               echo -e "${green}\n[+] Donee Check Module.\n"
