@@ -1,0 +1,8 @@
+dev
+development
+live
+stag
+staging
+prod
+production
+test
