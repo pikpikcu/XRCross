@@ -226,6 +226,7 @@ scraping(){
     if dependencies
         then
         echo -e "${NT}[${RD}*${NT}]${GR} Fetch all the URLs that the Wayback Machine knows about for a domain ...${NT}"
+        sleep 2
         echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
         assetfinder --subs-only $site > $output/scraping/$site.txt
         cat $output/scraping/$site.txt | sort -u > $output/scraping/subs.txt
@@ -247,6 +248,7 @@ js(){
     if dependencies
         then
         echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for data js...${NT}"
+        sleep 2
         echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
         assetfinder --subs-only $site > $output/$site.txt
         cat $output/$site.txt | sort -u > $output/subs.txt
@@ -270,6 +272,7 @@ jsurl(){
     if dependencies 
         then
         echo -e "${NT}[${RD}*${NT}]${GR} Downloading js files...${NT}"
+        sleep 2
         echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
         #assetfinder --subs-only $site | sort -u > $output/subs.txt
         echo $site > $output/subs.txt
@@ -294,6 +297,7 @@ jstatus(){
     if dependencies
         then
         echo -e "${NT}[${RD}*${NT}]${GR} Check for the status JavaScript...${NT}"
+        sleep 2
         echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
         assetfinder --subs-only $site > $output/$site.txt
         cat $output/$site.txt | sort -u > $output/subs.txt
@@ -316,6 +320,7 @@ php(){
     if dependencies 
         then 
         echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for data php...${NT}"
+        sleep 2
         echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
         assetfinder --subs-only $site > $output/$site.txt
         cat $output/$site.txt | sort -u > $output/subs.txt
@@ -339,6 +344,7 @@ asp(){
     if dependencies 
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for data aspx...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
@@ -363,6 +369,7 @@ html(){
     if dependencies 
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for data HTML...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt
@@ -384,6 +391,7 @@ respon(){
     if dependencies 
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Takes a list of URLs and returns their HTTP response codes...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder --subs-only $site > $output/$site.txt
             cat $output/$site.txt | sort -u > $output/subs.txt 
@@ -404,6 +412,7 @@ redirec(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check Open Redirection...]${NT}"
+            sleep 2
             echo -e "${RD}[+] Start On target:${NT} $site"
             assetfinder $site | gau --subs | sort -u >  $output/redirec/$site.txt
             cat $output/redirec/$site.txt | grep -e 'redirect\|redirect=\|url\|url=\|next=\|dest=\|destination\|return\|go\|redirect_uri\|continue=\|return_path=\|externalLink=\|URL' > $output/redirec/$site-redirect.txt
@@ -422,6 +431,7 @@ ssrf(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Blind SSRF testing...${NT}"
+            sleep 2
             ssr=`cat callback.txt`
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             waybackurls $site | sort -u > $output/ssrf/$site-ssrf.txt
@@ -446,6 +456,7 @@ xss(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} XSS testing...${NT}"
+            sleep 2
             xsss=`cat xss.ht`
             linee=".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)"
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
@@ -460,6 +471,7 @@ cors(){
     if dependencies
         then 
             echo -e "${NT}[${RD}*${NT}]${GR} CORS misconfiguration vulnerabilities scanner...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder  $site > $output/cors/$site.txt
             subfinder -silent -d $site >> $output/cors/$site.txt
@@ -481,6 +493,7 @@ ssti(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check SSTI Parameters...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder  $site > $output/ssti/$site.txt
             subfinder -silent -d $site >> $output/ssti/$site.txt
@@ -503,6 +516,7 @@ check_r(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check redirec Parameters...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder  $site > $output/redirec/$site.txt
             subfinder -silent -d $site >> $output/redirec/$site.txt
@@ -525,6 +539,7 @@ idor(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check IDOR Parameters...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder  $site > $output/idor/$site.txt
             subfinder -silent -d $site >> $output/idor/$site.txt
@@ -547,6 +562,7 @@ rce(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check RCE Parameters...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder  $site > $output/rce/$site.txt
             subfinder -silent -d $site >> $output/rce/$site.txt
@@ -569,6 +585,7 @@ lfi(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check LFI Parameters...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder  $site > $output/lfi/$site.txt
             subfinder -silent -d $site >> $output/lfi/$site.txt
@@ -591,6 +608,7 @@ sqli(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check SQLI Parameters...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder  $site > $output/sqli/$site.txt
             subfinder -silent -d $site >> $output/sqli/$site.txt
@@ -613,6 +631,7 @@ take(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check Takeover...]${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder $site > $output/takeover/$site.txt
             subfinder -silent -d $site >> $output/takeover/$site.txt 
@@ -635,7 +654,8 @@ take(){
 api(){
     if dependencies
         then
-            echo -e "${NT}[${RD}*${NT}]${GR} Check api keys...${NT}"  
+            echo -e "${NT}[${RD}*${NT}]${GR} Check api keys...${NT}"
+            sleep 2  
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder $site| waybackurls | sort -u > $output/api/api.txt
             cat $output/api/api.txt | gf api-keys | tee -a > $output/api/$site-api.txt
@@ -655,6 +675,7 @@ ssrf2(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Check ssrf...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder $site | waybackurls | sort -u > $output/ssrf/ssrf.txt
             cat $output/ssrf/ssrf.txt | gf ssrf | tee -a > $output/ssrf/$site-ssrf.txt
@@ -670,10 +691,29 @@ ssrf2(){
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/ssrf/$site-ssrf.txt]"
     exit 1
 }
+aws(){
+    if dependencies
+        then
+            echo -e "${NT}[${RD}!${NT}]${GR} Amazon S3 bucket enumeration...${NT}"
+            sleep 2
+            echo -e "${NT}[${RD}*${NT}]${GR} Check aws:${NT} $site"
+            echo -e "${NT}[${RD}!${NT}]${GR} It takes a long time to wait ..."
+            for run in $(s3enum --wordlist AWS/wordlist.txt --suffixlist AWS/suffixlist.txt --threads 10 $site);do
+                while [ $run ];do
+                    echo -e "\n${NT}[${dat}]${GR}[+]resluts:${NT} $run" | tee -a $output/aws/$site-aws.txt
+                    break
+                done
+            done 
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Found ${NT}[${GR}$(cat $output/aws/$site-aws.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/aws/$site-aws.txt]"
+    exit 1
+}
 int(){
     if dependencies
         then
             echo -e "${NT}[${RD}*${NT}]${GR} Interestingparams...${NT}"
+            sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder $site | waybackurls | sort -u > $output/int/int.txt
             cat $output/int/int.txt | gf interestingparams | tee -a > $output/int/$site-int.txt
@@ -694,6 +734,7 @@ verbose(){
     if dependencies
         then
         echo -e "${NT}[${RD}*${NT}]${GR} Verbose...${NT}"
+        sleep 2
         echo -e "${RD}[+] Start On target:${NT} $site"
         assetfinder -subs-only $site | waybackurls | sort -u > $output/verbose/out.txt
         cat $output/verbose/out.txt | httpx -silent -content-length -status-code -verbose -title -vhost -json | jq > $output/verbose/$site-out.json
@@ -743,6 +784,7 @@ help(){
         echo   "           --takeover  | Check Posible Takeover"
         echo   "           --verbose   | Verbose status code"
         echo   "           --jsurl     | Gathering all js urls"
+       # echo   "           --git       | Git Dump and Extrack Endpoinds" Coming Soon
         echo   "       -gf             | GF parameters grep"
         echo   "           -ssti       | Check SSTI Parameters"
         echo   "           -idor       | Check IDOR Parameters"
@@ -750,15 +792,16 @@ help(){
         echo   "           -lfi        | Check LFI Parameters"
         echo   "           -sqli       | Check SQLI Parameters"
         echo   "           -ssrf       | Check SSRF Parameters"
-      # echo   "           -api   | Api keys" # delet
-      # echo   "           -int   | " #interestingparams # delet
-      # echo   "           -dt    | " #Directory Traversal  # delet
+      # echo   "           -api        | Api keys" # delet
+      # echo   "           -int        | " #interestingparams # delet
+      # echo   "           -dt         | " #Directory Traversal  # delet
         echo   "       -sw/-scrw       | Scraping wayback for data"
         echo   "           -js         | Jsurls "
       # echo   "           -jvar       | " # 0
         echo   "           -php        | Phpurls"
         echo   "           -asp        | ASP"
         echo   "           -html       | Html"
+        echo   "       -aws            | Amazon S3 bucket enumeration "
         echo   "       -r  normal      | Check open redirection"
         echo   "           -redirec    | Check redirec Parameters"
         echo   "       -o              | Outfile"
@@ -1149,6 +1192,20 @@ while [ "$site" ]; do
         "-h" | "--help")
             help
             exit 1
+            ;;
+        "-aws") site="$2"
+            if [[ $3 == "-o" ]]; 
+                then
+                output="$4/$site"
+                mkdir -p "$output"/"aws"
+                logo
+                aws $site
+            else 
+                output="$site"
+                mkdir -p "$output"/"aws"
+                logo
+                aws $site
+            fi
             ;;
         esac
         shift
