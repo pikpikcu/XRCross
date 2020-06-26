@@ -83,6 +83,10 @@ dependencies(){
         then
         echo -e "${RD}[+]${GR} Httpx Not Install!\n"
         exit 1
+    elif [ ! -f ~/go/bin/github-subs ];
+        then
+        echo -e "${RD}[+]${GR} github-subs Not Install!\n"
+        exit 1
     elif [ ! -f /usr/bin/jq ];
         then
         echo -e "${RD}[+]${GR} jq Not Install!\n"
@@ -139,6 +143,32 @@ all(){
     exit 1  
 }
 # Subdomain Enumerate
+github(){
+    if  dependencies
+        then
+        api=`cat Api-github.txt`
+        echo -e "${NT}[${RD}*${NT}]${GR} Check the Subdomains for github...${NT}"
+        sleep 2
+        echo -e "${NT}[${RD}!${NT}]${GR} Start On target:${NT} $site"
+        github-subs -d $site -api $api > $output/github/$site.txt 
+        cat $output/github/$site.txt | sort -u > $output/github/subs.txt 
+        rm -rf $output/github/$site.txt
+        for run in $(cat $output/github/subs.txt);do
+            ping -c1 -W1 $run > /dev/null 2>&1
+            if [[ $? -eq 0 ]];
+                then
+                echo -e "${RD}[${GR}*${RD}]${GR} VALID:${NT} $run" | tee -a $output/github/subs-valid.txt 
+
+            else
+                echo -e "${RD}[${GR}*${RD}]${RD} NOTVALID:${NT} $run" | tee -a $output/github/subs-notvalid.txt
+            fi                
+        done
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} SUBDOMAINS Valid ${NT}[${GR}$(cat $output/github/subs-valid.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} SUBDOMAINS NotValid ${NT}[${GR}$(cat $output/github/subs-notvalid.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/github/subs.txt]"
+    exit 1
+}
 subdo(){
     if dependencies 
         then
@@ -701,36 +731,37 @@ help(){
         echo "         $0 <arguments> example.site <arguments> "
         echo
         echo "Optional Arguments:"
-        echo   "       -h  --help     show this help message and exit"
-        echo   "       -u  --url      URLs"
-        echo   "           -rc        Check HTTP response codes "
-        echo   "           --subdo    Check Subdomains"
-        echo   "           --host     Host Live Check"
-        echo   "           --jst      JavaScript Status"
-        echo   "           --ssrf     Blind SSRF testing"
-        echo   "           --cors     CORS misconfiguration scanner"
-        echo   "           --takeover Check Posible Takeover"
-        echo   "           --verbose  Verbose status code"
-        echo   "           --jsurl    Gathering all js urls"
-        echo   "       -gf            GF parameters grep"
-        echo   "                -ssti Check SSTI Parameters"
-        echo   "                -idor Check IDOR Parameters"
-        echo   "                -rce  Check RCE Parameters"
-        echo   "                -lfi  Check LFI Parameters"
-        echo   "                -sqli Check SQLI Parameters"
-        echo   "                -ssrf Check SSRF Parameters"
-      # echo   "                -api  Api keys" # delet
-      # echo   "                -int  " #interestingparams # delet
-      # echo   "                -dt   " #Directory Traversal  # delet
-        echo   "       -sw --scrw     Scraping wayback for data"
-        echo   "                -js   Jsurls "
-      # echo   "                -jvar  " # 0
-        echo   "                -php  Phpurls"
-        echo   "                -asp  ASP"
-        echo   "                -html Html"
-        echo   "       -r  normal     Check open redirection"
-        echo   "                -redirec  Check redirec Parameters"
-        echo   "       -o             Outfile"
+        echo   "       -h /--help      | show this help message and exit"
+        echo   "       -u /--url       | URLs"
+        echo   "           -rc         | Check HTTP response codes "
+        echo   "           --subdo     | Check Subdomains"
+        echo   "           --github    | Enumerate Subdomain for github And Using Api github"
+        echo   "           --host      | Host Live Check"
+        echo   "           --jst       | JavaScript Status"
+        echo   "           --ssrf      | Blind SSRF testing"
+        echo   "           --cors      | CORS misconfiguration scanner"
+        echo   "           --takeover  | Check Posible Takeover"
+        echo   "           --verbose   | Verbose status code"
+        echo   "           --jsurl     | Gathering all js urls"
+        echo   "       -gf             | GF parameters grep"
+        echo   "           -ssti       | Check SSTI Parameters"
+        echo   "           -idor       | Check IDOR Parameters"
+        echo   "           -rce        | Check RCE Parameters"
+        echo   "           -lfi        | Check LFI Parameters"
+        echo   "           -sqli       | Check SQLI Parameters"
+        echo   "           -ssrf       | Check SSRF Parameters"
+      # echo   "           -api   | Api keys" # delet
+      # echo   "           -int   | " #interestingparams # delet
+      # echo   "           -dt    | " #Directory Traversal  # delet
+        echo   "       -sw/-scrw       | Scraping wayback for data"
+        echo   "           -js         | Jsurls "
+      # echo   "           -jvar       | " # 0
+        echo   "           -php        | Phpurls"
+        echo   "           -asp        | ASP"
+        echo   "           -html       | Html"
+        echo   "       -r  normal      | Check open redirection"
+        echo   "           -redirec    | Check redirec Parameters"
+        echo   "       -o              | Outfile"
         
         exit 1
 }
@@ -965,6 +996,20 @@ while [ "$site" ]; do
                         mkdir -p "$output"/"js"
                         logo
                         jsurl $site
+                    fi
+            elif [[ $3 == "--github" ]];
+                then
+                    if [[ $4 == "-o" ]];
+                    then
+                        output="$5/$site"
+                        mkdir -p "$output"/"github"
+                        logo
+                        github $site
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"github"
+                        logo
+                        github $site
                     fi
             elif [[ $3 == "-s" ]] || [[ $3 == "--subdo" ]];
                 then
