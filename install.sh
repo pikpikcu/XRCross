@@ -145,6 +145,10 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install jsbeautifier"
                               pip install jsbeautifier
                               echo -e "${red}[+] Done Install jsbeautifier"
+                        elif [ ! -f /usr/bin/github-subs ];then
+                              echo -e "\n${red}[+]${green}Install github-subs"
+                              go get -u github.com/theblackturtle/github-subs
+                              echo -e "${red}[+] Done Install github-subs"
                         
                         else
                               echo -e "${green}\n[+] Donee Check Module.\n"
