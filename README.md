@@ -29,45 +29,41 @@
 
 #### ✔️ ***Options***:
 >   
-
-      Example: ./XRCross -u/--url example.site <arguments>
+      Example: 
+            ./XRCross -u/--url example.site <arguments>
             ./XRCross <arguments> example.site <arguments> 
 
       Optional Arguments:
-            -h  --help     show this help message and exit
+            -h /--help      | show this help message and exit
+            -u /--url       | URLs
+            -rc         | Check HTTP response codes 
+            --subdo     | Check Subdomains
+            --github    | Enumerate Subdomain 
+                              for github And Using Api github
+                              
+            --host      | Host Live Check
+            --jst       | JavaScript Status
+            --ssrf      | Blind SSRF testing
+            --cors      | CORS misconfiguration scanner
+            --takeover  | Check Posible Takeover
+            --verbose   | Verbose status code
+            --jsurl     | Gathering all js urls
+            -gf             | GF parameters grep
+            -ssti       | Check SSTI Parameters
+            -idor       | Check IDOR Parameters
+            -rce        | Check RCE Parameters
+            -lfi        | Check LFI Parameters
+            -sqli       | Check SQLI Parameters
+            -ssrf       | Check SSRF Parameters
+            -sw/-scrw       | Scraping wayback for data
+            -js         | Jsurls 
+            -php        | Phpurls
+            -asp        | ASP
+            -html       | Html
+            -r  normal      | Check open redirection
+            -redirec    | Check redirec Parameters
+            -o              | Outfile
 
-            -u  --url      URLs
-                -rc        Check HTTP response codes 
-                --subdo    Check Subdomains
-                --host     Host Live Check
-                --jst      JavaScript Status
-                --ssrf     Blind SSRF testing
-                --cors     CORS misconfiguration scanner
-                --takeover Check Posible Takeover
-                --verbose  Verbose status code
-                --jsurl    Gathering all js urls
-
-            -gf            GF parameters grep
-                  -ssti Check SSTI Parameters
-                  -idor Check IDOR Parameters
-                  -rce  Check RCE Parameters
-                  -lfi  Check LFI Parameters
-                  -sqli Check SQLI Parameters
-                  -ssrf Check SSRF Parameters
-                  -api  Api keys
-                  -int  
-
-            -sw --scrw     Scraping wayback for data
-                  -js   Jsurls 
-                  -php  Phpurls
-                  -asp  ASP
-                  -html Html
-
-            -r  normal     Check open redirection
-                  -redirec Check redirec Parameters
-
-            -o             Outfile
-       
 #### ✔️ ***Example***:
 
 >  Check Subdomains
@@ -132,6 +128,12 @@ All the dependent libraries are compiled with go version 1.14.2. So go version 1
 (I love coffee and am very addicted to coffee:v)
 <br><a href="https://www.buymeacoffee.com/pikpikcu"><img src="https://cdn.buymeacoffee.com/buttons/default-black.png" alt="Buy Me A Coffee" height="50px"></a>
 
+### ✔️ ***Contribution & License***
+
+You can contribute in following ways:
+  - Give suggestions to make it better
+  - Fix issues & submit a pull request
+
  Credits Thanks:
 ------------
 
@@ -145,3 +147,4 @@ All the dependent libraries are compiled with go version 1.14.2. So go version 1
 * [Gf-Patterns](https://github.com/1ndianl33t/Gf-Patterns)
 * [httpx](https://github.com/projectdiscovery/httpx)
 * [SubOver](https://github.com/Ice3man543/SubOver)
+* [github-sub](github.com/theblackturtle/github-subs)
