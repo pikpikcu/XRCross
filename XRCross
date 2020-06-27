@@ -280,14 +280,15 @@ jsurl(){
         while read sub;do
                 gau -subs $sub | grep "\.js$" | anti-burl | grep -Eo "(http|https)://[a-zA-Z0-9./?=_-]*" | sort -u | tee -a > $output/js_file
         done < $output/subs.txt          
+        cd $output/js/          
         while read line; do
-            for i in $(curl -s "$line" | js-beautify ); do
-                    echo "$i" | sed -e 's/[/]/_/g' | sed -e 's/:/./g'| tee >> $output/js/$output.js
-            done  
-        done < $output/js_file
-        for file in $output/./js/*; do
+            curl -s "$line" | js-beautify > $( echo "$line" | sed -e 's/[/]/_/g' | sed -e 's/:/./g') 
+        done < ../js_file
+        cd ..
+        for file in ./js/*; do
             gf js $file      
-        done 
+        done
+        cd .. 
     fi
     echo -e "${NT}[${RD}*${NT}]${GR} Found js Download ${NT}[${GR}$(ls $output/js | wc -l)${NT}]"
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$(pwd /$output/)]"
@@ -784,6 +785,7 @@ help(){
         echo   "           --takeover  | Check Posible Takeover"
         echo   "           --verbose   | Verbose status code"
         echo   "           --jsurl     | Gathering all js urls"
+        echo   "           --xss       | XSS testing"
        # echo   "           --git       | Git Dump and Extrack Endpoinds" Coming Soon
         echo   "       -gf             | GF parameters grep"
         echo   "           -ssti       | Check SSTI Parameters"
