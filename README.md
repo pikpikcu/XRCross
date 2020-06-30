@@ -46,6 +46,7 @@
                   --ssrf      | Blind SSRF testing
                   --cors      | CORS misconfiguration scanner
                   --takeover  | Check Posible Takeover
+                  --xss       | XSS testing"
                   --verbose   | Verbose status code
                   --jsurl     | Gathering all js urls
             -gf         | GF parameters grep
@@ -67,53 +68,54 @@
 
 #### ✔️ ***Example***:
 
->  Check Subdomains
+>  ***Check Subdomains***
 
       XRCross -u  example.site  (--subdo|-s)
-
->  Host Live Check
+      
+>  ***Host Live Check***
 
       XRCross -u  example.site (--host|-H)
 
->  Scraping wayback
+>  ***Blind SSRF testing***
 
-      XRCross -sw  example.site (-js|-php|-asp|-html)
+      XRCross -u  example.site  (-Ss/--ssrf)
 
->  Check open redirection
+>  ***Check Parameter XSS***
 
-      XRCross -r  example.site  "(-redirec)"
+      XRCross -u example.site --xss
 
->  Blind SSRF testing
+>  ***CORS misconfiguration scanner***
 
-      XRCross -Ss/--ssrf  example.site  
+      XRCross -u  example.site --cors
 
->  Check Parameter XSS
+>  ***Check Posible Takeover***
 
-      XRCross -xs/--xss  example.site  
-     
->  CORS misconfiguration scanner
+      XRCross -u example.site --takeover
 
-      XRCross -cs/--cors  example.site  
+> ***Verbose Status Code***
 
->  GF parameters grep
+      XRCross -u  example.com --verbose
+
+>  ***GF parameters grep***
 
       XRCross -gf example.site "(-ssti|-idor|-rce|-lfi|-sqli)"
 
->  Check Posible Takeover
+>  ***Scraping wayback***
 
-      XRCross -T/--takeover  example.site 
+      XRCross -sw  example.site (-js|-php|-asp|-html)
 
-> Amazon S3 bucket enumeration 
+>  ***Check open redirection***
+
+      XRCross -r  example.site  "(-redirec)"
+
+> ***Amazon S3 bucket enumeration*** 
 
       XRCross -aws whatever
 
->  Outfile
+>  ***Outfile***
 
       XRCross <Arguments>  example.site  -o File_OUT/
 
-> Verbose Status Code
-
-      XRCross -v/--verbose  example.com 
 
 #### ✔️ ***How to install XRCross***:
 
