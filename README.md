@@ -13,7 +13,7 @@
    <img src="https://img.shields.io/badge/telegram--blue.svg">
    </a>
   <a href="https://github.com/pikpikcu/xrcross">
-    <img src="https://img.shields.io/badge/version-V1.5-green.svg">
+    <img src="https://img.shields.io/badge/version-V1.6[Beta]-green.svg">
  </a>
    <a href="https://github.com/pikpikcu/xrcross/blob/master/LICENSE">
    <img src="https://img.shields.io/badge/LICENSE-red.svg">
@@ -38,6 +38,7 @@
             -u /--url       | URLs
                   -rc         | Check HTTP response codes 
                   --subdo     | Check Subdomains
+                    --burp    | Urls Burpsuite crawling and scanning
                   --github    | Enumerate Subdomain 
                                     for github And Using Api github
                                     
@@ -71,7 +72,11 @@
 >  ***Check Subdomains***
 
       XRCross -u  example.site  (--subdo|-s)
-      
+
+>  ***Check Subdomains,and Burpsuite scanning***
+
+      XRCross -u  example.site --subdo --burp http://127.0.0.1:8080
+
 >  ***Host Live Check***
 
       XRCross -u  example.site (--host|-H)
