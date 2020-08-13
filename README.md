@@ -43,6 +43,7 @@
                     --dir       | Dir bruteforce
                       -w        | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
                     --host      | Host Live Check
+                    --header    | Host header injection check
                     --jst       | JavaScript Status
                     --ssrf      | Blind SSRF testing
                     --cors      | CORS misconfiguration scanner
@@ -165,3 +166,4 @@ You can contribute in following ways:
 * [SubOver](https://github.com/Ice3man543/SubOver) By [@Ice3man543]
 * [github-sub](github.com/theblackturtle/github-subs) By [@theblackturtle]
 * [s3enum](https://github.com/koenrh/s3enum) By [@koenrh]
+* [hinject](https://github.com/dwisiswant0) By [@dwisiswant0]
