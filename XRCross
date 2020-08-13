@@ -728,7 +728,15 @@ dirbuster(){
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/dir/$site-dir.txt]"
     
 }
-
+smuggling(){
+    if dependencies
+        then
+            echo -e "${NT}[${RD}*${NT}]${GR} Check HTTP smuggling ...${NT}"
+            sleep 2  
+            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
+            python3 tools/http-smuggling-test.py $site
+    fi
+}
 api(){
     if dependencies
         then
@@ -870,6 +878,7 @@ help(){
                     --cors      | CORS misconfiguration scanner
                     --takeover  | Check Posible Takeover
                     --verbose   | Verbose status code
+                    --smuggling | HTTP smuggling attack and check
                     --jsurl     | Gathering all js urls
                     --xss       | XSS testing
                 -gf             | GF parameters grep
@@ -1195,6 +1204,11 @@ while true; do
                         echo -e "${NT}[${RD}*${NT}]${GR} Wordlists Not Found!!!\n "
                         exit 1
                     fi
+            elif [[ $3 == "--smuggling" ]];
+                then
+                    logo
+                    smuggling $site
+                    exit 1
             elif [[ $3 == "--jsurl" ]];
                 then
                     if [[ $4 == "-o" ]];
