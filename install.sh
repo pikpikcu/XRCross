@@ -80,7 +80,19 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install Gau "
                               go get -u github.com/lc/gau
                               echo -e "${red}[+] Done Install Gau "
-                         elif [ ! -f ~/go/bin/assetfinder ];then      
+                        elif [ ! -f ~/go/bin/dirsearch ];then
+                              # [ dirsearch]
+                              echo -e "\n${red}[+]${green}Install dirsearch "
+                              go get github.com/evilsocket/dirsearch
+                              go get github.com/evilsocket/brutemachine
+                              cd ~/go/src/github.com/evilsocket/dirsearch
+                              make get_glide
+                              make install_dependencies
+                              make build
+                              cd ~/go/src/github.com/evilsocket/dirsearch/build/linux_x64/
+                              cp dirsearch ~/go/bin/
+                              echo -e "${red}[+] Done Install dirsearch "
+                        elif [ ! -f ~/go/bin/assetfinder ];then      
                               # [ Assetfinder]
                               echo -e "\n${red}[+]${green}Install Assetfinder "
                               go get -u github.com/tomnomnom/assetfinder
@@ -145,7 +157,7 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install jsbeautifier"
                               pip install jsbeautifier
                               echo -e "${red}[+] Done Install jsbeautifier"
-                        elif [ ! -f /usr/bin/github-subs ];then
+                        elif [ ! -f ~/go/bin/github-subs ];then
                               echo -e "\n${red}[+]${green}Install github-subs"
                               go get -u github.com/theblackturtle/github-subs
                               echo -e "${red}[+] Done Install github-subs"
@@ -169,4 +181,4 @@ if [[ -z "$XRCross" ]];then
       done
       shift
 fi
-./XRCross -h
+
