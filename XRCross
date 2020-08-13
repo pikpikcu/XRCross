@@ -96,6 +96,9 @@ dependencies(){
         then
         echo -e "${RD}[+]${GR} dirsearch Not Install!\n"
         exit 1
+    elif [ ! -f ~/go/bin/hinject ];then
+        echo -e "${RD}[+]${GR} hinject Not Install!\n"
+        exit 1
 
     fi
 }
@@ -214,6 +217,27 @@ proxy(){
             curl -H "$agent" --proxy $prox --ssl-no-revoke -L --url "$wayback" -o /dev/null -sk 
         done < $output/subdo/wayback.txt 
     fi
+}
+header(){
+    if  dependencies
+        then
+        echo -e "\n${NT}[${RD}*${NT}]${GR} Header Injection Checker...${NT}" 
+        sleep 2
+        echo -e "${NT}[${RD}!${NT}]${GR} Start On target:${NT} $site"
+        sleep 2
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Enumerate domain!!!:${NT}"
+        assetfinder --subs-only $site > $output/header/$site.txt 
+        #subfinder -silent -d $site >> $output/header/$site.txt 
+        echo -e "${NT}[${RD}*${NT}]${GR} Finall subdomain!!!:${NT}"
+        cat $output/header/$site.txt | sort -u > $output/header/subs.txt
+        rm -rf $output/subdo/$site.txt
+        sleep 2
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Check Header Injection Vulnerabilty!!!:${NT}"
+        while read line ;do
+            echo $line | httpx -silent | hinject -v 
+        done < $output/header/subs.txt
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Done Check Header Injection"
 }
 # Check the Subdomains for working HTTP and HTTPS
 hostlive(){
@@ -873,6 +897,7 @@ help(){
                     --dir       | Dir bruteforce
                       -w        | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
                     --host      | Host Live Check
+                    --header    | Host header injection check
                     --jst       | JavaScript Status
                     --ssrf      | Blind SSRF testing
                     --cors      | CORS misconfiguration scanner
@@ -1202,6 +1227,22 @@ while true; do
                     else
                         logo
                         echo -e "${NT}[${RD}*${NT}]${GR} Wordlists Not Found!!!\n "
+                        exit 1
+                    fi
+            elif [[ $3 == "--header" ]];
+                then
+                    if [[ $4 == "-o" ]];
+                    then
+                        output="$5/$site"
+                        mkdir -p "$output"/"header"
+                        logo
+                        header $site
+                        exit 1
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"header"
+                        logo
+                        header $site
                         exit 1
                     fi
             elif [[ $3 == "--smuggling" ]];
