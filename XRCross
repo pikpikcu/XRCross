@@ -20,7 +20,7 @@ BD=$(tput bold) # Bold
 ###############################################
 agent='User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0'
 codename='Sniper'
-ver='1.6.1[Beta]'
+ver='1.6.2[Beta]'
 follow='pikpikcu'
 site=$1
 IFS=$'\n'
@@ -91,6 +91,10 @@ dependencies(){
     elif [ ! -f /usr/bin/jq ];
         then
         echo -e "${RD}[+]${GR} jq Not Install!\n"
+        exit 1
+    elif [ ! -f ~/go/bin/dirsearch ];
+        then
+        echo -e "${RD}[+]${GR} dirsearch Not Install!\n"
         exit 1
 
     fi
@@ -713,6 +717,18 @@ take(){
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/takeover/$site-takeover.txt]"
     
 }
+dirbuster(){
+    if dependencies
+        then
+            echo -e "${NT}[${RD}*${NT}]${GR} Start dir bruteforce...${NT}"
+            sleep 2  
+            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
+            dirsearch -url $site --wordlist $wordlist | tee -a $output/dir/$site-dir.txt
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/dir/$site-dir.txt]"
+    
+}
+
 api(){
     if dependencies
         then
@@ -846,6 +862,8 @@ help(){
                     --subdo     | Check Subdomains
                       --burp    | Urls Burpsuite crawling and scanning 
                     --github    | Enumerate Subdomain for github And Using Api github
+                    --dir       | Dir bruteforce
+                      -w        | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
                     --host      | Host Live Check
                     --jst       | JavaScript Status
                     --ssrf      | Blind SSRF testing
@@ -1155,6 +1173,28 @@ while true; do
                 logo
                 all $site
                 exit 1
+            elif [[ $3 == "--dir" ]];
+                then
+                    if [[ $4 == "-o" ]];
+                    then
+                        output="$5/$site"
+                        mkdir -p "$output"/"dir"
+                        logo
+                        dirbuster $site
+                        exit 1
+                    elif [[ $4 == "-w" ]];
+                    then
+                        wordlist="$5"
+                        output="$site"
+                        mkdir -p "$output"/"dir"
+                        logo
+                        dirbuster $site
+                        exit 1
+                    else
+                        logo
+                        echo -e "${NT}[${RD}*${NT}]${GR} Wordlists Not Found!!!\n "
+                        exit 1
+                    fi
             elif [[ $3 == "--jsurl" ]];
                 then
                     if [[ $4 == "-o" ]];
