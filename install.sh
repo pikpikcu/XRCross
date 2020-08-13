@@ -147,7 +147,12 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install httpx"
                               GO111MODULE=on go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
                               echo -e "${red}[+] Done Install httpxs"
-                              
+              
+                        elif [ ! -f tools/http-smuggling-test.py  ];then 
+                              echo -e "\n${red}[+]${green}Install http-smuggling-test"
+                              mkdir tools && cd tools
+                              wget https://raw.githubusercontent.com/belane/http-smuggling-test/master/http-smuggling-test.py
+                              echo -e "${red}[+] Done Install http-smuggling-test"                
                         elif [ ! -f ~/go/bin/anti-burl ];then
                               echo -e "\n${red}[+]${green}Install anti-burl"
                               go get -u github.com/tomnomnom/hacks/anti-burl
