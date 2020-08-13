@@ -20,7 +20,7 @@ BD=$(tput bold) # Bold
 ###############################################
 agent='User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0'
 codename='Sniper'
-ver='1.6[Beta]'
+ver='1.6.1[Beta]'
 follow='pikpikcu'
 site=$1
 IFS=$'\n'
@@ -551,6 +551,29 @@ check_r(){
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/redirec/$site-redirec.txt]"
     
 }
+gfxss(){
+    if dependencies
+        then
+            echo -e "${NT}[${RD}*${NT}]${GR} Check XSS Parameters...${NT}"
+            sleep 2
+            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
+            assetfinder  $site > $output/xss/$site.txt
+            subfinder -silent -d $site >> $output/xss/$site.txt
+            cat $output/xss/$site.txt | sort -u > $output/xss/$site-1.txt
+            cat $output/xss/$site-1.txt | waybackurls | sort -u > $output/xss/xss.txt
+            cat $output/xss/xss.txt | gf xss | tee -a > $output/xss/$site-xss.txt
+            rm -rf $output/xss/$site.txt | rm -rf $output/xss/xss.txt
+            for run in $(cat $output/xss/$site-xss.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Found Check XSS Parameters${NT} [${GR}$(cat $output/xss/$site-xss.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/xss/$site-xss.txt]"
+    
+}
 idor(){
     if dependencies
         then
@@ -595,6 +618,29 @@ rce(){
     fi
     echo -e "${NT}[${RD}*${NT}]${GR} Found Check RCE Parameters ${NT}[${GR}$(cat $output/rce/$site-rce.txt | wc -l)${NT}]"
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/rce/$site-rce.txt]"
+    
+}
+traversal(){
+    if dependencies
+        then
+            echo -e "${NT}[${RD}*${NT}]${GR} Check img-traversal Parameters...${NT}"
+            sleep 2
+            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
+            assetfinder  $site > $output/traversal/$site.txt
+            subfinder -silent -d $site >> $output/traversal/$site.txt
+            cat $output/traversal/$site.txt | sort -u > $output/traversal/$site-1.txt
+            cat $output/traversal/$site-1.txt | waybackurls | sort -u > $output/traversal/traversal.txt
+            cat $output/traversal/traversal.txt | gf img-traversal | tee -a > $output/idor/$site-traversal.txt
+            rm -rf $output/traversal/$site.txt | rm -rf $output/traversal/traversal.txt
+            for run in $(cat $output/idor/$site-traversal.txt);do
+                while [ $run ];do
+                    echo -e "${NT}[${dat}]${GR}[+]resluts:${NT} $run"
+                    break
+                done
+            done 
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Found Check traversal Parameters ${NT}[${GR}$(cat $output/traversal/$site-traversal.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/traversal/$site-traversal.txt]"
     
 }
 lfi(){
@@ -690,7 +736,7 @@ api(){
 ssrf2(){
     if dependencies
         then
-            echo -e "${NT}[${RD}*${NT}]${GR} Check ssrf...${NT}"
+            echo -e "${NT}[${RD}*${NT}]${GR} Check ssrf Parameters...${NT}"
             sleep 2
             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $site"
             assetfinder $site | waybackurls | sort -u > $output/ssrf/ssrf.txt
@@ -815,6 +861,9 @@ help(){
                     -lfi        | Check LFI Parameters
                     -sqli       | Check SQLI Parameters
                     -ssrf       | Check SSRF Parameters
+                    -xss        | Check XSS Parameters
+                    -img        | Check img-traversal Parameters
+                    -int        | Interestingparams
                 -sw/-scrw       | Scraping wayback for data
                     -js         | Jsurls 
                     -php        | Phpurls
@@ -890,6 +939,22 @@ while true; do
                     mkdir -p "$output"/"idor"
                     logo
                     idor $site
+                    exit 1
+                fi
+            elif [[ $3 == "-xss" ]];
+                then
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"xss"
+                    logo
+                    gfxss $site
+                    exit 1
+                else
+                    output="$site"
+                    mkdir -p "$output"/"xss"
+                    logo
+                    gfxss $site
                     exit 1
                 fi
             elif [[ $3 == "-int" ]];
@@ -998,13 +1063,29 @@ while true; do
                     output="$5/$site"
                     mkdir -p "$output"/"ssrf"
                     logo
-                    ssrf $site
+                    ssrf2 $site
                     exit 1
                 else
                     output="$site"
                     mkdir -p "$output"/"ssrf"
                     logo
-                    ssrf $site
+                    ssrf2 $site
+                    exit 1
+                fi
+            elif [[ $3 == "-img" ]];
+                then
+                if [[ $4 == "-o" ]];
+                    then
+                    output="$5/$site"
+                    mkdir -p "$output"/"traversal"
+                    logo
+                    traversal $site
+                    exit 1
+                else
+                    output="$site"
+                    mkdir -p "$output"/"traversal"
+                    logo
+                    traversal $site
                     exit 1
                 fi
                 
