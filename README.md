@@ -29,43 +29,46 @@
 
 #### ✔️ ***Options***:
 >   
-      Example: 
-            ./XRCross -u/--url example.site <arguments>
-            ./XRCross <arguments> example.site <arguments> 
-
-      Optional Arguments:
-            -h /--help      | show this help message and exit
-            -u /--url       | URLs
-                  -rc         | Check HTTP response codes 
-                  --subdo     | Check Subdomains
-                    --burp    | Urls Burpsuite crawling and scanning
-                  --github    | Enumerate Subdomain 
-                                    for github And Using Api github
-                                    
-                  --host      | Host Live Check
-                  --jst       | JavaScript Status
-                  --ssrf      | Blind SSRF testing
-                  --cors      | CORS misconfiguration scanner
-                  --takeover  | Check Posible Takeover
-                  --xss       | XSS testing"
-                  --verbose   | Verbose status code
-                  --jsurl     | Gathering all js urls
-            -gf         | GF parameters grep
-                  -ssti       | Check SSTI Parameters
-                  -idor       | Check IDOR Parameters
-                  -rce        | Check RCE Parameters
-                  -lfi        | Check LFI Parameters
-                  -sqli       | Check SQLI Parameters
-                  -ssrf       | Check SSRF Parameters
-            -sw/-scrw   | Scraping wayback for data
-                  -js         | Jsurls 
-                  -php        | Phpurls
-                  -asp        | ASP
-                  -html       | Html
-            -aws              | Amazon S3 bucket enumeration "
-            -r  normal        | Check open redirection
-                  -redirec    | Check redirec Parameters
-            -o                | Outfile
+       
+        Example: ./XRCross -u/--url example.site <arguments>
+                ./XRCross <arguments> example.site <arguments> 
+        
+        Optional Arguments:
+                -h /--help      | show this help message and exit
+                -u /--url       | URLs
+                    -rc         | Check HTTP response codes 
+                    --subdo     | Check Subdomains
+                      --burp    | Urls Burpsuite crawling and scanning 
+                    --github    | Enumerate Subdomain for github And Using Api github
+                    --dir       | Dir bruteforce
+                      -w        | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
+                    --host      | Host Live Check
+                    --jst       | JavaScript Status
+                    --ssrf      | Blind SSRF testing
+                    --cors      | CORS misconfiguration scanner
+                    --takeover  | Check Posible Takeover
+                    --verbose   | Verbose status code
+                    --jsurl     | Gathering all js urls
+                    --xss       | XSS testing
+                -gf             | GF parameters grep
+                    -ssti       | Check SSTI Parameters
+                    -idor       | Check IDOR Parameters
+                    -rce        | Check RCE Parameters
+                    -lfi        | Check LFI Parameters
+                    -sqli       | Check SQLI Parameters
+                    -ssrf       | Check SSRF Parameters
+                    -xss        | Check XSS Parameters
+                    -img        | Check img-traversal Parameters
+                    -int        | Interestingparams
+                -sw/-scrw       | Scraping wayback for data
+                    -js         | Jsurls 
+                    -php        | Phpurls
+                    -asp        | ASP
+                    -html       | Html
+                -aws            | Amazon S3 bucket enumeration 
+                -r  normal      | Check open redirection
+                    -redirec    | Check redirec Parameters
+                -o              | Outfile
 
 #### ✔️ ***Example***:
 
