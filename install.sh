@@ -157,6 +157,10 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install anti-burl"
                               go get -u github.com/tomnomnom/hacks/anti-burl
                               echo -e "${red}[+] Done Install anti-burl"
+                        elif [ ! -f ~/go/bin/hinject ];then
+                              echo -e "\n${red}[+]${green}Install hinject"
+                              go get -u github.com/dwisiswant0/hinject
+                              echo -e "${red}[+] Done Installhinject"
 
                         elif [ ! -f /usr/bin/js-beautify ];then
                               echo -e "\n${red}[+]${green}Install jsbeautifier"
