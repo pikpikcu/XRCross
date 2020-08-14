@@ -146,8 +146,11 @@ if [[ -z "$XRCross" ]];then
                         elif [ ! -f ~/go/bin/httpx ];then 
                               echo -e "\n${red}[+]${green}Install httpx"
                               GO111MODULE=on go get -u -v github.com/projectdiscovery/httpx/cmd/httpx
-                              echo -e "${red}[+] Done Install httpxs"
-              
+                              echo -e "${red}[+] Done Install httpx"
+                        elif [ ! -f ~/go/bin/qsreplace ];then 
+                              echo -e "\n${red}[+]${green}Install qsreplace"
+                              go get -u github.com/tomnomnom/qsreplace
+                              echo -e "${red}[+] Done Install qsreplace"
                         elif [ ! -f tools/http-smuggling-test.py  ];then 
                               echo -e "\n${red}[+]${green}Install http-smuggling-test"
                               mkdir tools && cd tools
@@ -160,8 +163,11 @@ if [[ -z "$XRCross" ]];then
                         elif [ ! -f ~/go/bin/hinject ];then
                               echo -e "\n${red}[+]${green}Install hinject"
                               go get -u github.com/dwisiswant0/hinject
-                              echo -e "${red}[+] Done Installhinject"
-
+                              echo -e "${red}[+] Done Install hinject"
+                        elif [ ! -f ~/go/bin/nuclei ];then
+                              echo -e "\n${red}[+]${green}Install nuclei"
+                              GO111MODULE=on go get -u -v github.com/projectdiscovery/nuclei/v2/cmd/nuclei
+                              echo -e "${red}[+] Done Install nuclei"
                         elif [ ! -f /usr/bin/js-beautify ];then
                               echo -e "\n${red}[+]${green}Install jsbeautifier"
                               pip install jsbeautifier
