@@ -51,6 +51,7 @@
                     --verbose   | Verbose status code
                     --jsurl     | Gathering all js urls
                     --xss       | XSS testing
+                    --lfi       | LFI Check Vulnerabilty
                 -gf             | GF parameters grep
                     -ssti       | Check SSTI Parameters
                     -idor       | Check IDOR Parameters
