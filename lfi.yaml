@@ -65,11 +65,7 @@ requests:
       - '{{BaseURL}}../../../administrator/inbox'
       - '{{BaseURL}}../../../../../../../dev'     
     matchers:
-      - type: status
-        status:
-          - 200
-          - 404
-          - 403
-          - 300
-          - 301
+      - type: regex
+        regex:
+          - "root:[x*]:0:0:"
         part: header
