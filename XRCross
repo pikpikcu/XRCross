@@ -228,6 +228,25 @@ LFI1(){
     echo -e "${NT}[${RD}*${NT}]${GR} Done Check LFI Vulnerabilty ${NT}[${GR}$(cat $output/lfi/$site-lfi.txt  | wc -l)${NT}]"
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/lfi/$site-lfi.txt]"
 }
+ssti1(){
+    if  dependencies
+        then
+        echo -e "\n${NT}[${RD}*${NT}]${GR} Start Check SSTI Vulnerabilty...${NT}" 
+        sleep 2
+        echo -e "${NT}[${RD}!${NT}]${GR} Start On target:${NT} $site"
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Enumerate domain!!!${NT}"
+        assetfinder --subs-only $site | sort -u > $output/ssti/$site.txt 
+        subfinder -silent -d $site >> $output/ssti/$site.txt 
+        echo -e "${NT}[${RD}*${NT}]${GR} Finall subdomain!!!${NT}"
+        cat $output/ssti/$site.txt | httpx --silent | sort -u > $output/ssti/$site-final.txt
+        echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+        cat $output/ssti/$site-final.txt | waybackurls | gf ssti | qsreplace | sort -u > $output/ssti/$site-data.txt 
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Check ssti Vulnerabilty!!!${NT}"
+        nuclei -l $output/ssti/$site-data.txt -t ssti.yaml -silent -timeout 7 | tee -a  $output/ssti/$site-ssti.txt
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssti Vulnerabilty ${NT}[${GR}$(cat $output/ssti/$site-ssti.txt  | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/ssti/$site-ssti.txt]"
+}
 flash(){
     if  dependencies
         then
@@ -950,6 +969,7 @@ help(){
                     --jsurl     | Gathering all js urls
                     --xss       | XSS testing
                     --lfi       | LFI Check Vulnerabilty
+                    --ssti      | SSTI Check Vulnerabilty
                 -gf             | GF parameters grep
                     -ssti       | Check SSTI Parameters
                     -idor       | Check IDOR Parameters
@@ -1303,6 +1323,22 @@ while true; do
                         mkdir -p "$output"/"lfi"
                         logo
                         LFI1 $site
+                        exit 1
+                    fi
+            elif [[ $3 == "--ssti" ]];
+                then
+                    if [[ $4 == "-o" ]];
+                    then
+                        output="$5/$site"
+                        mkdir -p "$output"/"ssti"
+                        logo
+                        ssti1 $site
+                        exit 1
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"ssti"
+                        logo
+                        ssti1 $site
                         exit 1
                     fi
             elif [[ $3 == "--smuggling" ]];
