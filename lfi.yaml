@@ -66,4 +66,4 @@ requests:
       - type: regex
         regex:
           - "root:[x*]:0:0:"
-        part: header
+        part: body
