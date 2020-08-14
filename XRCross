@@ -202,6 +202,26 @@ subdo(){
     echo -e "${NT}[${RD}*${NT}]${GR} SUBDOMAINS NotValid ${NT}[${GR}$(cat $output/subdo/subs-notvalid.txt | wc -l)${NT}]"
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/subdo/subs.txt]"
 }
+LFI1(){
+    if  dependencies
+        then
+        echo -e "\n${NT}[${RD}*${NT}]${GR} Start Check LFI Vulnerabilty...${NT}" 
+        sleep 2
+        echo -e "${NT}[${RD}!${NT}]${GR} Start On target:${NT} $site"
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Enumerate domain!!!:${NT}"
+        assetfinder --subs-only $site | sort -u > $output/lfi/$site.txt 
+        subfinder -silent -d $site >> $output/lfi/$site.txt 
+        echo -e "${NT}[${RD}*${NT}]${GR} Finall subdomain!!!${NT}"
+        cat $output/lfi/$site.txt | httpx --silent | sort -u > $output/lfi/$site-final.txt
+        echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+        cat $output/lfi/$site-final.txt | waybackurls | gf lfi | qsreplace | sort -u > $output/lfi/$site-data.txt 
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Check LFI Vulnerabilty!!!${NT}"
+        nuclei -l $output/lfi/$site-data.txt -t lfi.yaml -silent -timeout 7 | tee -a  $output/lfi/$site-lfi.txt
+        #rm -rf $output/lfi/$site-final.txt $output/lfi/$site.txt $output/lfi/$site-data.txt   
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Done Check LFI Vulnerabilty ${NT}[${GR}$(cat $output/lfi/$site-lfi.txt  | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/lfi/$site-lfi.txt]"
+}
 proxy(){
     if dependencies
         then
@@ -225,14 +245,14 @@ header(){
         sleep 2
         echo -e "${NT}[${RD}!${NT}]${GR} Start On target:${NT} $site"
         sleep 2
-        echo -e "${NT}[${RD}*${NT}]${GR} Start Enumerate domain!!!:${NT}"
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Enumerate domain!!!${NT}"
         assetfinder --subs-only $site > $output/header/$site.txt 
         #subfinder -silent -d $site >> $output/header/$site.txt 
-        echo -e "${NT}[${RD}*${NT}]${GR} Finall subdomain!!!:${NT}"
+        echo -e "${NT}[${RD}*${NT}]${GR} Finall subdomain!!!${NT}"
         cat $output/header/$site.txt | sort -u > $output/header/subs.txt
         rm -rf $output/subdo/$site.txt
         sleep 2
-        echo -e "${NT}[${RD}*${NT}]${GR} Start Check Header Injection Vulnerabilty!!!:${NT}"
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Check Header Injection Vulnerabilty!!!${NT}"
         while read line ;do
             echo $line | httpx -silent | hinject -v 
         done < $output/header/subs.txt
@@ -906,6 +926,7 @@ help(){
                     --smuggling | HTTP smuggling attack and check
                     --jsurl     | Gathering all js urls
                     --xss       | XSS testing
+                    --lfi       | LFI Check Vulnerabilty
                 -gf             | GF parameters grep
                     -ssti       | Check SSTI Parameters
                     -idor       | Check IDOR Parameters
@@ -1243,6 +1264,22 @@ while true; do
                         mkdir -p "$output"/"header"
                         logo
                         header $site
+                        exit 1
+                    fi
+            elif [[ $3 == "--lfi" ]];
+                then
+                    if [[ $4 == "-o" ]];
+                    then
+                        output="$5/$site"
+                        mkdir -p "$output"/"lfi"
+                        logo
+                        LFI1 $site
+                        exit 1
+                    else
+                        output="$site"
+                        mkdir -p "$output"/"lfi"
+                        logo
+                        LFI1 $site
                         exit 1
                     fi
             elif [[ $3 == "--smuggling" ]];
