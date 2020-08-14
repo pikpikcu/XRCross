@@ -214,7 +214,7 @@ LFI1(){
         echo -e "\n${NT}[${RD}*${NT}]${GR} Start Check LFI Vulnerabilty...${NT}" 
         sleep 2
         echo -e "${NT}[${RD}!${NT}]${GR} Start On target:${NT} $site"
-        echo -e "${NT}[${RD}*${NT}]${GR} Start Enumerate domain!!!:${NT}"
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Enumerate domain!!!${NT}"
         assetfinder --subs-only $site | sort -u > $output/lfi/$site.txt 
         subfinder -silent -d $site >> $output/lfi/$site.txt 
         echo -e "${NT}[${RD}*${NT}]${GR} Finall subdomain!!!${NT}"
@@ -227,6 +227,22 @@ LFI1(){
     fi
     echo -e "${NT}[${RD}*${NT}]${GR} Done Check LFI Vulnerabilty ${NT}[${GR}$(cat $output/lfi/$site-lfi.txt  | wc -l)${NT}]"
     echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/lfi/$site-lfi.txt]"
+}
+flash(){
+    if  dependencies
+        then
+        echo -e "\n${NT}[${RD}*${NT}]${GR} Start Check cors misconfig flash vulnerabilty...${NT}" 
+        sleep 2
+        echo -e "${NT}[${RD}!${NT}]${GR} Start On target:${NT} $site"
+        echo -e "${NT}[${RD}*${NT}]${GR} Start Enumerate domain!!!${NT}"
+        assetfinder --subs-only $site | sort -u > $output/cors/$site.txt 
+        subfinder -silent -d $site >> $output/cors/$site.txt 
+        echo -e "${NT}[${RD}*${NT}]${GR} Finall subdomain!!!${NT}"
+        cat $output/cors/$site.txt | httpx --silent | sort -u > $output/cors/$site-final.txt
+        nuclei -l $output/cors/$site-final.txt -t basic-cors-flash.yaml -silent -timeout 7 | tee -a  $output/cors/$site-cors.txt
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Done Check cors misconfig flash  Vulnerabilty ${NT}[${GR}$(cat $output/cors/$site-cors.txt  | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/cors/$site-cors.txt]"
 }
 proxy(){
     if dependencies
@@ -927,6 +943,7 @@ help(){
                     --jst       | JavaScript Status
                     --ssrf      | Blind SSRF testing
                     --cors      | CORS misconfiguration scanner
+                      -flash    | Basic cors misconfig flash
                     --takeover  | Check Posible Takeover
                     --verbose   | Verbose status code
                     --smuggling | HTTP smuggling attack and check
@@ -1422,6 +1439,14 @@ while true; do
                         mkdir -p "$output"/"cors"
                         logo
                         cors $site
+                        exit 1
+                    elif [[ $4 == "-flash" ]];
+                    then
+                        #burp="$5"
+                        output="$site"
+                        mkdir -p "$output"/"cors"
+                        logo
+                        flash $site
                         exit 1
                     else
                         output="$site"
