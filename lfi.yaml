@@ -8,8 +8,6 @@ info:
 requests:
   - method: GET
     path:
-     # - '{{BaseURL}}../../../../../../../../../../../../../../../../etc/passwd'
-     # - '{{BaseURL}}../../../../../../../../../../../../etc/passwd%00'
       - '{{BaseURL}}/etc/master.passwd'
       - '{{BaseURL}}/master.passwd'
       - '{{BaseURL}}/etc/passwd'
