@@ -52,7 +52,7 @@ if [[ -z "$XRCross" ]];then
                         elif [ ! -f ~/go/bin/SubOver ]; then
                               #SubOver
                               echo -e "\n${red}[+]${green}Install SubOver "
-                              go get -u github.com/Ice3man543/SubOver
+                              go get -u github.com/pikpikcu/SubOver
                               echo -e "${red}[+] Done Install SubOver "
                         elif [ ! -f ~/go/bin/dalfox ];then
                               # [dalfox]
@@ -139,7 +139,7 @@ if [[ -z "$XRCross" ]];then
                               echo -e "\n${red}[+]${green}Install Gf-Patterns"
                               git clone https://github.com/1ndianl33t/Gf-Patterns
                               mv Gf-Patterns/*.json ~/.gf
-                              cp *.json ~/.gf
+                              cp config/cmd.json ~/.gf
                               rm -rf Gf-Patterns
                               echo -e "${red}[+] Done Install Gf-Patterns"
                         
