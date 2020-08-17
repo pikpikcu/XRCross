@@ -13,7 +13,7 @@
    <img src="https://img.shields.io/badge/telegram--blue.svg">
    </a>
   <a href="https://github.com/pikpikcu/xrcross">
-    <img src="https://img.shields.io/badge/version-V1.6[Beta]-green.svg">
+    <img src="https://img.shields.io/badge/version-V1.6.4[Beta]-green.svg">
  </a>
    <a href="https://github.com/pikpikcu/xrcross/blob/master/LICENSE">
    <img src="https://img.shields.io/badge/LICENSE-red.svg">
