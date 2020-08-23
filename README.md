@@ -13,7 +13,7 @@
    <img src="https://img.shields.io/badge/telegram--blue.svg">
    </a>
   <a href="https://github.com/pikpikcu/xrcross">
-    <img src="https://img.shields.io/badge/version-V1.6.4[Beta]-green.svg">
+    <img src="https://img.shields.io/badge/version-V1.6.8[Beta]-green.svg">
  </a>
    <a href="https://github.com/pikpikcu/xrcross/blob/master/LICENSE">
    <img src="https://img.shields.io/badge/LICENSE-red.svg">
@@ -29,102 +29,53 @@
 
 #### ✔️ ***Options***:
 >   
-       
-        Example: ./XRCross -u/--url example.site <arguments>
-                ./XRCross <arguments> example.site <arguments> 
+        Example: 
+                XRCross -u/--url example.site <arguments>
+                
         
         Optional Arguments:
-                -h /--help      | show this help message and exit
-                -u /--url       | URLs
-                    -rc         | Check HTTP response codes 
-                    --subdo     | Check Subdomains
-                      --burp    | Urls Burpsuite crawling and scanning 
-                    --github    | Enumerate Subdomain for github And Using Api github
-                    --dir       | Dir bruteforce
-                      -w        | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
-                    --host      | Host Live Check
-                    --header    | Host header injection check
-                    --jst       | JavaScript Status
-                    --ssrf      | Blind SSRF testing
-                    --cors      | CORS misconfiguration scanner
-                    --takeover  | Check Posible Takeover
-                    --verbose   | Verbose status code
-                    --jsurl     | Gathering all js urls
-                    --xss       | XSS testing
-                    --lfi       | LFI Check Vulnerabilty
-                -gf             | GF parameters grep
-                    -ssti       | Check SSTI Parameters
-                    -idor       | Check IDOR Parameters
-                    -rce        | Check RCE Parameters
-                    -lfi        | Check LFI Parameters
-                    -sqli       | Check SQLI Parameters
-                    -ssrf       | Check SSRF Parameters
-                    -xss        | Check XSS Parameters
-                    -img        | Check img-traversal Parameters
-                    -int        | Interestingparams
-                -sw/-scrw       | Scraping wayback for data
-                    -js         | Jsurls 
-                    -php        | Phpurls
-                    -asp        | ASP
-                    -html       | Html
-                -aws            | Amazon S3 bucket enumeration 
-                -r  normal      | Check open redirection
-                    -redirec    | Check redirec Parameters
-                -o              | Outfile
+                -h /--help          | show this help message and exit
+                -u /--url           | URLs
+                -lp/--lfiparam      | Get LFI Parameters       
+                    --lfiv          | LFI Check Vulnerabilty
+                -ss/--ssrf          | Get SSRF Parameters 
+                    --ssrfv         | Blind SSRF testing Vulnerabilty
+                -st/--ssti          | Get parameter SSTI Vulnerabilty  
+                    --sstiv         | Test Vulnerabilty SSTI
+                -c /--cmd           | Command Injection Check Vulnerabilty
+                -sm/--smuggling     | HTTP request smuggling 
+                -hr/--header        | Host header injection 
+                -t /--takeover      | Check Posible Takeover
+                -r /--redirect      | Get redirec Parameters
+                    --rev           | Get Vulnerabilty Open-redirect
+                -x /--xss           | Get XSS Parameters        
+                    --xssv          | XSS Scanners Vulnerabilty
+                -a /--aws           | Amazon S3 bucket enumeration
+                -p /--proxy         | URL of the proxy server (default: http://127.0.0.1:8080)
+                -s /--subdo         | Check Subdomains Enumerations
+                    --live          | Check live the Subdomains for working HTTP and HTTPS servers
+                    --map           | Domain Mapping with dnsdumster
+                -d /--dir           | Dir enumeration
+                   -w /--wordlists  | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
+                -j /--jsurl         | Gathering all js urls and extract endpoints from js file
+                   -js /--jstatus   | Get Status JavaScript 
+                -cr/--cors          | CORS misconfiguration scanner
+                    --flash         | Basic cors misconfig flash
+                -pr/--param        
+                    --idor          | Get IDOR Parameters
+                    --rce           | Get RCE Parameters
+                    --sqli          | Get SQLI Parameters
+                    --img           | Get img-traversal Parameters
+                    --int           | Interestingparams
+                     
+                -w /--wayback       | Scraping wayback for data
+                    --js            | Jsurls 
+                    --php           | Phpurls
+                    --asp           | ASP
+                    --html          | Html
 
-#### ✔️ ***Example***:
-
->  ***Check Subdomains***
-
-      XRCross -u  example.site  (--subdo|-s)
-
->  ***Check Subdomains,and Burpsuite scanning***
-
-      XRCross -u  example.site --subdo --burp http://127.0.0.1:8080
-
->  ***Host Live Check***
-
-      XRCross -u  example.site (--host|-H)
-
->  ***Blind SSRF testing***
-
-      XRCross -u  example.site  (-Ss/--ssrf)
-
->  ***Check Parameter XSS***
-
-      XRCross -u example.site --xss
-
->  ***CORS misconfiguration scanner***
-
-      XRCross -u  example.site --cors
-
->  ***Check Posible Takeover***
-
-      XRCross -u example.site --takeover
-
-> ***Verbose Status Code***
-
-      XRCross -u  example.com --verbose
-
->  ***GF parameters grep***
-
-      XRCross -gf example.site "(-ssti|-idor|-rce|-lfi|-sqli)"
-
->  ***Scraping wayback***
-
-      XRCross -sw  example.site (-js|-php|-asp|-html)
-
->  ***Check open redirection***
-
-      XRCross -r  example.site  "(-redirec)"
-
-> ***Amazon S3 bucket enumeration*** 
-
-      XRCross -aws whatever
-
->  ***Outfile***
-
-      XRCross <Arguments>  example.site  -o File_OUT/
+                -v /--verbose       | verbose
+                -o /--outfile       | outfile    
 
 
 #### ✔️ ***How to install XRCross***:
@@ -135,10 +86,18 @@
 
 > root@kali~# ./XRCross -h
 
+> Open folder confing/ and edit file:
+      |-> Api-github.txt <(inssert github token)
+      |-> ssrf.txt <(inssert ssrf payload)
+      |-> xss.ht <(inssert your.xss.ht)
 
 #### ✔️ ***Go language dependency***:
 
-All the dependent libraries are compiled with go version 1.14.2. So go version 1.14.2 should be installed(strictly). Secondly, $GOPATH should be set to /root/go and it should be exported to PATH using "export PATH=$PATH:$GOROOT/bin/:$GOPATH/bin" and same should be present in profile or bash_profile or bashrc. XRCross checks for all the go dependencies under ~/go/bin.
+```bash
+All the dependent libraries are compiled with go version 1.14.2. So go version 1.14.2 should be installed
+(strictly). Secondly, $GOPATH should be set to /root/go and it should be exported to PATH using "export PATH=$PATH:$GOROOT/bin/:$GOPATH/bin" 
+and same should be present in profile or bash_profile or bashrc. XRCross checks for all the go dependencies under ~/go/bin.
+```
 
 ### ✔️ ***Donate!***
 
