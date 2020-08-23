@@ -86,8 +86,9 @@
 
 > root@kali~# ./XRCross -h
 
->
- Open folder confing/ and edit file:
+>       
+   
+    Open folder confing/ and edit file:
       |-> Api-github.txt <(inssert github token)
       |-> ssrf.txt <(inssert ssrf payload)
       |-> xss.ht <(inssert your.xss.ht)
