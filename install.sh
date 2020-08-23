@@ -49,11 +49,11 @@ if [[ -z "$XRCross" ]];then
                               GO111MODULE=on
                               sleep 1
                               echo -e "${red}[+] Done Install Golang "
-                        elif [ ! -f ~/go/bin/SubOver ]; then
+                        elif [ ! -f ~/go/bin/subjack ]; then
                               #SubOver
-                              echo -e "\n${red}[+]${green}Install SubOver "
-                              go get -u github.com/pikpikcu/SubOver
-                              echo -e "${red}[+] Done Install SubOver "
+                              echo -e "\n${red}[+]${green}Install subjack "
+                              go get github.com/haccer/subjack
+                              echo -e "${red}[+] Done Install subjack "
                         elif [ ! -f ~/go/bin/dalfox ];then
                               # [dalfox]
                               echo -e "\n${red}[+]${green}Install dalfox "
