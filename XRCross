@@ -144,7 +144,8 @@ function exec_Subdomains {
      alienvault && \
      ctsearch && \
      dnsdumpster && \
-     web_archive jldc && \
+     web_archive && \
+     jldc && \
      crtsh  Api_Sublist3r  && \
      hackertarget  && \
      threatcrowd && \
@@ -308,7 +309,6 @@ map(){
      echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
     if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
         exec_Subdomains
-        cat $output/$url.txt
         while read line ;do
             token=$(curl -ILs https://dnsdumpster.com | grep csrftoken | cut -d " " -f2 | cut -d "=" -f2 | tr -d ";")
             curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com \
