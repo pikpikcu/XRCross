@@ -13,7 +13,7 @@
    <img src="https://img.shields.io/badge/telegram--blue.svg">
    </a>
   <a href="https://github.com/pikpikcu/xrcross">
-    <img src="https://img.shields.io/badge/version-V1.6.8[Beta]-green.svg">
+    <img src="https://img.shields.io/badge/version-V1.7.0[Beta]-green.svg">
  </a>
    <a href="https://github.com/pikpikcu/xrcross/blob/master/LICENSE">
    <img src="https://img.shields.io/badge/LICENSE-red.svg">
@@ -36,47 +36,47 @@
         Optional Arguments:
                 -h /--help          | show this help message and exit
                 -u /--url           | URLs
+                -a /--aws           | Amazon S3 bucket enumeration
+                -p /--proxy         | URL of the proxy server (default: http://127.0.0.1:8080)
+                -s /--subdo         | Check Subdomains Enumerations
+                -m /--map           | Domain Mapping with dnsdumster
+                -l /--live          | Check live the Subdomains for working HTTP and HTTPS servers
+                -hr/--header        | Host header injection 
+                -sm/--smuggling     | HTTP request smuggling 
+                -t /--takeover      | Check Posible Takeover
+                -cr/--cors          | CORS misconfiguration scanner
+                    --flash         | Basic cors misconfig flash
+                -d /--dir           | Dir enumeration
+                   -w /--wordlists  | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
                 -lp/--lfiparam      | Get LFI Parameters       
                     --lfiv          | LFI Check Vulnerabilty
-                -ss/--ssrf          | Get SSRF Parameters 
-                    --ssrfv         | Blind SSRF testing Vulnerabilty
                 -st/--ssti          | Get parameter SSTI Vulnerabilty  
                     --sstiv         | Test Vulnerabilty SSTI
-                -c /--cmd           | Command Injection Check Vulnerabilty
-                -sm/--smuggling     | HTTP request smuggling 
-                -hr/--header        | Host header injection 
-                -t /--takeover      | Check Posible Takeover
+                -ss/--ssrf          | Get SSRF Parameters 
+                    --blind         | Blind SSRF testing Vulnerabilty
+                -c /--cmd           | Get Command Injection Parameter
+                    --cmdv          | Command Injection Check Vulnerabilty
                 -r /--redirect      | Get redirec Parameters
                     --rev           | Get Vulnerabilty Open-redirect
                 -x /--xss           | Get XSS Parameters        
                     --xssv          | XSS Scanners Vulnerabilty
-                -a /--aws           | Amazon S3 bucket enumeration
-                -p /--proxy         | URL of the proxy server (default: http://127.0.0.1:8080)
-                -s /--subdo         | Check Subdomains Enumerations
-                    --live          | Check live the Subdomains for working HTTP and HTTPS servers
-                    --map           | Domain Mapping with dnsdumster
-                -d /--dir           | Dir enumeration
-                   -w /--wordlists  | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
-                -j /--jsurl         | Gathering all js urls and extract endpoints from js file
-                   -js /--jstatus   | Get Status JavaScript 
-                -cr/--cors          | CORS misconfiguration scanner
-                    --flash         | Basic cors misconfig flash
-                -pr/--param        
+                -j /--jstatus       | Get Status JavaScript 
+                    --jsurl         | Gathering all js urls and extract endpoints from js file
+
+                -pr/--param         
                     --idor          | Get IDOR Parameters
                     --rce           | Get RCE Parameters
                     --sqli          | Get SQLI Parameters
                     --img           | Get img-traversal Parameters
                     --int           | Interestingparams
-                     
+
                 -w /--wayback       | Scraping wayback for data
                     --js            | Jsurls 
                     --php           | Phpurls
                     --asp           | ASP
                     --html          | Html
-
-                -v /--verbose       | verbose
+                -v /--verbose       | verbose mode
                 -o /--outfile       | outfile    
-
 
 #### ✔️ ***How to install XRCross***:
 
