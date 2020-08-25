@@ -6,6 +6,7 @@
 # if there are any problems with these tools please let me know.     #
 ######################################################################
 
+
 # Faforit Colors
 BK=$(tput setaf 0) # Black
 RD=$(tput setaf 1) # Red
@@ -21,117 +22,18 @@ AB=$(tput setaf 8) # abuabu
 
 agent='User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0'
 codename='Sniper'
-ver='1.6.8[Beta]'
+ver='1.7.0[Beta]'
 follow='pikpikcu'
 tw='@sec715'
 IFS=$'\n'
 verbose=0
-##dat=$(date +"%m-%d-%y[%r]")
 GitHubApi=`cat config/Api-github.txt`
 xss_ht=`cat config/xss.ht`
 host=`cat config/openredirect.txt`
 linee=".(jpg|jpeg|gif|css|tif|tiff|png|ttf|woff|woff2|ico|pdf|svg|txt|js)"
+_start=1
+_end=100
 
-# Dependenciess
-dependencies(){
-    if [ ! -f ~/go/bin/assetfinder ]; 
-        then
-        echo -e "${RD}[+]${GR} Assetfinder Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/subfinder ]; 
-        then
-        echo -e "${RD}[+]${GR} Subfinder Not Install!\n"
-        exit 1  
-    elif [ ! -f ~/go/bin/httprobe ];
-        then
-        echo -e "${RD}[+]${GR} httprobe Not Install!\n"
-        exit 1 
-    elif [ ! -f ~/go/bin/waybackurls ];
-        then
-        echo -e "${RD}[+]${GR} waybackurls Not Install!\n"
-        exit 1 
-    elif [ ! -f ~/go/bin/anti-burl ];
-        then
-        echo -e "${RD}[+]${GR} anti-burl Not Install!\n"
-        exit 1  
-    elif [ ! -f ~/go/bin/hakrawler ];
-        then
-        echo -e "${RD}[+]${GR} hakrawler Not Install!\n"
-        exit 1 
-    elif [ ! -f ~/go/bin/hakcheckurl ];
-        then
-        echo -e "${RD}[+]${GR} hakcheckurl Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/gau ];
-        then
-        echo -e "${RD}[+]${GR} Gau Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/qsreplace ];
-        then
-        echo -e "${RD}[+]${GR} qsreplace Not Install!\n"
-        exit 1 
-    elif [ ! -f ~/go/bin/dalfox ];
-        then
-        echo -e "${RD}[+]${GR} dalfox Not Install!\n"
-        exit 1  
-    elif [ ! -f ~/go/bin/CORS-Scanner ];
-        then
-        echo -e "${RD}[+]${GR} CORS-Scanner Not Install!\n"
-        exit 1 
-    elif [ ! -f ~/go/bin/gf ];
-        then
-        echo -e "${RD}[+]${GR} gf Not Install!\n"
-        exit 1 
-    elif [ ! -f ~/go/bin/httpx ];
-        then
-        echo -e "${RD}[+]${GR} Httpx Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/github-subs ];
-        then
-        echo -e "${RD}[+]${GR} github-subs Not Install!\n"
-        exit 1
-    elif [ ! -f /usr/bin/jq ];
-        then
-        echo -e "${RD}[+]${GR} jq Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/dirsearch ];
-        then
-        echo -e "${RD}[+]${GR} dirsearch Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/hinject ];then
-        echo -e "${RD}[+]${GR} hinject Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/qsreplace ];then
-        echo -e "${RD}[+]${GR} qsreplace Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/nuclei ];then
-        echo -e "${RD}[+]${GR} nuclei Not Install!\n"
-        exit 1
-    elif [ ! -f ~/go/bin/subjack ];then
-        echo -e "${RD}[+]${GR} subjack Not Install!\n"
-        exit 1
-    elif [ ! -f tools/http-smuggling-test.py ];then
-        echo -e "${RD}[+]${GR} http-smuggling Not Install!\n"
-        exit 1
-    fi
-}
-
-function ProgressBar {
-	let _progress=(${1}*100/${2}*100)/100
-	let _done=(${_progress}*4)/10
-	let _left=40-$_done
-	_done=$(printf "%${_done}s")
-	_left=$(printf "%${_left}s")
-
-# 1.2.1.1 Progress : [########################################] 100%
-printf "\r${PP}Progress : ${NT}[${CY}${_done// />}${_left// /-}${NT}]${BD} ${_progress}%%"
-}
-function wayback {
-    js && \  
-    php && \
-    asp && \   
-    html   
-}
 function exec_Subdomains {
     # export -f Github  && export -f RapidDNS && export -f BufferOver  && export -f Riddler  && export -f VirusTotal  && export -f CertSpotter && export -f web_archive && export -f jldc && export -f crtsh && export -f Api_Sublist3r && export -f hackertarget && export -f threatcrowd && export -f urlscan && export -f spyse && export -f openssl && export -f ptrarchive && export -f etc
      Github && \
@@ -144,7 +46,7 @@ function exec_Subdomains {
      alienvault && \
      ctsearch && \
      dnsdumpster && \
-     web_archive && \
+     web_archive &&\
      jldc && \
      crtsh  Api_Sublist3r  && \
      hackertarget  && \
@@ -157,60 +59,60 @@ function exec_Subdomains {
 }
 function Github {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}Github${GR})"
-    github-subs -d $url -api $GitHubApi > $output/$url.txt
+    github-subs -d $url -api $GitHubApi > $outfile/subdo/$url.txt
 }
 function RapidDNS {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}RapidDNS${GR})" 
     curl -s "https://rapiddns.io/subdomain/$url?full=1#result" \
     | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | grep ".$url" | sort -u >> $output/$url.txt     
+        | grep ".$url" | sort -u >> $outfile/subdo/$url.txt     
 }
 function BufferOver {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}BufferOver${GR})" 
     curl -s "https://dns.bufferover.run/dns?q=.$url" \
     | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | grep ".$url" | sort -u >> $output/$url.txt     
+        | grep ".$url" | sort -u >> $outfile/subdo/$url.txt     
 }
 function Riddler {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}Riddler${GR})"
     curl -s "https://riddler.io/search/exportcsv?q=pld:$url" \
         | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-            | sort -u >> $output/$url.txt  
+            | sort -u >> $outfile/subdo/$url.txt  
 }
 function VirusTotal {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}VirusTotal${GR})"
         curl -s "https://www.virustotal.com/ui/domains/$url/subdomains?limit=40" \
         | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-            | sort -u | grep ".$url" >> $output/$url.txt
+            | sort -u | grep ".$url" >> $outfile/subdo/$url.txt
 }
 function CertSpotter {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}CertSpotter${GR})"
     curl -s "https://certspotter.com/api/v0/certs?domain=$url" \
     | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-    | sort -u | grep ".$url" >> $output/$url.txt
+    | sort -u | grep ".$url" >> $outfile/subdo/$url.txt
 }
 function web_archive {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}web.archive${GR})"
     curl -s "http://web.archive.org/cdx/search/cdx?url=*.$url/*&output=text&fl=original&collapse=urlkey" \
     | sed -e 's_https*://__' -e "s/\/.*//" \
-        | sort -u | grep ".$url" >> $output/$url.txt  
+        | sort -u | grep ".$url" >> $outfile/subdo/$url.txt  
 }
 function jldc {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}jldc${GR})"
         curl -s "https://jldc.me/anubis/subdomains/$url" \
         | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-            | sort -u >> $output/$url.txt     
+            | sort -u >> $outfile/subdo/$url.txt     
 }  
 function threatminer {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}threatminer${GR})"
 	curl -s "https://api.threatminer.org/v2/domain.php?q=$url&rt=5" \
     | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-    | grep ".$url" | sort -u >> $output/$url.txt   
+    | grep ".$url" | sort -u >> $outfile/subdo/$url.txt   
 } 
 function ctsearch {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}ctsearch${GR})"
     curl -s "https://ctsearch.entrust.com/api/v1/certificates?fields=subjectDN&domain=$url&includeExpired=false&exactMatch=false&limit=5000" \
-    | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | grep ".$url" | sort -u >> $output/$url.txt  
+    | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | grep ".$url" | sort -u >> $outfile/subdo/$url.txt  
 }
 function dnsdumpster {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}dnsdumpster${GR})"
@@ -218,38 +120,38 @@ function dnsdumpster {
 	curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com \
     --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" \
     --data "csrfmiddlewaretoken=$token&targetip=$url" \
-    --cookie "csrftoken=$token; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com > $output/dnsdum   
-	cat $output/dnsdum | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-    | grep -o "\w.*$url" | sort -u | sed -e 's!http[s]\?://!!' >> $output/$url.txt  
-	rm $output/dnsdum
+    --cookie "csrftoken=$token; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com > $outfile/subdo/dnsdum   
+	cat $outfile/subdo/dnsdum  | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
+    | grep -o "\w.*$url" | sort -u | sed -e 's!http[s]\?://!!' >> $outfile/subdo/$url.txt  
+	rm $outfile/subdo/dnsdum   
 }
 function crtsh {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}crt.sh${GR})"
         curl -s "https://crt.sh/?q=%25.$url&output=json" \
         | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | sort -u >> $output/$url.txt    
+        | sort -u >> $outfile/subdo/$url.txt    
 }
 function Api_Sublist3r {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}api.sublist3r${GR})"
         curl -s "https://api.sublist3r.com/search.php?domain=$url" \
         | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-         | sort -u >> $output/$url.txt 
+         | sort -u >> $outfile/subdo/$url.txt 
 }
 function hackertarget {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}hackertarget${GR})"
         curl -s "https://api.hackertarget.com/hostsearch/?q=$url" \
-        | cut -d',' -f1 | sort -u >> $output/$url.txt      
+        | cut -d',' -f1 | sort -u >> $outfile/subdo/$url.txt      
 }
 function threatcrowd {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}threatcrowd${GR})"
         curl -s "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$url" \
-        | jq -r '.subdomains | .[]' | sort -u >> $output/$url.txt
+        | jq -r '.subdomains | .[]' | sort -u >> $outfile/subdo/$url.txt
        
 }
 function urlscan {
      echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}urlscan${GR})"
         curl -s "https://urlscan.io/api/v1/search/?q=domain:$url" \
-        | jq -r '.results[].page.domain' | sort -u > $output/$url.txt
+        | jq -r '.results[].page.domain' | sort -u > $outfile/subdo/$url.txt
         
 }
 function spyse {
@@ -260,13 +162,13 @@ function spyse {
                 -H "HTTPS: 1" -H "DNT: 1" -H "TE: Trailers"  -H "Accept-Language: en-US,en;q=0.5" \
                     --compressed "https://spyse.com/api/data/domain/subdomain?limit=15&offset=0&domain=$url" \
                         | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-                            | grep ".$url" | cut -d '/' -f3 | sort -u >> $output/$url.txt
+                            | grep ".$url" | cut -d '/' -f3 | sort -u >> $outfile/subdo/$url.txt
 }
 function alienvault {
         echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}alienvault${GR})"
 		curl -s "https://otx.alienvault.com/api/v1/indicators/domain/$url/passive_dns" \
         | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | sort -u >> $output/$url.txt
+        | sort -u >> $outfile/subdo/$url.txt
 }
 function openssl {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}openssl${GR})"
@@ -275,930 +177,41 @@ function openssl {
         #grep DNS | \
         #tr ',' '\n' | \
         #cut -d ':' -f 2 | \
-        #sort -u >> $output/$url.txt
+        #sort -u >> $outfile/subdo/$url.txt
 }
 function ptrarchive {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}ptrarchive${GR})"
         curl -s "http://ptrarchive.com/tools/search.htm?label=$url" \
         |  grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | grep ".$url" | sort -u >> $output/$url.txt     
+        | grep ".$url" | sort -u >> $outfile/subdo/$url.txt     
 }
 function etc {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}etc${GR})"
-        echo -e "${RD}  ~>${AB} assetfinder"
-        echo -e "${RD}  ~>${AB} subfinder"
-        assetfinder $url | subfinder -silent >> $output/$url.txt
+        echo -e "${RD}└──╼>${AB} assetfinder"
+        echo -e "${RD}└──╼>${AB} subfinder"
+        assetfinder $url | subfinder -silent >> $outfile/subdo/$url.txt
 }
-subdo(){
-    if dependencies
-    then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Searching for subdomains for${NT} ${ip}${GR} [${NT}$url${GR}]${NT}" 
-        exec_Subdomains	 
-        cat $output/$url.txt | sort -u > $output/subdo/subs.txt && rm -rf $output/$url.txt
-        echo -e "\n${NT}[${RD}*${NT}]${GR} Total Subdomains ${NT}[${BD}$(cat $output/subdo/subs.txt  | wc -l)${NT}]${GR} "
-        echo -e "${NT}[${RD}*${NT}]${GR} Saved Subdomains ${NT}[${GR}$output/subdo/subs.txt${NT}]"
-    fi
-}
-map(){
-    _start=1
-    _end=100
-     ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-     echo -e "${NT}[${RD}*${NT}]${GR} Start Mammping for  domains...${NT}"
-     echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-     echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-    if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-        exec_Subdomains
-        while read line ;do
-            token=$(curl -ILs https://dnsdumpster.com | grep csrftoken | cut -d " " -f2 | cut -d "=" -f2 | tr -d ";")
-            curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com \
-                --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" \
-                     --data "csrfmiddlewaretoken=$token&targetip=$line" \
-                        --cookie "csrftoken=$token; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com > /dev/null 2>&1 
-        done < $output/$url.txt
-        while read line ;do
-            map=`curl -s  https://dnsdumpster.com/static/map/$line.png --output $output/mapping/$line.png`
-            for number in $(seq ${_start} ${_end})
-            do
-                sleep 0.2
-                ProgressBar ${number} $map ${_end} 
-            done
-        done < $output/$url.txt
-        echo -e "\n${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/mapping/$url.png]"  
-	else
-        token=$(curl -ILs https://dnsdumpster.com | grep csrftoken | cut -d " " -f2 | cut -d "=" -f2 | tr -d ";")
-            curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com \
-                --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" \
-                     --data "csrfmiddlewaretoken=$token&targetip=$url" \
-                        --cookie "csrftoken=$token; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com > /dev/null 2>&1 
-        map=`curl -s  https://dnsdumpster.com/static/map/$url.png --output $output/mapping/$url.png`
-        for number in $(seq ${_start} ${_end})
-        do
-	        sleep 0.2
-	        ProgressBar ${number} $map ${_end} 
-        done
-        echo -e "\n${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/mapping/$url.png]"  
-    fi
-}
-live(){
-    echo -e "${NT}[${RD}*${NT}]${GR} Check live the Subdomains for working HTTP and HTTPS servers...${NT}"
-        exec_Subdomains	 
-        cat $output/$url.txt | sort -u > $output/subdo/subs.txt && rm -rf $output/$url.txt
-        for run in $(cat $output/subdo/subs.txt);do
-            ping -c1 -w1 $run > /dev/null 2>&1
-            if [[ $? -eq 0 ]];
-                then
-                live=$(echo -e "$run" | httpx -silent | sort -u)
-                echo -e "${RD}[${GR}*${RD}]${GR} VALID:${NT} $live" | tee -a $output/subdo/subs-valid.txt 
-            else
-                echo -e "${RD}[${GR}*${RD}]${RD} NOTVALID:${NT} $run" | tee -a $output/subdo/subs-notvalid.txt
-            fi                
-        done 
-    echo -e "\n${NT}[${RD}*${NT}]${GR} SUBDOMAINS Valid ${NT}[${GR}$(cat $output/subdo/subs-valid.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} SUBDOMAINS NotValid ${NT}[${GR}$(cat $output/subdo/subs-notvalid.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/subdo/subs.txt]"  
-}
-proxy(){
-    if dependencies
-        then
-        echo -e "${NT}[${RD}*${NT}]${GR} Running Proxy Server: $burp${NT}"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains [$url] (y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            mkdir -p $url/subdo
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/subdo/valid.txt
-            while read sub; do
-                curl -H "$agent" -x $burp --ssl-no-revoke -L --url "$sub" -o /dev/null -sk 
-            done < $output/subdo/valid.txt
-            prox=$(cat $output/subdo/valid.txt | httpx -http-proxy $burp -silent )
-            echo -e "${NT}[${RD}*${NT}]${GR} $prox"
-        else
-            curl -H "$agent" -x $burp --ssl-no-revoke -L --url "$url" -o /dev/null -sk 
-            prox=$(echo $url | httpx -http-proxy $burp -silent )
-            echo -e "${NT}[${RD}*${NT}]${GR} $prox"
-        fi 
-        exit 1
-    fi
-}
-dirbuster(){
-    if dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start dir enumerations...${NT}"
-        echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} ${ip} $url"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/dir/$url.txt
-            while read line ;do
-                dirsearch -url $line --wordlist $wordlist | tee -a $output/dir/$url-dir.txt
-            done < $output/dir/$url.txt
-        else
-            dirsearch -url $url -wordlist $wordlist | tee -a $output/dir/$url-dir.txt
-        fi 
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/dir/$url-dir.txt]"
-    
-}
-jsurl(){
-    if dependencies 
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Gathering all js urls ${NT}${ip} $url${NT}"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/$url.txt
-            echo -e "${RD}[*]${GR} downloading js files"
-            while read sub;do
-                    gau -subs $sub | grep "\.js$" | anti-burl | grep -Eo "(http|https)://[a-zA-Z0-9./?=_-]*" | sort -u | tee -a > $output/js_file
-            done < $output/$url.txt        
-            cd $output/js/          
-            while read line; do
-                curl -s "$line" | js-beautify > $( echo "$line" | sed -e 's/[/]/_/g' | sed -e 's/:/./g') 
-            done < ../js_file
-            cd ..
-            for file in ./js/*; do
-                gf js $file      
-            done
-            cd .. 
+function ProgressBar {
+	let _progress=(${1}*100/${2}*100)/100
+	let _done=(${_progress}*4)/10
+	let _left=40-$_done
+	_done=$(printf "%${_done}s")
+	_left=$(printf "%${_left}s")
 
-        else
-            echo $url > $output/subs.txt
-            echo -e "${RD}[*]${GR} downloading js files"
-            while read sub;do
-                    gau -subs $sub | grep "\.js$" | anti-burl | grep -Eo "(http|https)://[a-zA-Z0-9./?=_-]*" | sort -u | tee -a > $output/js_file
-            done < $output/subs.txt          
-            cd $output/js/          
-            while read line; do
-                curl -s "$line" | js-beautify > $( echo "$line" | sed -e 's/[/]/_/g' | sed -e 's/:/./g') 
-            done < ../js_file
-            cd ..
-            for file in ./js/*; do
-                gf js $file      
-            done
-            cd .. 
-        fi 
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found js Download ${NT}[${GR}$(ls $output/js | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$(pwd /$output/)]"   
+# 1.2.1.1 Progress : [########################################] 100%
+printf "\r${PP}Progress : ${NT}[${CY}${_done// />}${_left// /-}${NT}]${BD} ${_progress}%%"
 }
-jstatus(){
-    if dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Check for the status JavaScript...${NT}"
-        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/subs.txt
-            cat $output/subs.txt | waybackurls | sort -u > $output/scraping/$url-list.txt
-            rm -rf $output/$subs.txt
-            cat $output/scraping/$url-list.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $output/scraping/jsurls.txt
-            echo -e "=============================================="
-            echo -e "  Staus        |  Size          |  Links"
-            echo -e "=============================================="
-            for js in $(cat $output/scraping/jsurls.txt | parallel -j50 -q curl -w ${GR}"Status:${CY}%{http_code}\t ${GR}Size:${CY}%{size_download}\t ${GR}Url:${CY}%{url_effective}\n" -o /dev/null -sk | tee -a $output/scraping/$url-jstatus.txt );do           
-                    echo -e "${RD}[${GR}*${RD}] $js"
-            done
-        else
-            echo "$url" | waybackurls | sort -u > $output/scraping/$url-list.txt
-            cat $output/scraping/$url-list.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $output/scraping/jsurls.txt
-            echo -e "=============================================="
-            echo -e "  Staus        |  Size          |  Links"
-            echo -e "=============================================="
-            for js in $(cat $output/scraping/jsurls.txt | parallel -j50 -q curl -w ${GR}"Status:${CY}%{http_code}\t ${GR}Size:${CY}%{size_download}\t ${GR}Url:${CY}%{url_effective}\n" -o /dev/null -sk | tee -a $output/scraping/$url-jstatus.txt );do           
-                    echo -e "${RD}[${GR}*${RD}] $js"
-            done
-            
-        fi     
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check for the status JavaScript ${NT}[${GR}$(cat $output/scraping/$url-jstatus.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/scraping/$url-jstatus.txt]"
-    
-}
-lfiv(){
-    if  dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start Check LFI Vulnerabilty...${NT}" 
-        echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} ${ip} $url"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/lfi/$url.txt
-            cat $output/lfi/$url.txt | httpx -silent | sort -u > $output/lfi/$url-final.txt
-            echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Get LFI Parameters${NT}" 
-            cat $output/lfi/$url-final.txt | waybackurls | gf lfi | qsreplace | sort -u > $output/lfi/$url-data.txt 
-            echo -e "${NT}[${RD}*${NT}]${GR} Start Check LFI Vulnerabilty!!!${NT}"
-            nuclei -l $output/lfi/$url-data.txt -t config/lfi.yaml -silent -timeout 7 | tee -a  $output/lfi/$url-lfi.txt
-            #rm -rf $output/lfi/$url-final.txt $output/lfi/$url.txt $output/lfi/$url-data.txt   
-        else
-            echo "$url" | httpx -silent | sort -u > $output/lfi/$url-final.txt
-            echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Get LFI Parameters${NT}" 
-            cat $output/lfi/$url-final.txt | waybackurls | gf lfi | qsreplace | sort -u > $output/lfi/$url-data.txt 
-            echo -e "${NT}[${RD}*${NT}]${GR} Start Check LFI Vulnerabilty!!!${NT}"
-            nuclei -l $output/lfi/$url-data.txt -t config/lfi.yaml -silent -timeout 7 | tee -a  $output/lfi/$url-lfi.txt
-            #rm -rf $output/lfi/$url-final.txt $output/lfi/$url.txt $output/lfi/$url-data.txt 
-        fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Done Check LFI Vulnerabilty ${NT}[${GR}$(cat $output/lfi/$url-lfi.txt  | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/lfi/$url-lfi.txt]"
-}
-ssrf() {
-    if dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start Blind SSRF testing...${NT}"
-        sleep 2
-        ssr=`cat config/ssrf.txt`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} ${ip} $url"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/ssrf/$url.txt
-            cat $output/ssrf/$url.txt | waybackurls | sort -u > $output/ssrf/$url-ssrf.txt
-            cat $output/ssrf/$url.txt | gau | sort -u >> $output/ssrf/$url-ssrf.txt
-            cat $output/ssrf/$url-ssrf.txt | gf ssrf | grep "?" | qsreplace | qsreplace $ssr > $output/ssrf/$url-ssrf2.txt
-            sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/ssrf/$url-ssrf2.txt
-            echo -e "${RD}[+] Start On FFUF:${NT}"
-            ffuf -w $output/ssrf/$url-ssrf2.txt -u FUZZ -t 50 -of md > $output/ssrf/$url-ssrf3.md  
-            for run in $(cat $output/ssrf/$url-ssrf3.md | grep -Po ".*\?((.*=.*)(&?))+");do
-                while [ $run ];do
-                    echo -e "${NT}[${RD}*${NT}]${GR}${NT} $run\n"
-                    break
-                done
-            done
-        else 
-            waybackurls $url | sort -u > $output/ssrf/$url-ssrf.txt
-            gau $url >> $output/ssrf/$url-ssrf.txt
-            cat $output/ssrf/$url-ssrf.txt | gf ssrf | grep "?" | qsreplace | qsreplace $ssr > $output/ssrf/$url-ssrf2.txt
-            sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $output/ssrf/$url-ssrf2.txt
-            echo -e "${RD}[+] Start On FFUF:${NT}"
-            ffuf -w $output/ssrf/$url-ssrf2.txt -u FUZZ -t 50 -of md > $output/ssrf/$url-ssrf3.md  
-            for run in $(cat $output/ssrf/$url-ssrf3.md | grep -Po ".*\?((.*=.*)(&?))+");do
-                while [ $run ];do
-                    echo -e "${NT}[${RD}*${NT}]${GR}${NT} $run\n"
-                    break
-                done
-            done
-        fi
-    fi
-    #echo -e "Found Check SSRF [${GR}$(cat $output/ssrf/$url-ssrf3.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/ssrf/$url-ssrf3.txt]\n"
-}
-cmd(){
-    if  dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "\n${NT}[${RD}*${NT}]${GR} Start Check Command Injection Vulnerabilty...${NT}" 
-        echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} ${ip} $url"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/cmd/$url.txt 
-            cat $output/cmd/$url.txt | httpx -silent | sort -u > $output/cmd/$url-final.txt
-            echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
-            cat $output/cmd/$url-final.txt | waybackurls | gf cmd | qsreplace | sort -u > $output/cmd/$url-data.txt 
-            echo -e "${NT}[${RD}*${NT}]${GR} Start Check cmd Vulnerabilty!!!${NT}"
-            nuclei -l $output/cmd/$url-data.txt -t config/cmd.yaml -silent -timeout 7 | tee -a  $output/cmd/$url-cmd.txt
-        else
-            echo "$url" | httpx -silent | sort -u > $output/cmd/$url-final.txt
-            echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
-            cat $output/cmd/$url-final.txt | waybackurls | gf cmd | qsreplace | sort -u > $output/cmd/$url-data.txt 
-            echo -e "${NT}[${RD}*${NT}]${GR} Start Check Command Injection Vulnerabilty!!!${NT}"
-            nuclei -l $output/cmd/$url-data.txt -t config/command-injection.yaml -silent -timeout 7 | tee -a  $output/cmd/$url-cmd.txt
-        fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Done Check Command Injection Vulnerabilty ${NT}[${GR}$(cat $output/cmd/$url-cmd.txt  | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/cmd/$url-cmd.txt]"
-}
-sstiv(){
-    if  dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start Check SSTI Vulnerabilty...${NT}" 
-        echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} ${ip} $url"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/ssti/$url.txt 
-            cat $output/ssti/$url.txt | httpx -silent | sort -u > $output/ssti/$url-final.txt
-            echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
-            cat $output/ssti/$url-final.txt | waybackurls | gf ssti | qsreplace | sort -u > $output/ssti/$url-data.txt 
-            echo -e "${NT}[${RD}*${NT}]${GR} Start Check ssti Vulnerabilty!!!${NT}"
-            nuclei -l $output/ssti/$url-data.txt -t config/ssti.yaml -silent -timeout 7 | tee -a  $output/ssti/$url-ssti.txt
-        else
-            echo "$url" | httpx -silent | sort -u > $output/ssti/$url-final.txt
-            echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
-            cat $output/ssti/$url-final.txt | waybackurls | gf ssti | qsreplace | sort -u > $output/ssti/$url-data.txt 
-            echo -e "${NT}[${RD}*${NT}]${GR} Start Check ssti Vulnerabilty!!!${NT}"
-            nuclei -l $output/ssti/$url-data.txt -t config/ssti.yaml -silent -timeout 7 | tee -a  $output/ssti/$url-ssti.txt
-        fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssti Vulnerabilty ${NT}[${GR}$(cat $output/ssti/$url-ssti.txt  | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/ssti/$url-ssti.txt]"
-}
-cors(){
-    if dependencies
-        then 
-            ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} CORS misconfiguration vulnerabilities scanner...${NT}"
-            echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} ${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | sort -u > $output/cors/$url.txt
-                cat $output/cors/$url.txt | httprobe > $output/cors/cors.txt
-                cat $output/cors/cors.txt | CORS-Scanner | tee $output/cors/$url-cors.txt
-                rm -rf $output/cors/$url.txt | rm -rf $output/cors/cors.txt
-                for line in $(cat $output/cors/$url-cors.txt);do
-                    ping -c1 -w1 $line > /dev/null 2>&1
-                    if [[ $? -eq 0 ]]; then
-                        echo -e "${NT}[Vuln]${GR} Resluts:${NT} $line "
-                    else
-                        echo -e "${NT}[${RD}NOT-VULN${NT}]${GR}  Resluts:${NT} $url "
-                    fi
-                done 
-            else    
-                echo "$url" | httprobe > $output/cors/cors.txt
-                cat $output/cors/cors.txt | CORS-Scanner | tee $output/cors/$url-cors.txt
-               # rm -rf $output/cors/cors.txt
-                for line in $(cat $output/cors/$url-cors.txt);do
-                    ping -c1 -w1 $line > /dev/null 2>&1
-                    if [[ $? -eq 0 ]]; then
-                        echo -e "${NT}[Vuln]${GR} Resluts:${NT} $line "
-                    else
-                        echo -e "${NT}[${RD}NOT-VULN${NT}]${GR}  Resluts:${NT} $url "
-                    fi
-                done 
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Done Check CORS Vulnerabilty ${NT}[${GR}$(cat $output/cors/$url-cors.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/cors/$url-cors.txt]" 
-}
-flash(){
-    if  dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "\n${NT}[${RD}*${NT}]${GR} Start Check cors misconfig flash vulnerabilty...${NT}" 
-        echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} ${ip} $url"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/cors/$url.txt
-            cat $output/cors/$url.txt | httpx -silent | sort -u > $output/cors/$url-final.txt
-            nuclei -l $output/cors/$url-final.txt -t config/basic-cors-flash.yaml -silent -timeout 7 | tee -a  $output/cors/$url-cors.txt
-       
-        else
-            echo "$url" | httpx -silent | sort -u > $output/cors/$url-final.txt
-            nuclei -l $output/cors/$url-final.txt -t config/basic-cors-flash.yaml -silent -timeout 7 | tee -a  $output/cors/$url-cors.txt   
-        fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Done Check cors misconfig flash  Vulnerabilty ${NT}[${GR}$(cat $output/cors/$url-cors.txt  | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/cors/$url-cors.txt]"
-}
-smuggling(){
-    if dependencies
-        then
-            ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Check HTTP smuggling ...${NT}"
-            sleep 2  
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target: ${NT} ${ip} $url"
-            python3 tools/http-smuggling-test.py $url
-    fi
-}
-header(){
-    if  dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start Check Header Injection Vulnerabilty!!!${NT}"
-        echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} ${ip} $url"
-        echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-        if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-            exec_Subdomains
-            cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sort -u > $output/header/subs.txt
-            while read line ;do
-                echo $line | httpx -silent | hinject -v >> $output/header/subs.txt
-            done < $output/header/subs.txt
-        else
-            echo -e "${NT}[${RD}*${NT}]${GR} Start Check Header Injection Vulnerabilty!!!${NT}"
-            echo $url | httpx -silent | hinject -v 
-        fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Done Check Header Injection"
-}
-take(){
-    if dependencies
-        then
-            ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Start Check vulnerabilty subdomain takeover...]${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sed 's|^http[s]://||g' | sort -u > $output/takeover/$url.txt
-                subjack -w $output/takeover/$url.txt -t 100 -timeout 30 -c config/config.json > $output/takeover/posible.txt
-                for run in $(cat $output/takeover/posible.txt);do
-                    while [ $run ];do
-                        echo -e "${NT}[${RD}*${NT}]${RD} Posible Takeover-${NT}$run"
-                        break
-                    done
-                done 
-            else
-                echo "$url" > $output/takeover/$url.txt
-                subjack -w $output/takeover/$url.txt -t 100 -timeout 30  -c config/config.json > $output/takeover/$url-takeover.txt
-                for run in $(cat $output/takeover/$url-takeover.txt);do
-                    while [ $run ];do
-                        echo -e "${NT}[${RD}*${NT}]${RD} Posible Takeover-${NT}$run"
-                        break
-                    done
-                done 
-            fi    
-    fi
-    #echo -e "${NT}[${RD}*${NT}]${GR} Found Check Takeover${NT} [${GR}$(cat $output/takeover/$url-takeover.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/takeover/$url-takeover.txt]"
-    
-}
-xss(){
-    if dependencies
-        then
-            ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Start XSS scanning...${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sed 's|^http[s]://||g' | sort -u > $output/xss/$url.txt
-                cat $output/xss/$url.txt | hakrawler -plain -usewayback -wayback | grep "=" | gf xss | egrep -iv "$linee" | \
-                qsreplace | dalfox pipe -b $xss_ht -o $output/xss/$url-xss.txt 
-            else
-                echo "$url" | hakrawler -plain -usewayback -wayback | grep "=" | gf xss | egrep -iv "$linee" | \
-                qsreplace | dalfox pipe -b $xss_ht -o $output/xss/$url-xss.txt 
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/xss/$url-xss.txt]"
-    
-} 
-aws(){
-    if dependencies
-        then
-            echo -e "${NT}[${RD}!${NT}]${GR} Amazon S3 bucket enumeration...${NT}"
-            sleep 2
-            echo -e "${NT}[${RD}*${NT}]${GR} Check aws:${NT} $url"
-            echo -e "${NT}[${RD}!${NT}]${GR} It takes a long time to wait ..."
-            for run in $(s3enum --wordlist AWS/wordlist.txt --suffixlist AWS/suffixlist.txt --threads 10 $url);do
-                while [ $run ];do
-                    echo -e "\n${NT}[${RD}*${NT}]${GR} Resluts:${NT} $run" | tee -a $output/aws/$url-aws.txt
-                    break
-                done
-            done 
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found ${NT}[${GR}$(cat $output/aws/$url-aws.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/aws/$url-aws.txt]"
-}
-lfi(){
-    if dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Check LFI Parameters...${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*))" | sed 's|^http[s]://||g' | sort -u >  $output/lfi/$url.txt
-                cat $output/lfi/$url.txt | waybackurls | sort -u > $output/lfi/lfi.txt
-                cat $output/lfi/$url.txt | gau | sort -u >> $output/lfi/lfi.txt
-                cat $output/lfi/lfi.txt | gf lfi | qsreplace | tee -a > $output/lfi/$url-lfi.txt
-                rm -rf $output/lfi/$url.txt | rm -rf $output/lfi/lfi.txt 
-                    while read line ;do
-                        echo -e "${NT}[${RD}i${NT}]${GR}}${NT} $line"
-                    done < $output/lfi/$url-lfi.txt
-            else
-                echo "$url" | waybackurls | sort -u > $output/lfi/lfi.txt
-                echo "$url" | gau | sort -u >> $output/lfi/lfi.txt
-                cat $output/lfi/lfi.txt | gf lfi | qsreplace | tee -a > $output/lfi/$url-lfi.txt
-                rm -rf $output/lfi/$url.txt | rm -rf $output/lfi/lfi.txt 
-                    while read line ;do
-                        echo -e "${NT}[${RD}i${NT}]${GR}}${NT} $line"
-                    done < $output/lfi/$url-lfi.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check LFI Parameters ${NT}[${GR}$(cat $output/lfi/$url-lfi.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/lfi/$url-lfi.txt]"
-    
-}
-gfxss(){
-    if dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Get XSS Parameters...${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | sort -u > $output/xss/$url-1.txt
-                cat $output/xss/$url-1.txt | waybackurls | sort -u > $output/xss/xss.txt
-                cat $output/xss/$url-1.txt | gau | sort -u >> $output/xss/xss.txt
-                cat $output/xss/xss.txt | gf xss | qsreplace | tee -a > $output/xss/$url-xss.txt
-                rm -rf $output/xss/$url-1.txt | rm -rf $output/xss/xss.txt
-                    while read line;do
-                        echo -e "${NT}[${RD}i${NT}]${AB} $line"
-                    done < $output/xss/$url-xss.txt
-            else
-                curl -s "http://web.archive.org/cdx/search/cdx?url=*.$url/*&output=text&fl=original&collapse=urlkey" > $output/xss/xss.txt
-                echo "$url" | waybackurls | sort -u >> $output/xss/xss.txt
-                echo "$url" | gau | sort -u >> $output/xss/xss.txt
-                cat $output/xss/xss.txt | gf xss | qsreplace | tee -a > $output/xss/$url-xss.txt
-                rm -rf $output/xss/xss.txt
-                    while read line;do
-                        echo -e "${NT}[${RD}i${NT}]${GR} ${NT} $line"
-                    done < $output/xss/$url-xss.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check XSS Parameters${NT} [${GR}$(cat $output/xss/$url-xss.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/xss/$url-xss.txt]"
-}
-ssrf2(){
-    if dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Get ssrf Parameters...${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | gf ssrf | qsreplace | sort -u > $output/ssrf/$url-ssrf.txt
-                cat $output/$url.txt | gau | gf ssrf | qsreplace | sort -u >> $output/ssrf/$url-ssrf.txt
-                cat output/ssrf/$url-ssrf.txt | sort -u > output/ssrf/$url-ssrf-param.txt
-                    while read line ;do
-                        echo -e "${NT}[${RD}i${NT}]${GR} ${NT} $run"
-                    done < $output/ssrf/$url-ssrf-param.txt
-                
-            else
-                echo "$url" | waybackurls | gf ssrf | qsreplace | sort -u > $output/ssrf/$url-ssrf.txt
-                echo "$url" | gau | gf ssrf | qsreplace | sort -u >> $output/ssrf/$url-ssrf.txt
-                cat output/ssrf/$url-ssrf.txt | sort -u > output/ssrf/$url-ssrf-param.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}i${NT}]${GR} ${NT} $run"
-                done < $output/ssrf/$url-ssrf-param.txt
-
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check ssrf${NT} [${GR}$(cat $output/ssrf/$url-ssrf.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/ssrf/$url-ssrf.txt]"
-    
-}
-ssti(){
-    if dependencies
-        then
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Get SSTI Parameters...${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/ssti/ssti.txt
-                cat $output/$url.txt | gau | sort -u >> $output/ssti/ssti.txt
-                cat $output/ssti/ssti.txt | gf ssti | qsreplace | sort -u > $output/ssti/$url-ssti-param.txt
-                rm -rf $output/ssti/ssti.txt
-                while read line ;do
-                    echo "${NT}[${RD}*${NT}]${GR} $line" 
-                done < $output/ssti/$url-ssti-param.txt
-            else
-                echo -e "$url" | waybackurls | gf ssti | qsreplace | sort -u > $output/ssti/$url-ssti-param.txt
-                echo -e "$url" | gau | gf ssti | qsreplace | sort -u >> $output/ssti/$url-ssti-param.txt
-                while read line ;do
-                    echo "${NT}[${RD}*${NT}]${GR} $line" 
-                done < $output/ssti/$url-ssti-param.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check SSTI Parameters${NT} [${GR}$(cat $output/ssti/$url-ssti-param.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/ssti/$url-ssti-param.txt]"
-    
-}
-redirect(){
-    if dependencies
-        then
-         ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Get redirect Parameters...${NT}"
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/redirec/redirec.txt
-                cat $output/$url.txt | gau | sort -u >> $output/redirec/redirec.txt
-                cat $output/redirec/redirec.txt | grep "=" | gf redirect | qsreplace |tee -a > $output/redirec/$url-redirec.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${NT} $line"
-                done < $output/redirec/$url-redirec.txt
-            else 
-                echo "$url" | waybackurls | sort -u > $output/redirec/redirec.txt
-                echo "$url" | gau | sort -u >> $output/redirec/redirec.txt
-                cat $output/redirec/redirec.txt | grep "=" | gf redirect | qsreplace | tee -a > $output/redirec/$url-redirec.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${NT} $line"
-                done < $output/redirec/$url-redirec.txt
-            fi 
-               
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check redirec Parameters ${NT}[${GR}$(cat $output/redirec/$url-redirec.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/redirec/$url-redirec.txt]"
-    
-}
-rev(){
-    if dependencies
-        then
-            echo -e "${NT}[${RD}*${NT}]${GR} Get Vulnerabilty Open-redirect...]${NT}"
-            ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | gau | grep "=" | gf redirect | qsreplace | qsreplace "$host" |  sed -e 's!http[s]\?://!!' | xargs -I % -P 25 sh -c 'curl -Is "%" 2>&1 | grep -q "Location: $host" && echo "VULN! %"' | tee $output/redirec/$url-redirec.txt
-            else
-               echo "$url" | gau | grep "=" | gf redirect | qsreplace | qsreplace "$host" |  sed -e 's!http[s]\?://!!' | xargs -I % -P 25 sh -c 'curl -Is "%" 2>&1 | grep -q "Location: $host" && echo "VULN! %"' | tee $output/redirec/$url-redirec.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Open-redirect Vulnerabilty${NT} [${GR}$(cat $output/redirec/$url-redirec.txt | wc -l)${NT}]"
-    #echo -e "${NT}[${RD}*${NT}]${GR}Success Saved:${GR}[$output/redirec/]"  
-}
-idor(){
-    if dependencies
-        then
-            echo -e "${NT}[${RD}*${NT}]${GR} Get IDOR Parameters...${NT}"
-             ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/idor/idor.txt
-                cat $output/$url.txt | gau | sort -u >> $output/idor/idor.txt
-                cat $output/idor/idor.txt | gf idor | qsreplace | sort -u > $output/idor/$url-idor.txt
-                rm -rf $output/idor/$url.txt | rm -rf $output/idor/idor.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/idor/$url-idor.txt
-            else
-                echo "$url" | waybackurls | sort -u > $output/idor/idor.txt
-                echo "$url" | gau | sort -u >> $output/idor/idor.txt
-                cat $output/idor/idor.txt | gf idor | qsreplace | sort -u > $output/idor/$url-idor.txt
-                rm -rf $output/idor/$url.txt | rm -rf $output/idor/idor.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/idor/$url-idor.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check IDOR Parameters${NT} [${GR}$(cat $output/idor/$url-idor.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/idor/$url-idor.txt]"
-    
-}
-rce(){
-    if dependencies
-        then
-            echo -e "${NT}[${RD}*${NT}]${GR} Get RCE Parameters...${NT}"
-             ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/rce/rce.txt
-                cat $output/$url.txt | gau | sort -u >> $output/rce/rce.txt
-                cat $output/rce/rce.txt | gf rce | qsreplace | sort -u > $output/rce/$url-rce.txt
-                rm -rf $output/rce/$url.txt | rm -rf $output/rce/rce.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/rce/$url-rce.txt
-            else
-                echo "$url" | waybackurls | sort -u > $output/rce/rce.txt
-                echo "$url" | gau | sort -u >> $output/rce/rce.txt
-                cat $output/rce/rce.txt | gf rce | qsreplace | sort -u > $output/rce/$url-rce.txt
-                rm -rf $output/rce/$url.txt | rm -rf $output/rce/rce.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/rce/$url-rce.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check rce Parameters${NT} [${GR}$(cat $output/rce/$url-rce.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/rce/$url-rce.txt]"
-    
-}
-traversal(){
-    if dependencies
-        then
-            echo -e "${NT}[${RD}*${NT}]${GR} Get img-traversal Parameters...${NT}"
-             ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/traversal/traversal.txt
-                cat $output/$url.txt | gau | sort -u >> $output/traversal/traversal.txt
-                cat $output/traversal/traversal.txt | gf traversal | qsreplace | sort -u > $output/traversal/$url-traversal.txt
-                rm -rf $output/traversal/$url.txt | rm -rf $output/traversal/traversal.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/traversal/$url-traversal.txt
-            else
-                echo "$url" | waybackurls | sort -u > $output/traversal/traversal.txt
-                echo "$url" | gau | sort -u >> $output/traversal/traversal.txt
-                cat $output/traversal/traversal.txt | gf img-traversal | qsreplace | sort -u > $output/traversal/$url-traversal.txt
-                rm -rf $output/traversal/$url.txt | rm -rf $output/traversal/traversal.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/traversal/$url-traversal.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check traversal Parameters${NT} [${GR}$(cat $output/traversal/$url-traversal.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/traversal/$url-traversal.txt]"
-    
-}
-sqli(){
-    if dependencies
-        then
-            echo -e "${NT}[${RD}*${NT}]${GR} Get SQLI Parameters...${NT}"
-             ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/sqli/sqli.txt
-                cat $output/$url.txt | gau | sort -u >> $output/sqli/sqli.txt
-                cat $output/sqli/sqli.txt | gf sqli | qsreplace | sort -u > $output/sqli/$url-sqli.txt
-                rm -rf $output/sqli/$url.txt | rm -rf $output/sqli/sqli.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/sqli/$url-sqli.txt
-            else
-                echo "$url" | waybackurls | sort -u > $output/sqli/sqli.txt
-                echo "$url" | gau | sort -u >> $output/sqli/sqli.txt
-                cat $output/sqli/sqli.txt | gf sqli | qsreplace | sort -u > $output/sqli/$url-sqli.txt
-                rm -rf $output/sqli/$url.txt | rm -rf $output/sqli/sqli.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/sqli/$url-sqli.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check sqli Parameters${NT} [${GR}$(cat $output/sqli/$url-sqli.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/sqli/$url-sqli.txt]"
-    
-}
-int(){
-    if dependencies
-        then
-            echo -e "${NT}[${RD}*${NT}]${GR} Get interestingparams...${NT}"
-             ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/int/int.txt
-                cat $output/$url.txt | gau | sort -u >> $output/int/int.txt
-                cat $output/int/int.txt | gf int | qsreplace | sort -u > $output/int/$url-int.txt
-                rm -rf $output/int/$url.txt | rm -rf $output/int/int.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/int/$url-int.txt
-            else
-                echo "$url" | waybackurls | sort -u > $output/int/int.txt
-                echo "$url" | gau | sort -u >> $output/int/int.txt
-                cat $output/int/int.txt | gf interestingparams | qsreplace | sort -u > $output/int/$url-int.txt
-                rm -rf $output/int/$url.txt | rm -rf $output/int/int.txt
-                while read line ;do
-                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
-                done < $output/int/$url-int.txt
-            fi
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Check interestingparams${NT} [${GR}$(cat $output/int/$url-int.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/int/$url-int.txt]"
-    
-}
-js(){
-    if dependencies
-        then
-        echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for jsfile NT}"
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/scraping/$url-list.txt
-                cat $output/$url.txt | gau | sort -u > $output/scraping/$url-list.txt
-                cat $output/scraping/$url-list.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $output/scraping/jsurls.txt
-                rm -rf $output/scraping/$url-list.txt
-                while read line ;do
-                    echo -e "${NT}[${RD}*${NT}] $line"
-                done < $output/scraping/jsurls.txt  
-            else
-                echo "$url" | waybackurls | sort -u > $output/scraping/$url-list.txt
-                echo "$url" | gau | sort -u >> $output/scraping/$url-list.txt
-                cat $output/scraping/$url-list.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $output/scraping/jsurls.txt
-                rm -rf $output/scraping/$url-list.txt
-                while read line ;do
-                    echo -e "${NT}[${RD}*${NT}] $line"
-                done < $output/scraping/jsurls.txt 
-
-            fi             
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $output/scraping/jsurls.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/scraping/$url-jsurls.txt]"
-    
-}
-php(){
-    if dependencies
-        then
-        echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for php NT}"
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/scraping/$url-list.txt
-                cat $output/$url.txt | gau | sort -u > $output/scraping/$url-list.txt
-                cat $output/scraping/$url-list.txt | grep -P "\w+\.php(\?|$)" | uniq | sort -u > $output/scraping/phpurls.txt
-                rm -rf $output/scraping/$url-list.txt
-                while read line ;do
-                    echo -e "${NT}[${RD}*${NT}] $line"
-                done < $output/scraping/phpurls.txt  
-            else
-                echo "$url" | waybackurls | sort -u > $output/scraping/$url-list.txt
-                echo "$url" | gau | sort -u >> $output/scraping/$url-list.txt
-                cat $output/scraping/$url-list.txt | grep -P "\w+\.php(\?|$)" | uniq | sort -u > $output/scraping/phpurls.txt
-                rm -rf $output/scraping/$url-list.txt
-                while read line ;do
-                    echo -e "${NT}[${RD}*${NT}] $line"
-                done < $output/scraping/phpurls.txt 
-
-            fi             
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $output/scraping/phpurls.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/scraping/$url-phpurls.txt]"
-    
-}
-asp(){
-    if dependencies
-        then
-        echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for asp NT}"
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/scraping/$url-list.txt
-                cat $output/$url.txt | gau | sort -u > $output/scraping/$url-list.txt
-                cat $output/scraping/$url-list.txt | grep -P "\w+\.asp(\?|$)" | uniq | sort -u > $output/scraping/aspurls.txt
-                rm -rf $output/scraping/$url-list.txt
-                while read line ;do
-                    echo -e "${NT}[${RD}*${NT}] $line"
-                done < $output/scraping/aspurls.txt  
-            else
-                echo "$url" | waybackurls | sort -u > $output/scraping/$url-list.txt
-                echo "$url" | gau | sort -u >> $output/scraping/$url-list.txt
-                cat $output/scraping/$url-list.txt | grep -P "\w+\.asp(\?|$)" | uniq | sort -u > $output/scraping/aspurls.txt
-                rm -rf $output/scraping/$url-list.txt
-                while read line ;do
-                    echo -e "${NT}[${RD}*${NT}] $line"
-                done < $output/scraping/aspurls.txt 
-
-            fi             
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $output/scraping/aspurls.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/scraping/$url-aspurls.txt]"
-    
-}
-hmlt(){
-    if dependencies
-        then
-        echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for asp NT}"
-        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
-        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
-            echo -ne "${NT}[${RD}*${NT}]${GR} Searching for Subdomains(y/n): ${NT}"; read mod;
-            if [[ $mod =~ ^([yY][eE][sS]|[yY])$ ]]; then
-                exec_Subdomains
-                cat $output/$url.txt | waybackurls | sort -u > $output/scraping/$url-list.txt
-                cat $output/$url.txt | gau | sort -u > $output/scraping/$url-list.txt
-                cat $output/scraping/$url-list.txt | grep -P "\w+\.asp(\?|$)" | uniq | sort -u > $output/scraping/htmlurls.txt
-                rm -rf $output/scraping/$url-list.txt
-                while read line ;do
-                    echo -e "${NT}[${RD}*${NT}] $line"
-                done < $output/scraping/htmlurls.txt  
-            else
-                echo "$url" | waybackurls | sort -u > $output/scraping/$url-list.txt
-                echo "$url" | gau | sort -u >> $output/scraping/$url-list.txt
-                cat $output/scraping/$url-list.txt | grep -P "\w+\.asp(\?|$)" | uniq | sort -u > $output/scraping/htmlurls.txt
-                rm -rf $output/scraping/$url-list.txt
-                while read line ;do
-                    echo -e "${NT}[${RD}*${NT}] $line"
-                done < $output/scraping/htmlurls.txt 
-
-            fi             
-    fi
-    echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $output/scraping/htmlurls.txt | wc -l)${NT}]"
-    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$output/scraping/$url-htmlurls.txt]"
-    
+function smuggling(){
+   ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Check HTTP smuggling ...${NT}"
+    echo -e "${NT}[${RD}*${NT}]${GR} Start On target: ${NT} ${ip} $url" 
+ if [ ! -f tools/http-smuggling-test.py ];then
+    echo -e "${NT}[${RD}!${NT}]${AB} Modules HTTP smuggling Not Found!!!${NT}"
+    echo -e "${NT}[${RD}!${NT}]${NT} pleas run ./install.sh to install modules${NT}"
+    exit 1
+ else 
+    python3 tools/http-smuggling-test.py $url
+fi
 }
 logo(){
  echo -e "${RD}
@@ -1231,50 +244,52 @@ Help(){
         Optional Arguments:
                 -h /--help          | show this help message and exit
                 -u /--url           | URLs
+                -a /--aws           | Amazon S3 bucket enumeration
+                -p /--proxy         | URL of the proxy server (default: http://127.0.0.1:8080)
+                -s /--subdo         | Check Subdomains Enumerations
+                -m /--map           | Domain Mapping with dnsdumster
+                -l /--live          | Check live the Subdomains for working HTTP and HTTPS servers
+                -hr/--header        | Host header injection 
+                -sm/--smuggling     | HTTP request smuggling 
+                -t /--takeover      | Check Posible Takeover
+                -cr/--cors          | CORS misconfiguration scanner
+                    --flash         | Basic cors misconfig flash
+                -d /--dir           | Dir enumeration
+                   -w /--wordlists  | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
                 -lp/--lfiparam      | Get LFI Parameters       
                     --lfiv          | LFI Check Vulnerabilty
-                -ss/--ssrf          | Get SSRF Parameters 
-                    --ssrfv         | Blind SSRF testing Vulnerabilty
                 -st/--ssti          | Get parameter SSTI Vulnerabilty  
                     --sstiv         | Test Vulnerabilty SSTI
-                -c /--cmd           | Command Injection Check Vulnerabilty
-                -sm/--smuggling     | HTTP request smuggling 
-                -hr/--header        | Host header injection 
-                -t /--takeover      | Check Posible Takeover
+                -ss/--ssrf          | Get SSRF Parameters 
+                    --blind         | Blind SSRF testing Vulnerabilty
+                -c /--cmd           | Get Command Injection Parameter
+                    --cmdv          | Command Injection Check Vulnerabilty
                 -r /--redirect      | Get redirec Parameters
                     --rev           | Get Vulnerabilty Open-redirect
                 -x /--xss           | Get XSS Parameters        
                     --xssv          | XSS Scanners Vulnerabilty
-                -a /--aws           | Amazon S3 bucket enumeration
-                -p /--proxy         | URL of the proxy server (default: http://127.0.0.1:8080)
-                -s /--subdo         | Check Subdomains Enumerations
-                    --live          | Check live the Subdomains for working HTTP and HTTPS servers
-                    --map           | Domain Mapping with dnsdumster
-                -d /--dir           | Dir enumeration
-                   -w /--wordlists  | Wordlist file to use for enumeration. (default wordlists/wordlists.txt)
-                -j /--jsurl         | Gathering all js urls and extract endpoints from js file
-                   -js /--jstatus   | Get Status JavaScript 
-                -cr/--cors          | CORS misconfiguration scanner
-                    --flash         | Basic cors misconfig flash
-                -pr/--param        
+                -j /--jstatus       | Get Status JavaScript 
+                    --jsurl         | Gathering all js urls and extract endpoints from js file
+
+                -pr/--param         
                     --idor          | Get IDOR Parameters
                     --rce           | Get RCE Parameters
                     --sqli          | Get SQLI Parameters
                     --img           | Get img-traversal Parameters
                     --int           | Interestingparams
-                     
+
                 -w /--wayback       | Scraping wayback for data
                     --js            | Jsurls 
                     --php           | Phpurls
                     --asp           | ASP
                     --html          | Html
-
-                -v /--verbose       | verbose
+                -v /--verbose       | verbose mode
                 -o /--outfile       | outfile    
  "       
         exit 1
 }
-while [[ "$#" -gt 0  ]]; do
+
+while (( $# > 0 )); do
 args="${1}";
     case "$( echo ${args} | tr '[:upper:]' '[:lower:]' )" in        
         # Help
@@ -1293,471 +308,132 @@ args="${1}";
             url="${1#*=}";
              shift 1
         ;;
-        "-w" | "--wayback") 
-            if [[ $2 == "-o" || $2 == "--outfile" ]]
-                    then
-                        output="$4/$url"
-                        mkdir -p "$output"/"scraping"
-                        wayback $url
-                        exit 1
-            elif [[ $2 == "--js" ]]
-                    then
-                        output="$url"
-                        mkdir -p "$output/scraping"
-                        js $url
-                        exit 1
-            elif [[ $2 == "--php" ]]
-                    then
-                        output="$url"
-                        mkdir -p "$output"/"scraping"
-                        php $url
-                        exit 1
-            elif [[ $2 == "--asp" ]]
-                    then
-                        output="$url"
-                        mkdir -p "$output"/"scraping"
-                        asp $url
-                        exit 1
-            elif [[ $2 == "--html" ]]
-                    then
-                        output="$url"
-                        mkdir -p "$output"/"scraping"
-                        html $url
-                        exit 1
-            else
-                output="$url"
-                mkdir -p "$output"/"scraping"
-                wayback $url
-                exit 1
-            fi
-            shift
+        "-pr" | "--param")
+            wayback=true
+            parsing="$2";
+        shift
+        shift
             ;;
-        "-pr" | "--param") 
-            if [[ $2 == "--idor" ]];
-                then
-                if [[ $3 == "-o" || $3 == "--outfile" ]]; then
-                    output="$4/$url"
-                    mkdir -p "$output"/"idor"
-                    idor $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"idor"
-                    idor $url
-                    exit 1
-                fi
-        
-            elif [[ $2 == "--int" ]];
-                then
-                if [[ $3 == "-o" || $3 == "--outfile" ]];then
-                    output="$4/$url"
-                    mkdir -p "$output"/"int"
-                    int $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"int"
-                    int $url
-                    exit 1
-                fi
-                
-            elif [[ $2 == "--rce" ]];
-                then
-                if [[ $3 == "-o" || $3 == "--outfile" ]];then
-                    output="$4/$url"
-                    mkdir -p "$output"/"rce"
-                    rce $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"rce"
-                    rce $url
-                    exit 1
-                fi
-                
-            elif [[ $2 == "--sqli" ]];
-                then
-                if [[ $3 == "-o" || $3 == "--outfile" ]];then
-                    output="$4/$url"
-                    mkdir -p "$output"/"sqli"
-                    sqli $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"sqli"
-                    sqli $url
-                    exit 1
-                fi
-            elif [[ $2 == "--img" ]];
-                then
-               if [[ $3 == "-o" || $3 == "--outfile" ]];then
-                    output="$4/$url"
-                    mkdir -p "$output"/"traversal"
-                    traversal $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"traversal"
-                    traversal $url
-                    exit 1
-                fi
-                
-            else
-                logo
-                exit 1
-            fi
-            shift
-            ;;
-        "-r" | "--redirect") 
-            if [[ $2 == "-o" || $2 == "--outfile" ]]; 
-                then
-                output="$3/$url"
-                mkdir -p "$output"/"redirec"
-                redirect $url
-                exit 1
-            elif [[ $2 == "--rev" ]]; 
-                then
-                output="$url"
-                mkdir -p "$output"/"redirec"
-                rev $url
-                exit 1
-            else
-                output="$url"
-                mkdir -p "$output"/"redirec"
-                redirect $url
-                exit 1
-            fi
-            shift
-            ;;
-        "-x" | "--xss")
-            if [[  $2 == "-o" || $2 == "--outfile" ]];
-                then
-                output="$3/$url"
-                mkdir -p "$output"/"xss"
-                gfxss $url
-                exit 1
-            elif [[ $2 == "--xssv" ]];then
-                if [[ $3 == "-o" || $3 == "--outfile" ]]; then
-                    output="$4/$url"
-                    mkdir -p "$output"/"xss"
-                    xss $url
-                    exit
-                else
-                    output="$url"
-                    mkdir -p "$output"/"xss"
-                    xss $url
-                    exit
-                fi
-            else
-                output="$url"
-                mkdir -p "$output"/"xss"
-                gfxss $url
-                exit 1
-            fi
-            shift 1
+        "-w" | "--wayback")
+            data=true
+            Scraping="$2";
+        shift
+        shift
         ;;
-        "-a" | "--aws")
-            if [[  $2 == "-o" || $2 == "--outfile" ]]; then
-                output="$3/$url"
-                mkdir -p "$output"/"aws"
-                aws $url
-                exit 1
-            else 
-                output="$url"
-                mkdir -p "$output"/"aws"
-                aws $url
-                exit 1
-            fi
-            shift
-            ;;
-        "-t" | "--takeover")
-            if [[  $2 == "-o" || $2 == "--outfile" ]]; then
-                output="$3/$url"
-                mkdir -p "$output"/"takeover"
-                take $url
-               exit 1
-            else
-                output="$url"
-                mkdir -p "$output"/"takeover"
-                take $url
-                exit 1
-            fi
-            shift 1
+        "-s" | "--subdo")
+           subdo=true    
+        shift 
+        ;;
+        "-j" | "--jstatus")
+           jstatus=true    
+        shift 
+        ;;
+        "--jsurl")
+            jsurl=true
+        shift
+        ;;
+        "-cr" | "--cors")
+            cors=true
+        shift
+        ;;
+         "-x" | "--xss")
+                gfxss=true
+            shift 
+        ;;
+        "--xssv")
+            xss=true
+        shift
         ;;
         "-hr" | "--header")
-            if [[  $2 == "-o" || $2 == "--outfile" ]];
-                    then
-                output="$3/$url"
-                mkdir -p "$output"/"header"
-                header $url
-                exit 1
-            else
-                output="$url"
-                mkdir -p "$output"/"header"
-                header $url
-                exit 1
-            fi
-            shift 1
-        ;;
-        "-c" | "--cmd")
-            if [[  $2 == "-o" || $2 == "--outfile" ]];
-                then
-                    output="$3/$url"
-                    mkdir -p "$output"/"cmd"
-                    cmd $url
-                    exit 1
-            else
-                    output="$url"
-                    mkdir -p "$output"/"cmd"
-                    cmd $url
-                    exit 1
-            fi
+            header=true
             shift
         ;;
         "-lp" | "--lfiparam")
-            if [[  $2 == "-o" || $2 == "--outfile" ]];
-                then
-                output="$3/$url"
-                mkdir -p "$output"/"lfi"
-                lfi $url
-                exit 1
-            elif [[ $2 == "--lfiv" ]]; then
-                if [[ $3 == "-o" || $3 == "--outfile" ]]; then
-                    output="$4/$url"
-                    mkdir -p "$output"/"lfi"
-                    lfiv $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"lfi"
-                    lfiv $url
-                    exit 1
-                fi
-            else
-                output="$url"
-                mkdir -p "$output"/"lfi"
-                lfi $url
-                exit 1
-            fi
-        shift 1
+            param=true
+        shift
         ;;
-        "-cr" | "--cors")
-            if [[ $2 == "-o" || $2 == "--outfile" ]];then
-               output="$3/$url"
-               mkdir -p "$output"/"cors"
-               cors $url
-               exit 1
-            elif [[ $2 == "--flash" ]];then
-                output="$url"
-                mkdir -p "$output"/"cors"
-                flash $url
-                exit 1
-            else
-                output="$url"
-                mkdir -p "$output"/"cors"
-                cors $url
-                exit 1
-            fi
+        "--lfiv")
+            lfiv=true
+        shift
         ;;
         "-st" | "--ssti")
-            if [[ $2 == "-o" || $2 == "--outfile" ]];then
-                output="$3/$url"
-                mkdir -p "$output"/"ssti"
-                ssti $url
-                exit 1
-            elif [[ $2 == "--sstiv" ]]; then
-                if [[ $3 == "-o" || $3 == "--outfile" ]]; then
-                    output="$4/$url"
-                    mkdir -p "$output"/"ssti"
-                    sstiv $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"ssti"
-                    sstiv $url
-                    exit 1
-                fi
-            else
-                output="$url"
-                mkdir -p "$output"/"ssti"
-                ssti $url
-                exit 1
-            fi
-            shift 1
+            ssti=true
+        shift
+        ;;
+        "--sstiv")
+            sstiv=true
+        shift
+        ;;
+        "-a" | "--aws")
+            aws=true
+            shift
             ;;
+        "-r" | "--redirect")
+            redirect=true
+        shift
+        ;;
+        "--rev")
+            rev=true
+        shift
+        ;;
+        "-c" | "--cmd")
+            cmd=true
+        shift
+        ;;
+        "--cmdv")
+            cmdv=true
+        shift
+        ;;
+        "-ss" | "--ssrf")
+            ssrf=true
+        shift
+        ;;
+        "--blind")
+            blind=true
+        shift
+        ;;
+        "-l" | "--live")
+            sublive=true
+        shift
+        ;;
+        "-d" | "--dir")
+            direnum=true
+        shift
+        ;;
+        "-w" | "--wordlists")
+            wordlists=true
+            wordlist="$2";
+        shift
+        shift
+        ;;
+        "-m" | "--map")
+            mapping=true
+         shift   
+        ;;
+        "-p" | "--proxy")
+            proxy=true
+            burp="$2";
+        shift
+        shift
+        ;;
         "-sm" | "--smuggling")
             smuggling $url
             exit 1
             shift 1
         ;;
-        "-p" | "--proxy") 
-            if [[ $3 == "-o" || $3 == "--outfile" ]];then
-                burp="$2"
-                output="$4/$url"
-                mkdir -p "$output"/"subdo/burp"
-                proxy
-                exit 1
-            else
-                burp="$2"
-                output="$url"
-                mkdir -p "$output"/"subdo/burp"
-                proxy
-                exit 1
-            fi
-        shift
-        ;;
-        "-d" | "--dir" )
+        "-t" | "--takeover")
+            take=true
             shift 1
-        ;;
-       
-        "-w" | "--wordlists"*) wordlist=true 
-            if [[ $3 == "-o" || $3 == "--outfile" ]];then
-                 wordlist="$2"
-                 output="$4/$url"
-                 mkdir -p "$output"/"dir"
-                 dirbuster $url
-                 exit 1
-            else 
-                wordlist="$2"
-                output="$url"
-                mkdir -p "$output"/"dir"
-                dirbuster $url
-                exit 1
-            fi
-            shift 1
-          ;;  
-
-        "-s" | "--subdo")
-            if [[ $2 == "-o" || $2 == "--outfile"   ]];
-                then
-                    output="$3/$url"
-                    mkdir -p "$output"/"subdo"
-                    subdo $url 
-                    exit 1
-            elif [[ $2 == "--live" ]]; then
-                if [[ $3 == "-o" || $3 == "--outfile"   ]];
-                    then
-                        burp="$2"
-                        output="$4/$url"
-                        mkdir -p "$output"/"subdo"
-                        live $url 
-                        exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"subdo"
-                    live $url
-                    exit 1
-                fi
-            elif [[ $2 == "-p" || $2 == "--proxy" ]]; then
-                    burp="$3"
-                    output="$url"
-                    mkdir -p "$output"/"subdo"
-                    proxy $url
-                    exit 1
-            elif [[ $2 == "--map" ]]; then
-                if [[ $3 == "-o" || $3 == "--output" ]];then
-                    output="$4/$url"
-                    mkdir -p "$output"/"mapping"
-                    map $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"mapping"
-                    map $url
-                    exit 1
-                fi
-                
-            else
-                output="$url"
-                mkdir -p "$output"/"subdo"
-                subdo $url
-                exit 1
-            fi
-            shift  
-        ;; 
-        "-ss" | "--ssrf")
-            if [[ $2 == "-o" || $2 == "--outfile"   ]]; then
-                output="$3/$url"
-                mkdir -p "$output"/"ssrf"
-                ssrf2 $url
-                exit 1
-            elif [[ $2 == "--ssrfv" ]]; then
-                if [[ $3 == "-o" || $3 == "--outfile" ]];then
-                    output="$4/$url"
-                    mkdir -p "$output"/"ssrf"
-                    ssrf $url
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"ssrf"
-                    ssrf $url
-                    exit 1
-                fi
-            else
-                output="$url"
-                mkdir -p "$output"/"ssrf"
-                ssrf2 $url
-                exit 1
-            fi
-        shift
-        ;;
-        "-j" | "--jsurl")
-            if [[ $2 == "-o" || $2 == "--outfile"   ]];
-                 then
-                 output="$3/$url"
-                 mkdir -p "$output"/"js"
-                 jsurl $url
-                 exit 1
-            elif [[ $2 == "-js" || $2 == "--jstatus" ]]; 
-                then
-                if [[ $3 == "-o" || $3 == "--outfile"   ]];
-                 then
-                    output="$4/$url"
-                    mkdir -p "$output"/"scraping"
-                    jstatus $url 
-                    echo "${YW}[i]${RD}${AB}Start Gathering all js urls and extract endpoints from js file"
-                    cat $output/scraping/$url-jstatus.txt \
-                    | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)).*\.((.*js.*)(&?))+" > $output/scraping/jsurl 
-                    cat $output/scraping/jsurl | parallel -j50 -q curl -s  | js-beautify > $output/scraping/$url.js 
-                    cat $output/scraping/$url.js | gf js 
-                    exit 1
-                else
-                    output="$url"
-                    mkdir -p "$output"/"scraping"
-                    jstatus $url
-                    echo "${YW}[i]${RD}${AB}Start Gathering all js urls and extract endpoints from js file"
-                    cat $output/scraping/$url-jstatus.txt \
-                    | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)).*\.((.*js.*)(&?))+" > $output/scraping/jsurl
-                    cat $output/scraping/jsurl | parallel -j50 -q curl -s  | js-beautify > $output/scraping/$url.js
-                    cat $output/scraping/$url.js | gf js 
-                    exit 1
-                fi
-            else
-                output="$url"
-                mkdir -p "$output"/"js"
-                jsurl $url
-                exit 1
-            fi
-            shift
-        ;;
-        "-js" | "--jstatus")
-            if [[ $2 == "-o" || $2 == "--outfile"   ]];
-                 then
-                    output="$3/$url"
-                    mkdir -p "$output"/"scraping"
-                    jstatus $url 
-                    exit 1
-            else
-                    output="$url"
-                    mkdir -p "$output"/"scraping"
-                    jstatus $url
-                    exit 1
-            fi
-            shift 
         ;;
         "-v" | "--verbose")
-            verbose=1 #not solved
-            shift
+            verbose=true
+        shift
+        ;;
+        "-o" | "--outfile")
+            outfile=true
+            out="$2";
+        shift
+        shift
         ;;
         "-"*)
             echo -e " ${YW}[i]${RD} Invalid option: ${RED}${1}${NT}" && shift && exit 1
@@ -1766,12 +442,1217 @@ args="${1}";
             echo -e " ${YW}[i]${RD} Invalid: Unknown option ${NT}${1}${NT}" && shift && exit
             exit
         ;;
-        
-    esac   
+    esac
 done
 
+
 if [ -z "${url}" ] ; then
-  logo
+    logo
   echo -e "You need to specify a target to use. Type --help for command usage.\n"
   exit
+fi
+if [[ ${outfile} == true ]];then
+    outfile="$out/$url"
+    mkdir -p "$outfile"
+else
+   outfile="$url"
+   mkdir -p "$outfile"
+fi
+if [[ ${subdo} == true ]];then
+    [ $outfile == true ] && 
+        outfile="$url"
+        mkdir -p "$outfile"/"subdo"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Searching for subdomains for${NT} ${GR} [${NT}$url${GR}]${NT}" 
+    exec_Subdomains
+    cat $outfile/subdo/$url.txt | sort -u > $outfile/subdo/$url-subdomains.txt
+    if [[ ${verbose} == true ]];then
+        if [[ -f $outfile/subdo/$url-subdomains.txt ]];then
+            final=$(cat $outfile/subdo/$url-subdomains.txt | sort -u | wc  -l  )
+            for out in $(cat $outfile/subdo/$url-subdomains.txt);do
+                echo -e "${NT}─╼>${NT} $out"
+            done 
+            echo -e "${NT}[${RD}*${NT}]${GR} Total Subdomains ${NT}[${BD}$final${NT}]${GR} "
+            echo -e "${NT}[${RD}*${NT}]${GR} Saved Subdomains ${NT}[${CY}$outfile/subdo/$url-subdomains.txt${NT}]"
+        fi
+    else
+        if [[ -f $outfile/subdo/$url-subdomains.txt ]];then
+            final=$(cat $outfile/subdo/$url-subdomains.txt | sort -u | wc  -l  )
+            echo -e "${NT}[${RD}*${NT}]${GR} Total Subdomains ${NT}[${BD}$final${NT}]${GR} "
+            echo -e "${NT}[${RD}*${NT}]${GR} Saved Subdomains ${NT}[${GR}$outfile/subdo/$url-subdomains.txt${NT}]"  
+        fi
+    fi
+fi
+
+if [[ ${header} == true ]];then
+ [[ $outfile == true ]] && \
+    outfile="$url"
+        mkdir -p "$outfile"/"header"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Start Check Header Injection Vulnerabilty!!!${NT}"
+        if [[ ${subdo} == true ]];then   
+            echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT}$outfile/subdo/$url-subdomains.txt"
+            while read line ;do
+                echo $line | httpx -silent | hinject -v | tee -a $outfile/header/$url-header.txt
+            done < $outfile/subdo/$url-subdomains.txt
+        else
+            echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} ${ip} $url"
+            echo $url | httpx -silent | hinject -v | tee -a $outfile/header/$url-header.txt
+            echo -e "${NT}[${RD}*${NT}]${GR} Done Check Header Injection[$(cat $outfile/header/$url-header.txt | wc -l)]"
+        fi
+fi
+
+if [[ ${redirect} == true ]];then
+  [ $outfile == true ] && \
+    outfile="$url"
+        mkdir -p "$outfile"/"redirec"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Get redirect  Parameters...${NT}"
+    if [[ ${subdo} == true ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+        if [[ ${rev} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/redirec/redirec.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/redirec/redirec.txt
+                cat $outfile/redirec/redirec.txt | grep "=" | gf redirect | qsreplace |tee -a > $outfile/redirec/$url-redirec-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/redirec/$url-redirec-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Open-redirect Vulnerabilty...${NT}" 
+                cat $outfile/redirec/$url-redirec-param.txt | qsreplace "$host" |  sed -e 's!http[s]\?://!!' | xargs -I % -P 25 sh -c 'curl -Is "%" 2>&1 | grep -q "Location: $host" && echo "VULN! %"' | tee -a $outfile/redirec/$url-redirec.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found  Open-redirect Vulnerabilty ${NT}[${GR}$(cat $outfile/redirec/$url-redirec.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/redirec/$url-redirec.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/redirec/redirec.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/redirec/redirec.txt
+                cat $outfile/redirec/redirec.txt | grep "=" | gf redirect | qsreplace |tee -a > $outfile/redirec/$url-redirec-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Open-redirect Vulnerabilty...${NT}" 
+                cat $outfile/redirec/$url-redirec-param.txt | qsreplace "$host" |  sed -e 's!http[s]\?://!!' | xargs -I % -P 25 sh -c 'curl -Is "%" 2>&1 | grep -q "Location: $host" && echo "VULN! %"' | tee -a $outfile/redirec/$url-redirec.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Open-redirect Vulnerabilty ${NT}[${GR}$(cat $outfile/redirec/$url-redirec.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/redirec/$url-redirec.txt]"
+            fi
+        else
+            echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+            cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/redirec/redirec.txt
+            cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/redirec/redirec.txt
+            cat $outfile/redirec/redirec.txt | grep "=" | gf redirect | qsreplace |tee -a > $outfile/redirec/$url-redirec-param.txt
+            while read line ;do
+                echo "${NT}[${RD}*${NT}]${NT} $line" 
+            done < $outfile/redirec/$url-redirec-param.txt
+            echo -e "${NT}[${RD}*${NT}]${GR} Found Get redirect  Parameters${NT} [${GR}$(cat $outfile/redirec/$url-redirec-param.txt | wc -l)${NT}]"
+            echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/redirec/$url-redirec-param.txt]"
+        fi
+    else
+        if [[ ${rev} == true ]];then
+            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/redirec/redirec.txt
+                echo -e "$url" | gau | sort -u >> $outfile/redirec/redirec.txt
+                cat $outfile/redirec/redirec.txt | grep "=" | gf redirect | qsreplace |tee -a > $outfile/redirec/$url-redirec-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/redirec/$url-redirec-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Open-redirect Vulnerabilty...${NT}" 
+                cat $outfile/redirec/$url-redirec-param.txt | qsreplace "$host" |  sed -e 's!http[s]\?://!!' | xargs -I % -P 25 sh -c 'curl -Is "%" 2>&1 | grep -q "Location: $host" && echo "VULN! %"' | tee -a $outfile/redirec/$url-redirec.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Open-redirect Vulnerabilty ${NT}[${GR}$(cat $outfile/redirec/$url-redirec.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/redirec/$url-redirec.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/redirec/redirec.txt
+                echo -e "$url" | gau | sort -u >> $outfile/redirec/redirec.txt
+                cat $outfile/redirec/redirec.txt | grep "=" | gf redirect | qsreplace |tee -a > $outfile/redirec/$url-redirec-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Open-redirect Vulnerabilty...${NT}" 
+                cat $outfile/redirec/$url-redirec-param.txt | qsreplace "$host" |  sed -e 's!http[s]\?://!!' | xargs -I % -P 25 sh -c 'curl -Is "%" 2>&1 | grep -q "Location: $host" && echo "VULN! %"' | tee -a $outfile/redirec/$url-redirec.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Open-redirect Vulnerabilty ${NT}[${GR}$(cat $outfile/redirec/$url-redirec.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/redirec/$url-redirec.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | grep "=" | gf redirect | qsreplace |tee -a > $outfile/redirec/$url-redirec-param.txt
+                echo -e "$url" | gau | grep "=" | gf redirect | qsreplace |tee -a >> $outfile/redirec/$url-redirec-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/redirec/$url-redirec-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get redirect  Parameters${NT} [${GR}$(cat $outfile/redirec/$url-redirec-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/redirec/$url-redirec-param.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | grep "=" | gf redirect | qsreplace |tee -a > $outfile/redirec/$url-redirec-param.txt
+                echo -e "$url" | gau | grep "=" | gf redirect | qsreplace |tee -a >> $outfile/redirec/$url-redirec-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get redirect  Parameters${NT} [${GR}$(cat $outfile/redirec/$url-redirec-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/redirec/$url-redirec-param.txt]"
+            fi
+        fi
+    fi
+fi
+
+if [[ ${ssti} == true ]];then
+  [ $outfile == true ] && \
+    outfile="$url"
+        mkdir -p "$outfile"/"ssti"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Get SSTI Parameters...${NT}"
+    if [[ ${subdo} == true ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+        if [[ ${sstiv} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/ssti/ssti.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/ssti/ssti.txt
+                cat $outfile/ssti/ssti.txt | gf ssti | qsreplace | sort -u > $outfile/ssti/$url-ssti-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/ssti/$url-ssti-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check SSTI Vulnerabilty...${NT}" 
+                nuclei -l $outfile/ssti/$url-ssti-param.txt -t config/ssti.yaml -silent -timeout 7 | tee -a  $outfile/ssti/$url-ssti.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssti Vulnerabilty ${NT}[${GR}$(cat $outfile/ssti/$url-ssti.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssti/$url-ssti.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/ssti/ssti.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/ssti/ssti.txt
+                cat $outfile/ssti/ssti.txt | gf ssti | qsreplace | sort -u > $outfile/ssti/$url-ssti-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check SSTI Vulnerabilty...${NT}" 
+                nuclei -l $outfile/ssti/$url-ssti-param.txt -t config/ssti.yaml -silent -timeout 7 | tee -a  $outfile/ssti/$url-ssti.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssti Vulnerabilty ${NT}[${GR}$(cat $outfile/ssti/$url-ssti.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssti/$url-ssti.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/ssti/ssti.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/ssti/ssti.txt
+                cat $outfile/ssti/ssti.txt | gf ssti | qsreplace | sort -u > $outfile/ssti/$url-ssti-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/ssti/$url-ssti-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get SSTI Parameters${NT} [${GR}$(cat $outfile/ssti/$url-ssti-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssti/$url-ssti-param.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/ssti/ssti.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/ssti/ssti.txt
+                cat $outfile/ssti/ssti.txt | gf ssti | qsreplace | sort -u > $outfile/ssti/$url-ssti-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/ssti/$url-ssti-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get SSTI Parameters${NT} [${GR}$(cat $outfile/ssti/$url-ssti-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssti/$url-ssti-param.txt]"
+            fi
+        fi
+    else
+        if [[ ${sstiv} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/ssti/ssti.txt
+                echo -e "$url" | gau | sort -u >> $outfile/ssti/ssti.txt
+                cat $outfile/ssti/ssti.txt | gf ssti | qsreplace | sort -u > $outfile/ssti/$url-ssti-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/ssti/$url-ssti-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check SSTI Vulnerabilty...${NT}" 
+                nuclei -l $outfile/ssti/$url-ssti-param.txt -t config/ssti.yaml -silent -timeout 7 | tee -a  $outfile/ssti/$url-ssti.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssti Vulnerabilty ${NT}[${GR}$(cat $outfile/ssti/$url-ssti.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssti/$url-ssti.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/ssti/ssti.txt
+                echo -e "$url" | gau | sort -u >> $outfile/ssti/ssti.txt
+                cat $outfile/ssti/ssti.txt | gf ssti | qsreplace | sort -u > $outfile/ssti/$url-ssti-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check SSTI Vulnerabilty...${NT}" 
+                nuclei -l $outfile/ssti/$url-ssti-param.txt -t config/ssti.yaml -silent -timeout 7 | tee -a  $outfile/ssti/$url-ssti.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssti Vulnerabilty ${NT}[${GR}$(cat $outfile/ssti/$url-ssti.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssti/$url-ssti.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf ssti | qsreplace | sort -u > $outfile/ssti/$url-ssti-param.txt
+                echo -e "$url" | gau | gf ssti | qsreplace | sort -u >> $outfile/ssti/$url-ssti-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/ssti/$url-ssti-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get SSTI Parameters${NT} [${GR}$(cat $outfile/ssti/$url-ssti-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssti/$url-ssti-param.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf ssti | qsreplace | sort -u > $outfile/ssti/$url-ssti-param.txt
+                echo -e "$url" | gau | gf ssti | qsreplace | sort -u >> $outfile/ssti/$url-ssti-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get SSTI Parameters${NT} [${GR}$(cat $outfile/ssti/$url-ssti-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssti/$url-ssti-param.txt]"
+            fi
+        fi
+    fi
+fi
+
+if [[ ${cmd} == true ]];then
+  [ $outfile == true ] && \
+    outfile="$url"
+        mkdir -p "$outfile"/"cmd"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Get Command Injection Parameters...${NT}"
+    if [[ ${subdo} == true ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+        if [[ ${cmdv} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/cmd/cmd.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/cmd/cmd.txt
+                cat $outfile/cmd/cmd.txt | gf cmd | qsreplace | sort -u > $outfile/cmd/$url-cmd-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/cmd/$url-cmd-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check Command Injection Vulnerabilty...${NT}" 
+                nuclei -l $outfile/cmd/$url-cmd-param.txt -t config/cmd.yaml -silent -timeout 7 | tee -a  $outfile/cmd/$url-cmd.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check Command Injection Vulnerabilty ${NT}[${GR}$(cat $outfile/cmd/$url-cmd.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/cmd/$url-cmd.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/cmd/cmd.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/cmd/cmd.txt
+                cat $outfile/cmd/cmd.txt | gf cmd | qsreplace | sort -u > $outfile/cmd/$url-cmd-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check Command Injection Vulnerabilty...${NT}" 
+                nuclei -l $outfile/cmd/$url-cmd-param.txt -t config/cmd.yaml -silent -timeout 7 | tee -a  $outfile/cmd/$url-cmd.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check Command Injection Vulnerabilty ${NT}[${GR}$(cat $outfile/cmd/$url-cmd.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/cmd/$url-cmd.txt]"
+            fi
+        else
+            echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+            cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/cmd/cmd.txt
+            cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/cmd/cmd.txt
+            cat $outfile/cmd/cmd.txt | gf cmd | qsreplace | sort -u > $outfile/cmd/$url-cmd-param.txt
+            while read line ;do
+                echo "${NT}[${RD}*${NT}]${NT} $line" 
+            done < $outfile/cmd/$url-cmd-param.txt
+            echo -e "${NT}[${RD}*${NT}]${GR} Found Get Command Injection Parameters${NT} [${GR}$(cat $outfile/cmd/$url-cmd-param.txt | wc -l)${NT}]"
+            echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/cmd/$url-cmd-param.txt]"
+        fi
+    else
+        if [[ ${cmdv} == true ]];then
+            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/cmd/cmd.txt
+                echo -e "$url" | gau | sort -u >> $outfile/cmd/cmd.txt
+                cat $outfile/cmd/cmd.txt | gf cmd | qsreplace | sort -u > $outfile/cmd/$url-cmd-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/cmd/$url-cmd-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check Command Injection Vulnerabilty...${NT}" 
+                nuclei -l $outfile/cmd/$url-cmd-param.txt -t config/cmd.yaml -silent -timeout 7 | tee -a  $outfile/cmd/$url-cmd.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check Command Injection Vulnerabilty ${NT}[${GR}$(cat $outfile/cmd/$url-cmd.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/cmd/$url-cmd.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/cmd/cmd.txt
+                echo -e "$url" | gau | sort -u >> $outfile/cmd/cmd.txt
+                cat $outfile/cmd/cmd.txt | gf cmd | qsreplace | sort -u > $outfile/cmd/$url-cmd-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check Command Injection Vulnerabilty...${NT}" 
+                nuclei -l $outfile/cmd/$url-cmd-param.txt -t config/cmd.yaml -silent -timeout 7 | tee -a  $outfile/cmd/$url-cmd.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check Command Injection Vulnerabilty ${NT}[${GR}$(cat $outfile/cmd/$url-cmd.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/cmd/$url-cmd.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf cmd | qsreplace | sort -u > $outfile/cmd/$url-cmd-param.txt
+                echo -e "$url" | gau | gf cmd | qsreplace | sort -u >> $outfile/cmd/$url-cmd-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/cmd/$url-cmd-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get Command Injection Parameters${NT} [${GR}$(cat $outfile/cmd/$url-cmd-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/cmd/$url-cmd-param.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf cmd | qsreplace | sort -u > $outfile/cmd/$url-cmd-param.txt
+                echo -e "$url" | gau | gf cmd | qsreplace | sort -u >> $outfile/cmd/$url-cmd-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get Command Injection Parameters${NT} [${GR}$(cat $outfile/cmd/$url-cmd-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/cmd/$url-cmd-param.txt]"
+            fi
+        fi
+    fi
+fi
+
+if [[ ${ssrf} == true ]];then
+ [ $outfile == true ] && \
+    outfile="$url"
+        mkdir -p "$outfile"/"ssrf"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Get SSRF Parameters...${NT}"
+    if [[ ${subdo} == true ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+        if [[ ${blind} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/ssrf/ssrf.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/ssrf/ssrf.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check ssrf blind Vulnerabilty...${NT}" 
+                cat $outfile/ssrf/ssrf.txt | gf ssrf | grep "?" | qsreplace | qsreplace $ssr > $outfile/ssrf/$url-ssrf-param.txt
+                sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "${RD}[+] Start On FFUF:${NT}"
+                ffuf -w $outfile/ssrf/$url-ssrf-param.txt -u FUZZ -t 50 -of md > $outfile/ssrf/$url-ssrf3.md  
+                for run in $(cat $outfile/ssrf/$url-ssrf3.md | grep -Po ".*\?((.*=.*)(&?))+");do
+                    while [ $run ];do
+                        echo -e "${NT}[${RD}*${NT}]${GR}${NT} $run\n"
+                        break
+                    done
+                done
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssrf blind Vulnerabilty ${NT}[${GR}$outfile/ssrf/$url-ssrf3.md)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssrf/$url-ssrf.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/ssrf/ssrf.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/ssrf/ssrf.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check ssrf blind Vulnerabilty...${NT}" 
+                cat $outfile/ssrf/ssrf.txt | gf ssrf | grep "?" | qsreplace | qsreplace $ssr > $outfile/ssrf/$url-ssrf-param.txt
+                sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "${RD}[+] Start On FFUF:${NT}"
+                ffuf -w $outfile/ssrf/$url-ssrf-param.txt -u FUZZ -t 50 -of md > $outfile/ssrf/$url-ssrf3.md  
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssrf blind Vulnerabilty ${NT}[${GR}$outfile/ssrf/$url-ssrf3.md)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssrf/$url-ssrf.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/ssrf/ssrf.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/ssrf/ssrf.txt
+                cat $outfile/ssrf/ssrf.txt | gf ssrf | qsreplace | sort -u > $outfile/ssrf/$url-ssrf-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get ssrf Parameters${NT} [${GR}$(cat $outfile/ssrf/$url-ssrf-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssrf/$url-ssrf-param.txt]"
+            else
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/ssrf/ssrf.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/ssrf/ssrf.txt
+                cat $outfile/ssrf/ssrf.txt | gf ssrf | qsreplace | sort -u > $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get ssrf Parameters${NT} [${GR}$(cat $outfile/ssrf/$url-ssrf-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssrf/$url-ssrf-param.txt]"
+            fi
+        fi
+    else
+        if [[ ${blind} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/ssrf/ssrf.txt
+                echo -e "$url" | gau | sort -u >> $outfile/ssrf/ssrf.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check ssrf blind Vulnerabilty...${NT}" 
+                cat $outfile/ssrf/ssrf.txt | gf ssrf | grep "?" | qsreplace | qsreplace $ssr > $outfile/ssrf/$url-ssrf-param.txt
+                sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "${RD}[+] Start On FFUF:${NT}"
+                ffuf -w $outfile/ssrf/$url-ssrf-param.txt -u FUZZ -t 50 -of md > $outfile/ssrf/$url-ssrf3.md  
+                for run in $(cat $outfile/ssrf/$url-ssrf3.md | grep -Po ".*\?((.*=.*)(&?))+");do
+                    while [ $run ];do
+                        echo -e "${NT}[${RD}*${NT}]${GR}${NT} $run\n"
+                        break
+                    done
+                done
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssrf blind Vulnerabilty ${NT}[${GR}$outfile/ssrf/$url-ssrf3.md)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssrf/$url-ssrf.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/ssrf/ssrf.txt
+                echo -e "$url" | gau | sort -u >> $outfile/ssrf/ssrf.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check ssrf blind Vulnerabilty...${NT}" 
+                cat $outfile/ssrf/ssrf.txt | gf ssrf | grep "?" | qsreplace | qsreplace $ssr > $outfile/ssrf/$url-ssrf-param.txt
+                sed -i "s|$|\&dest=$ssr\&redirect=$ssr\&uri=$ssr\&path=$ssr\&continue=$ssr\&url=$ssr\&window=$ssr\&next=$ssr\&data=$ssr\&reference=$ssr\&ssr=$ssr\&html=$ssr\&val=$ssr\&validate=$ssr\&domain=$ssr\&callback=$ssr\&return=$ssr\&page=$ssr\&feed=$ssr\&host=$ssr&\port=$ssr\&to=$ssr\&out=$ssr\&view=$ssr\&dir=$ssr\&show=$ssr\&navigation=$ssr\&open=$ssr|g" $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "${RD}[+] Start On FFUF:${NT}"
+                ffuf -w $outfile/ssrf/$url-ssrf-param.txt -u FUZZ -t 50 -of md > $outfile/ssrf/$url-ssrf3.md  
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check ssrf blind Vulnerabilty ${NT}[${GR}$outfile/ssrf/$url-ssrf3.md)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssrf/$url-ssrf.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf ssrf | qsreplace | sort -u > $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "$url" | gau | gf ssrf | qsreplace | sort -u >> $outfile/ssrf/$url-ssrf-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get ssrf Parameters${NT} [${GR}$(cat $outfile/ssrf/$url-ssrf-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssrf/$url-ssrf-param.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf ssrf | qsreplace | sort -u > $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "$url" | gau | gf ssrf | qsreplace | sort -u >> $outfile/ssrf/$url-ssrf-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get ssrf Parameters${NT} [${GR}$(cat $outfile/ssrf/$url-ssrf-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/ssrf/$url-ssrf-param.txt]"
+            fi
+        fi
+    fi
+fi
+
+if [[ ${param} == true ]];then
+[ $outfile == true ] && \
+    outfile="$url"
+        mkdir -p "$outfile"/"lfi"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Get LFI Parameters...${NT}"
+    if [[ ${subdo} == true ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+        if [[ ${lfiv} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/lfi/lfi.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/lfi/lfi.txt
+                cat $outfile/lfi/lfi.txt | gf lfi | qsreplace | sort -u > $outfile/lfi/$url-lfi-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/lfi/$url-lfi-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check lfi Vulnerabilty...${NT}" 
+                nuclei -l $outfile/lfi/$url-lfi-param.txt -t config/lfi.yaml -silent -timeout 7 | tee -a  $outfile/lfi/$url-lfi.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check lfi Vulnerabilty ${NT}[${GR}$(cat $outfile/lfi/$url-lfi.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/lfi/$url-lfi.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/lfi/lfi.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/lfi/lfi.txt
+                cat $outfile/lfi/lfi.txt | gf lfi | qsreplace | sort -u > $outfile/lfi/$url-lfi-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check lfi Vulnerabilty...${NT}" 
+                nuclei -l $outfile/lfi/$url-lfi-param.txt -t config/lfi.yaml -silent -timeout 7 | tee -a  $outfile/lfi/$url-lfi.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check lfi Vulnerabilty ${NT}[${GR}$(cat $outfile/lfi/$url-lfi.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/lfi/$url-lfi.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/lfi/lfi.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/lfi/lfi.txt
+                cat $outfile/lfi/lfi.txt | gf lfi | qsreplace | sort -u > $outfile/lfi/$url-lfi-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/lfi/$url-lfi-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get LFI Parameters${NT} [${GR}$(cat $outfile/lfi/$url-lfi-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/lfi/$url-lfi-param.txt]"
+            else
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/lfi/lfi.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/lfi/lfi.txt
+                cat $outfile/lfi/lfi.txt | gf lfi | qsreplace | sort -u > $outfile/lfi/$url-lfi-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get LFI Parameters${NT} [${GR}$(cat $outfile/lfi/$url-lfi-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/lfi/$url-lfi-param.txt]"
+            fi
+        fi
+    else
+        if [[ ${lfiv} == true ]];then
+            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/lfi/lfi.txt
+                echo -e "$url" | gau | sort -u >> $outfile/lfi/lfi.txt
+                cat $outfile/lfi/lfi.txt | gf lfi | qsreplace | sort -u > $outfile/lfi/$url-lfi-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/lfi/$url-lfi-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check lfi Vulnerabilty...${NT}" 
+                nuclei -l $outfile/lfi/$url-lfi-param.txt -t config/lfi.yaml -silent -timeout 7 | tee -a  $outfile/lfi/$url-lfi.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check lfi Vulnerabilty ${NT}[${GR}$(cat $outfile/lfi/$url-lfi.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/lfi/$url-lfi.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/lfi/lfi.txt
+                echo -e "$url" | gau | sort -u >> $outfile/lfi/lfi.txt
+                cat $outfile/lfi/lfi.txt | gf lfi | qsreplace | sort -u > $outfile/lfi/$url-lfi-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check lfi Vulnerabilty...${NT}" 
+                nuclei -l $outfile/lfi/$url-lfi-param.txt -t config/lfi.yaml -silent -timeout 7 | tee -a  $outfile/lfi/$url-lfi.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check lfi Vulnerabilty ${NT}[${GR}$(cat $outfile/lfi/$url-lfi.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/lfi/$url-lfi.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf lfi | qsreplace | sort -u > $outfile/lfi/$url-lfi-param.txt
+                echo -e "$url" | gau | gf lfi | qsreplace | sort -u >> $outfile/lfi/$url-lfi-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/lfi/$url-lfi-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get LFI Parameters${NT} [${GR}$(cat $outfile/lfi/$url-lfi-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/lfi/$url-lfi-param.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf lfi | qsreplace | sort -u > $outfile/lfi/$url-lfi-param.txt
+                echo -e "$url" | gau | gf lfi | qsreplace | sort -u >> $outfile/lfi/$url-lfi-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get LFI Parameters${NT} [${GR}$(cat $outfile/lfi/$url-lfi-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/lfi/$url-lfi-param.txt]"
+            fi
+        fi
+    fi
+fi
+
+if [[ ${mapping} == true ]]; then
+ [ $outfile == true ] && \
+    outfile="$url"
+        mkdir -p "$outfile"/"mapping"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Start Mammping for  domains...${NT}"
+    if [[ ${subdo} == true ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}$outfile/subdo/$url-subdomains.txt"
+        while read line ;do
+            token=$(curl -ILs https://dnsdumpster.com | grep csrftoken | cut -d " " -f2 | cut -d "=" -f2 | tr -d ";")
+            curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com \
+                --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" \
+                     --data "csrfmiddlewaretoken=$token&targetip=$line" \
+                        --cookie "csrftoken=$token; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com > /dev/null 2>&1 
+        done < $outfile/subdo/$url-subdomains.txt
+        while read line ;do
+            map=`curl -s  https://dnsdumpster.com/static/map/$line.png --output $outfile/mapping/$line.png`
+            for number in $(seq ${_start} ${_end})
+            do
+                sleep 0.2
+                ProgressBar ${number} $map ${_end} 
+            done
+        done < $outfile/subdo/$url-subdomains.txt
+        echo -e "\n${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/mapping/$url.png]" 
+    else
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+        token=$(curl -ILs https://dnsdumpster.com | grep csrftoken | cut -d " " -f2 | cut -d "=" -f2 | tr -d ";")
+            curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com \
+                --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" \
+                     --data "csrfmiddlewaretoken=$token&targetip=$url" \
+                        --cookie "csrftoken=$token; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com > /dev/null 2>&1 
+        map=`curl -s  https://dnsdumpster.com/static/map/$url.png --output $outfile/mapping/$url.png`
+        for number in $(seq ${_start} ${_end})
+        do
+	        sleep 0.2
+	        ProgressBar ${number} $map ${_end} 
+        done
+        echo -e "\n${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/mapping/$url.png]"  
+    fi
+fi
+
+if [[ ${direnum} == true ]]; then
+    [ $outfile == true ] && 
+        outfile="$url"
+        mkdir -p "$outfile"/"dir"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Start dir enumerations...${NT}"
+    echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} $url"
+    if [[ ${wordlists} == true ]];then
+        if [[ ${subdo} == true ]];then
+            echo -e "${NT}[${RD}!${NT}]${GR} Start On target Subdomains${NT} $outfile/subdo/$url-subdomains.txt"
+            if [[ ${verbose} == true ]];then
+                while read line ;do
+                    dirsearch -url $line --wordlist $wordlist | tee -a $outfile/dir/$url-dir.txt
+                done < $outfile/subdo/$url-subdomains.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/dir/$url-dir.txt]"
+            else
+                while read line ;do
+                    dirsearch -url $line --wordlist $wordlist > $outfile/dir/$url-dir.txt
+                done < $outfile/subdo/$url-subdomains.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/dir/$url-dir.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                dirsearch -url $url -wordlist $wordlist | tee -a $outfile/dir/$url-dir.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/dir/$url-dir.txt]"
+            else
+                dirsearch -url $url -wordlist $wordlist > $outfile/dir/$url-dir.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/dir/$url-dir.txt]"
+            fi 
+        fi 
+    else
+        echo -e "${NT}[${RD}!${NT}]${GR} Location Wordlists Not Found!!!"
+        echo -e "${NT}[${RD}!${NT}]${CY} Ex: $0 -u domain -d -w /path/wordlists.txt"
+    fi
+fi
+
+if [[ ${proxy} == true ]];then
+    [ $outfile == true ] && 
+        outfile="$url"
+        mkdir -p "$outfile"
+    if [[ $burp ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Running Proxy Server: ${AB}$burp"
+        if [[ ${subdo} == true ]]; then
+            while read sub; do
+                curl -H "$agent" -x $burp --ssl-no-revoke -L --url "$sub" -o /dev/null -sk 
+            done < $outfile/subdo/$url-subdomains.txt
+            prox=$(cat $outfile/subdo/$url-subdomains.txt | httpx -http-proxy $burp -silent )
+            echo -e "${NT}[${RD}*${NT}]${GR} $prox" | tee -a $outfile/$url.log
+        else
+            curl -H "$agent" -x $burp --ssl-no-revoke -L --url "$url" -o /dev/null -sk 
+            prox=$(echo $url | httpx -http-proxy $burp -silent ) 
+            echo -e "${NT}[${RD}*${NT}]${GR} $prox" | tee -a $outfile/$url.log
+        fi 
+    else
+        echo -e "${NT}[${RD}*${NT}]${GR} Running Proxy Server Default"
+        if [[ ${subdo} == true ]]; then
+            while read sub; do
+                curl -H "$agent" -x http://127.0.0.1:8080 --ssl-no-revoke -L --url "$sub" -o /dev/null -sk 
+            done < $outfile/subdo/$url-subdomains.txt
+            prox=$(cat $outfile/subdo/$url-subdomains.txt | httpx -http-proxy http://127.0.0.1:8080 -silent )
+            echo -e "${NT}[${RD}*${NT}]${GR} $prox" | tee -a $outfile/$url.log
+        else
+            curl -H "$agent" -x http://127.0.0.1:8080 --ssl-no-revoke -L --url "$url" -o /dev/null -sk 
+            prox=$(echo $url | httpx -http-proxy http://127.0.0.1:8080 -silent ) 
+            echo -e "${NT}[${RD}*${NT}]${GR} $prox" | tee -a $outfile/$url.log
+        fi 
+    fi
+fi 
+
+if [[ $sublive == true ]];then
+    [ $outfile == true ] && 
+        outfile="$url"
+        mkdir -p "$outfile"/"subdo"
+    echo -e "${NT}[${RD}*${NT}]${GR} Check live the Subdomains for working HTTP and HTTPS servers...${NT}"
+    if [[ ${subdo} == true ]]; then
+        for run in $(cat $outfile/subdo/$url-subdomains.txt);do
+            ping -c1 -w1 $run > /dev/null 2>&1
+            if [[ $? -eq 0 ]];
+                then
+                live=$(echo -e "$run" | httpx -silent | sort -u | tee -a $outfile/subdo/subs-valid.txt )
+                echo -e "${RD}[${GR}*${RD}]${GR} VALID:${NT} $live" | tee $outfile/subdo/$url-valid.txt 
+            else
+                echo -e "${RD}[${GR}*${RD}]${RD} NOTVALID:${NT} $run" | tee $outfile/subdo/$url-notvalid.txt
+            fi                
+        done  
+    else 
+        for run in $url;do
+            ping -c1 -w1 $run > /dev/null 2>&1
+            if [[ $? -eq 0 ]];
+                then
+                live=$(echo -e "$run" | httpx -silent | sort -u | tee -a $outfile/subdo/subs-valid.txt )
+                echo -e "${RD}[${GR}*${RD}]${GR} VALID:${NT} $live" | tee $outfile/subdo/$url-valid.txt 
+            else
+                echo -e "${RD}[${GR}*${RD}]${RD} NOTVALID:${NT} $run" | tee $outfile/subdo/$url-notvalid.txt
+            fi                
+        done  
+    fi
+fi
+if [[ $take == true ]];then
+    [ $outfile == true ] && 
+        outfile="$url"
+        mkdir -p "$outfile"/"takeover"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Start Check vulnerabilty subdomain takeover...${NT}"
+    if [[ ${subdo} == true ]]; then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+        subjack -w $outfile/subdo/$url-subdomains.txt -t 100 -timeout 30 -c config/config.json > $outfile/takeover/$url-takeover.txt
+                for run in $(cat $outfile/takeover/$url-takeover.txt);do
+                    while [ $run ];do
+                        echo -e "${NT}[${RD}*${NT}]${RD} Posible Takeover-${NT}$run"
+                    done
+                done 
+        echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/takeover/$url-takeover.txt]"
+    else 
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+        echo "$url" > $outfile/takeover/$url.txt
+        subjack -w $outfile/takeover/$url.txt -t 100 -timeout 30 -c config/config.json > $outfile/takeover/$url-takeover.txt
+                for run in $(cat $outfile/takeover/$url-takeover.txt);do
+                    while [ $run ];do
+                        echo -e "${NT}[${RD}*${NT}]${RD} Posible Takeover-${NT}$run"
+                    done
+                done 
+        echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/takeover/$url-takeover.txt]"     
+    fi
+fi
+
+if [[ ${gfxss} == true ]];then
+  [ $outfile == true ] && \
+    outfile="$url"
+        mkdir -p "$outfile"/"xss"
+    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Get XSS Parameters...${NT}"
+    if [[ ${subdo} == true ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+        if [[ ${xss} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/xss/xss.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/xss/xss.txt
+                cat $outfile/xss/xss.txt | gf xss | qsreplace | sort -u > $outfile/xss/$url-xss-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/xss/$url-xss-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check XSS Vulnerabilty...${NT}" 
+                cat $outfile/xss/$url-xss-param.txt | dalfox pipe -b $xss_ht -o $outfile/xss/$url-xss.txt 
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check xss Vulnerabilty ${NT}[${GR}$(cat $outfile/xss/$url-xss.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/xss/$url-xss.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/xss/xss.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/xss/xss.txt
+                cat $outfile/xss/xss.txt | gf xss | qsreplace | sort -u > $outfile/xss/$url-xss-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check XSS Vulnerabilty...${NT}" 
+                cat $outfile/xss/$url-xss-param.txt | dalfox pipe -b $xss_ht -o $outfile/xss/$url-xss.txt 
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check xss Vulnerabilty ${NT}[${GR}$(cat $outfile/xss/$url-xss.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/xss/$url-xss.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/xss/xss.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/xss/xss.txt
+                cat $outfile/xss/xss.txt | gf xss | qsreplace | sort -u > $outfile/xss/$url-xss-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/xss/$url-xss-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get XSS Parameters${NT} [${GR}$(cat $outfile/xss/$url-xss-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/xss/$url-xss-param.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/xss/xss.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/xss/xss.txt
+                cat $outfile/xss/xss.txt | gf xss | qsreplace | sort -u > $outfile/xss/$url-xss-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/xss/$url-xss-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get xss Parameters${NT} [${GR}$(cat $outfile/xss/$url-xss-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/xss/$url-xss-param.txt]"
+            fi
+        fi
+    else
+        if [[ ${xss} == true ]];then
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/xss/xss.txt
+                echo -e "$url" | gau | sort -u >> $outfile/xss/xss.txt
+                cat $outfile/xss/xss.txt | gf xss | qsreplace | sort -u > $outfile/xss/$url-xss-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/xss/$url-xss-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check xss Vulnerabilty...${NT}" 
+                cat $outfile/xss/$url-xss-param.txt | dalfox pipe -b $xss_ht -o $outfile/xss/$url-xss.txt 
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check xss Vulnerabilty ${NT}[${GR}$(cat $outfile/xss/$url-xss.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/xss/$url-xss.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | sort -u > $outfile/xss/xss.txt
+                echo -e "$url" | gau | sort -u >> $outfile/xss/xss.txt
+                cat $outfile/xss/xss.txt | gf xss | qsreplace | sort -u > $outfile/xss/$url-xss-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Start Check xss Vulnerabilty...${NT}" 
+                cat $outfile/xss/$url-xss-param.txt | dalfox pipe -b $xss_ht -o $outfile/xss/$url-xss.txt 
+                echo -e "${NT}[${RD}*${NT}]${GR} Done Check xss Vulnerabilty ${NT}[${GR}$(cat $outfile/xss/$url-xss.txt  | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/xss/$url-xss.txt]"
+            fi
+        else
+            if [[ ${verbose} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf xss | qsreplace | sort -u > $outfile/xss/$url-xss-param.txt
+                echo -e "$url" | gau | gf xss | qsreplace | sort -u >> $outfile/xss/$url-xss-param.txt
+                while read line ;do
+                    echo "${NT}[${RD}*${NT}]${NT} $line" 
+                done < $outfile/xss/$url-xss-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get xss Parameters${NT} [${GR}$(cat $outfile/xss/$url-xss-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/xss/$url-xss-param.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo -e "${NT}[${RD}*${NT}]${GR} Crawling wayback data!!!${NT}"
+                echo -e "$url" | waybackurls | gf xss | qsreplace | sort -u > $outfile/xss/$url-xss-param.txt
+                echo -e "$url" | gau | gf xss | qsreplace | sort -u >> $outfile/xss/$url-xss-param.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Get xss Parameters${NT} [${GR}$(cat $outfile/xss/$url-xss-param.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/xss/$url-xss-param.txt]"
+            fi
+        fi
+    fi
+fi
+
+if [[ ${aws} == true ]]; then
+    [ $outfile == true ] &&\
+    outfile="$url"
+    mkdir -p "$outfile"/"aws"
+    echo -e "${NT}[${RD}!${NT}]${GR} Amazon S3 bucket enumeration...${NT}"
+    echo -e "${NT}[${RD}*${NT}]${GR} Check aws:${NT} $url"
+    echo -e "${NT}[${RD}!${NT}]${GR} It takes a long time to wait ..."
+    if [[ ${verbose} == true ]];then
+        for run in $(s3enum --wordlist AWS/wordlist.txt --suffixlist AWS/suffixlist.txt --threads 10 $url);do
+            while [ $run ];do
+                echo -e "\n${NT}[${RD}*${NT}]${GR} Resluts:${NT} $run" | tee -a $outfile/aws/$url-aws.txt
+            done
+        done 
+        echo -e "${NT}[${RD}*${NT}]${GR} Found ${NT}[${GR}$(cat $outfile/aws/$url-aws.txt | wc -l)${NT}]"
+        echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/aws/$url-aws.txt]"
+    else
+        s3enum --wordlist AWS/wordlist.txt --suffixlist AWS/suffixlist.txt --threads 10 $url > $outfile/aws/$url-aws.txt
+        echo -e "${NT}[${RD}*${NT}]${GR} Found ${NT}[${GR}$(cat $outfile/aws/$url-aws.txt | wc -l)${NT}]"
+        echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/aws/$url-aws.txt]"
+    fi
+fi
+
+if [[ ${cors} == true ]];then
+ [ $outfile == true ] && \
+    outfile="$url"
+    mkdir -p "$outfile"/"cors"
+   ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+     echo -e "${NT}[${RD}*${NT}]${GR} CORS misconfiguration vulnerabilities scanner...${NT}"
+    if [[ ${subdo} == true ]];then
+        echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT} $outfile/subdo/$url-subdomains.txt"
+        if [ ! -f $outfile/subdo/$url-subdomains.txt ];then
+            cat $outfile/subdo/$url-subdomains.txt | httprobe > $outfile/cors/$url.txt
+            cat  $outfile/cors/$url.txt | CORS-Scanner > $outfile/cors/$url-cors.txt
+            for line in $(cat $outfile/cors/$url-cors.txt);do
+                    ping -c1 -w1 $line > /dev/null 2>&1
+                    if [[ $? -eq 0 ]]; then
+                        echo -e "${NT}[Vuln]${NT} $line " | tee -a $outfile/cors/$url-cors-vuln.txt
+                    else
+                        echo -e "${NT}[${RD}NOT-VULN${NT}]${NT} $url " | tee -a $outfile/cors/$url-cors-vuln.txt
+                    fi
+            done 
+        fi
+    else
+        echo -e "${NT}[${RD}!${NT}]${GR} Start On target ${NT}$ip $url"
+        echo "$url" | httpx -silent | CORS-Scanner > $outfile/cors/$url-cors.txt
+        for line in $(cat $outfile/cors/$url-cors.txt);do
+                    ping -c1 -w1 $line > /dev/null 2>&1
+                    if [[ $? -eq 0 ]]; then
+                        echo -e "${NT}[Vuln]${NT} $line " | tee -a $outfile/cors/$url-cors-vuln.txt
+                    else
+                        echo -e "${NT}[${RD}NOT-VULN${NT}]${NT} $url " | tee -a $outfile/cors/$url-cors-not-vuln.txt
+                    fi
+        done   
+    fi
+    if [ ! -f $outfile/cors/$url-cors-vuln.txt ];then
+        echo -e "${NT}[${RD}*${NT}]${RD} NOT-VULN ${NT}[${GR}$url${NT}]"
+    else
+        echo -e "${NT}[${RD}*${NT}]${RD} VULN ${NT}[${GR}$(cat outfile/cors/$url-cors-vuln.txt)${NT}]"
+    fi
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/cors/]" 
+fi
+
+if [[ ${jstatus} == true ]];then
+    [ ${outfile} == true ] && \
+     outfile="$url"
+     mkdir -p "$outfile"/"js"
+     ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+    echo -e "${NT}[${RD}*${NT}]${GR} Gathering all jsfiles ${NT}${ip} $url${NT}"
+    if [[ ${subdo} == true ]];then
+        if [[ ${jsurl} == true ]];then
+            echo -e "${RD}[*]${GR} downloading js files and enpoinds file js"
+            while read sub;do
+                    gau -subs $sub | grep "\.js$" | anti-burl | grep -Eo "(http|https)://[a-zA-Z0-9./?=_-]*" | sort -u | tee -a > $outfile/jsfile
+            done < $outfile/subdo/$url-subdomains.txt      
+            cd $outfile/js/          
+            while read line; do
+                curl -s "$line" | js-beautify > $( echo "$line" | sed -e 's/[/]/_/g' | sed -e 's/:/./g') 
+            done < ../jsfile
+            cd ..
+            for file in ./js/*; do
+                gf js $file      
+            done
+            cd .. 
+             echo -e "${NT}[${RD}*${NT}]${GR} Found js Download ${NT}[${GR}$(ls $outfile/js | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$(pwd /$outfile/js)]"   
+        else
+            echo -e "${NT}[${RD}*${NT}]${GR} Get for the status JavaScript...${NT}"
+            cat $outfile/subdo/$url-subdomains.txt   | waybackurls > $outfile/js/$url.txt
+            cat $outfile/subdo/$url-subdomains.txt   | gau >> $outfile/$url.txt
+            cat $outfile/$url.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $outfile/$url-js.txt
+            for js in $(cat $outfile/$url-js.txt | parallel -j50 -q curl -w ${GR}"Status:${CY}%{http_code}\t ${GR}Size:${CY}%{size_download}\t ${GR}Url:${CY}%{url_effective}\n" -o /dev/null -sk | tee -a $outfile/$url-jstatus.txt );do           
+                    echo -e "${RD}[${GR}*${RD}] $js"
+            done
+             echo -e "${NT}[${RD}*${NT}]${GR} Found Check for the status JavaScript ${NT}[${GR}$(cat $outfile/$url-jstatus.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/$url-jstatus.txt]"
+        fi
+
+    else
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+        if [[ ${jsurl} == true ]];then
+            echo $url > $outfile/js/$url.txt 
+            echo -e "${RD}[*]${GR} downloading js files and enpoinds file js"
+            while read sub;do
+                    gau -subs $sub | grep "\.js$" | anti-burl | grep -Eo "(http|https)://[a-zA-Z0-9./?=_-]*" | sort -u | tee -a > $outfile/jsfile
+            done < $outfile/js/$url.txt     
+            cd $outfile/js/          
+            while read line; do
+                curl -s "$line" | js-beautify > $( echo "$line" | sed -e 's/[/]/_/g' | sed -e 's/:/./g') 
+            done < ../jsfile
+            cd ..
+            for file in ./js/*; do
+                gf js $file      
+            done
+            cd .. 
+            echo -e "${NT}[${RD}*${NT}]${GR} Found js Download ${NT}[${GR}$(ls $outfile/js | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$(pwd /$outfile/js)]" 
+        else
+            echo -e "${NT}[${RD}*${NT}]${GR} Get for the status JavaScript...${NT}"
+            echo $url   | waybackurls > $outfile/js/$url.txt
+            echo $url   | gau >> $outfile/$url.txt
+            cat $outfile/$url.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $outfile/$url-js.txt
+            for js in $(cat $outfile/$url-js.txt | parallel -j50 -q curl -w ${GR}"Status:${CY}%{http_code}\t ${GR}Size:${CY}%{size_download}\t ${GR}Url:${CY}%{url_effective}\n" -o /dev/null -sk | tee -a $outfile/$url-jstatus.txt );do           
+                    echo -e "${RD}[${GR}*${RD}] $js"
+            done
+             echo -e "${NT}[${RD}*${NT}]${GR} Found Check for the status JavaScript ${NT}[${GR}$(cat $outfile/$url-jstatus.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/$url-jstatus.txt]"
+
+        fi
+    fi    
+fi
+
+if [[ ${wayback} == true ]]; then
+    if [[ ${parsing} == "--idor" ]];then
+        [ ${outfile} == true ] && \
+     outfile="$url"
+     mkdir -p "$outfile"/"idor"
+            echo -e "${NT}[${RD}*${NT}]${GR} Get IDOR Parameters...${NT}"
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+        if [[ ${subdo} == true ]];then
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/idor/idor.txt
+                cat$outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/idor/idor.txt
+                cat $outfile/idor/idor.txt | gf idor | qsreplace | sort -u > $outfile/idor/$url-idor.txt
+                rm -rf $outfile/idor/idor.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/idor/$url-idor.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check IDOR Parameters${NT} [${GR}$(cat $outfile/idor/$url-idor.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/idor/$url-idor.txt]"
+        else
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo "$url" | waybackurls | sort -u > $outfile/idor/idor.txt
+                echo "$url" | gau | sort -u >> $outfile/idor/idor.txt
+                cat $outfile/idor/idor.txt | gf idor | qsreplace | sort -u > $outfile/idor/$url-idor.txt
+                rm -rf $outfile/idor/idor.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/idor/$url-idor.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check IDOR Parameters${NT} [${GR}$(cat $outfile/idor/$url-idor.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/idor/$url-idor.txt]"
+        fi
+    elif [[ ${parsing} == "--rce" ]];then
+           [ ${outfile} == true ] && \
+     outfile="$url"
+     mkdir -p "$outfile"/"rce"
+             echo -e "${NT}[${RD}*${NT}]${GR} Get RCE Parameters...${NT}"
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+        if [[ ${subdo} == true ]];then
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/rce/rce.txt
+                cat$outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/rce/rce.txt
+                cat $outfile/rce/rce.txt | gf rce | qsreplace | sort -u > $outfile/rce/$url-rce.txt
+                rm -rf $outfile/rce/rce.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/rce/$url-rce.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check rce Parameters${NT} [${GR}$(cat $outfile/rce/$url-rce.txt | wc -l)${NT}]"
+            echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/rce/$url-rce.txt]"
+        else
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo "$url" | waybackurls | sort -u > $outfile/rce/rce.txt
+                echo "$url" | gau | sort -u >> $outfile/rce/rce.txt
+                cat $outfile/rce/rce.txt | gf rce | qsreplace | sort -u > $outfile/rce/$url-rce.txt
+                rm -rf $outfile/rce/rce.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/rce/$url-rce.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check rce Parameters${NT} [${GR}$(cat $outfile/rce/$url-rce.txt | wc -l)${NT}]"
+             echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/rce/$url-rce.txt]"
+        fi
+    elif [[ ${parsing} == "--sqli" ]]; then
+           [ ${outfile} == true ] && \
+     outfile="$url"
+     mkdir -p "$outfile"/"sqli"
+             echo -e "${NT}[${RD}*${NT}]${GR} Get SQLI Parameters...${NT}"
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+        if [[ ${subdo} == true ]];then
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/sqli/sqli.txt
+                cat$outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/sqli/sqli.txt
+                cat $outfile/sqli/sqli.txt | gf sqli | qsreplace | sort -u > $outfile/sqli/$url-sqli.txt
+                rm -rf $outfile/sqli/sqli.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/sqli/$url-sqli.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check sqli Parameters${NT} [${GR}$(cat $outfile/sqli/$url-sqli.txt | wc -l)${NT}]"
+            echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/sqli/$url-sqli.txt]"
+        else
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo "$url" | waybackurls | sort -u > $outfile/sqli/sqli.txt
+                echo "$url" | gau | sort -u >> $outfile/sqli/sqli.txt
+                cat $outfile/sqli/sqli.txt | gf sqli | qsreplace | sort -u > $outfile/sqli/$url-sqli.txt
+                rm -rf $outfile/sqli/sqli.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/sqli/$url-sqli.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check sqli Parameters${NT} [${GR}$(cat $outfile/sqli/$url-sqli.txt | wc -l)${NT}]"
+            echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/sqli/$url-sqli.txt]"
+        fi
+    elif [[ ${parsing} == "--img" ]]; then
+           [ ${outfile} == true ] && \
+     outfile="$url"
+     mkdir -p "$outfile"/"img"
+             echo -e "${NT}[${RD}*${NT}]${GR} Get img-traversal Parameters...${NT}"
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+        if [[ ${subdo} == true ]];then
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/img/img.txt
+                cat$outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/img/img.txt
+                cat $outfile/img/img.txt | gf img-traversal | qsreplace | sort -u > $outfile/img/$url-img.txt
+                rm -rf $outfile/img/img.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/img/$url-img.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check img-traversal Parameters${NT} [${GR}$(cat $outfile/img/$url-img.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/img/$url-img.txt]"
+        else
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo "$url" | waybackurls | sort -u > $outfile/img/img.txt
+                echo "$url" | gau | sort -u >> $outfile/img/img.txt
+                cat $outfile/img/img.txt | gf img-traversal | qsreplace | sort -u > $outfile/img/$url-img.txt
+                rm -rf $outfile/img/img.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/img/$url-img.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check img-traversal Parameters${NT} [${GR}$(cat $outfile/img/$url-img.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/img/$url-img.txt]"
+        fi
+    elif [[ ${parsing} == "--int" ]]; then
+           [ ${outfile} == true ] && \
+     outfile="$url"
+     mkdir -p "$outfile"/"int"
+             echo -e "${NT}[${RD}*${NT}]${GR} Get interestingparams Parameters...${NT}"
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+        if [[ ${subdo} == true ]];then
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/int/int.txt
+                cat$outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/int/int.txt
+                cat $outfile/int/int.txt | gf interestingparams | qsreplace | sort -u > $outfile/int/$url-int.txt
+                rm -rf $outfile/int/int.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/int/$url-int.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check interestingparams Parameters${NT} [${GR}$(cat $outfile/int/$url-int.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/int/$url-int.txt]"
+        else
+             echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo "$url" | waybackurls | sort -u > $outfile/int/int.txt
+                echo "$url" | gau | sort -u >> $outfile/int/int.txt
+                cat $outfile/int/int.txt | gf interestingparams | qsreplace | sort -u > $outfile/int/$url-int.txt
+                rm -rf $outfile/int/int.txt
+                while read line ;do
+                        echo -e "${NT}[${RD}*${NT}]${GR} $line"
+                done < $outfile/int/$url-int.txt
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Check interestingparams Parameters${NT} [${GR}$(cat $outfile/int/$url-int.txt | wc -l)${NT}]"
+                echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/int/$url-int.txt]"
+        fi
+    else
+        echo -e " ${YW}[i]${RD} Invalid: Unknown option"
+        exit
+    fi
+fi
+
+if [[ ${data} == true ]];then
+     [ ${outfile} == true ] && \
+     outfile="$url"
+     mkdir -p "$outfile"/"scraping"
+    if [[ ${Scraping} == "--js" ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for jsfile"
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+        if [[ ${subdo} == true ]];then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}$outfile/subdo/$url-subdomains.txt"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/scraping/$url-list.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u > $outfile/scraping/$url-list.txt
+                cat $outfile/scraping/$url-list.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $outfile/scraping/jsurls.txt
+                rm -rf $outfile/scraping/$url-list.txt
+                while read line ;do
+                    echo -e "${NT}[${RD}*${NT}] $line"
+                done < $outfile/scraping/jsurls.txt  
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $outfile/scraping/jsurls.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/scraping/$url-jsurls.txt]"
+        else
+            echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}$ip $url"
+                echo "$url" | waybackurls | sort -u > $outfile/scraping/$url-list.txt
+                echo "$url" | gau | sort -u >> $outfile/scraping/$url-list.txt
+                cat $outfile/scraping/$url-list.txt | grep -P "\w+\.js(\?|$)" | uniq | sort -u > $outfile/scraping/jsurls.txt
+                rm -rf $outfile/scraping/$url-list.txt
+                while read line ;do
+                    echo -e "${NT}[${RD}*${NT}] $line"
+                done < $outfile/scraping/jsurls.txt 
+            echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $outfile/scraping/jsurls.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/scraping/$url-jsurls.txt]"
+
+        fi  
+    elif [[ ${Scraping} == "--php" ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for php "
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+            if [[ ${subdo} == true ]]; then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT} $outfile/subdo/$url-subdomains.txt"                
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/scraping/$url-list.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u >> $outfile/scraping/$url-list.txt
+                cat $outfile/scraping/$url-list.txt | grep -P "\w+\.php(\?|$)" | uniq | sort -u > $outfile/scraping/phpurls.txt
+                rm -rf $outfile/scraping/$url-list.txt
+                while read line ;do
+                    echo -e "${NT}[${RD}*${NT}] $line"
+                done < $outfile/scraping/phpurls.txt  
+                echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $outfile/scraping/phpurls.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/scraping/$url-phpurls.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo "$url" | waybackurls | sort -u > $outfile/scraping/$url-list.txt
+                echo "$url" | gau | sort -u >> $outfile/scraping/$url-list.txt
+                cat $outfile/scraping/$url-list.txt | grep -P "\w+\.php(\?|$)" | uniq | sort -u > $outfile/scraping/phpurls.txt
+                rm -rf $outfile/scraping/$url-list.txt
+                while read line ;do
+                    echo -e "${NT}[${RD}*${NT}] $line"
+                done < $outfile/scraping/phpurls.txt 
+            echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $outfile/scraping/phpurls.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/scraping/$url-phpurls.txt]"
+
+            fi       
+    elif [[ ${Scraping} == "--html" ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for html"
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+            if [[ ${subdo} == true ]]; then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}$outfile/subdo/$url-subdomains.txt"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/scraping/$url-list.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u > $outfile/scraping/$url-list.txt
+                cat $outfile/scraping/$url-list.txt | grep -P "\w+\.html(\?|$)" | uniq | sort -u > $outfile/scraping/htmlurls.txt
+                rm -rf $outfile/scraping/$url-list.txt
+                while read line ;do
+                    echo -e "${NT}[${RD}*${NT}] $line"
+                done < $outfile/scraping/htmlurls.txt  
+                 echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $outfile/scraping/htmlurls.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/scraping/$url-htmlurls.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo "$url" | waybackurls | sort -u > $outfile/scraping/$url-list.txt
+                echo "$url" | gau | sort -u >> $outfile/scraping/$url-list.txt
+                cat $outfile/scraping/$url-list.txt | grep -P "\w+\.html(\?|$)" | uniq | sort -u > $outfile/scraping/htmlurls.txt
+                rm -rf $outfile/scraping/$url-list.txt
+                while read line ;do
+                    echo -e "${NT}[${RD}*${NT}] $line"
+                done < $outfile/scraping/htmlurls.txt 
+                 echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $outfile/scraping/htmlurls.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/scraping/$url-htmlurls.txt]"
+
+            fi             
+    elif [[ ${Scraping} == "--asp" ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Scraping wayback for asp "
+        ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
+            if [[ ${subdo} == true ]]; then
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}$outfile/subdo/$url-subdomains.txt"
+                cat $outfile/subdo/$url-subdomains.txt | waybackurls | sort -u > $outfile/scraping/$url-list.txt
+                cat $outfile/subdo/$url-subdomains.txt | gau | sort -u > $outfile/scraping/$url-list.txt
+                cat $outfile/scraping/$url-list.txt | grep -P "\w+\.asp(\?|$)" | uniq | sort -u > $outfile/scraping/aspurls.txt
+                rm -rf $outfile/scraping/$url-list.txt
+                while read line ;do
+                    echo -e "${NT}[${RD}*${NT}] $line"
+                done < $outfile/scraping/aspurls.txt  
+                 echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $outfile/scraping/aspurls.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/scraping/$url-aspurls.txt]"
+            else
+                echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}${ip} $url"
+                echo "$url" | waybackurls | sort -u > $outfile/scraping/$url-list.txt
+                echo "$url" | gau | sort -u >> $outfile/scraping/$url-list.txt
+                cat $outfile/scraping/$url-list.txt | grep -P "\w+\.html(\?|$)" | uniq | sort -u > $outfile/scraping/aspurls.txt
+                rm -rf $outfile/scraping/$url-list.txt
+                while read line ;do
+                    echo -e "${NT}[${RD}*${NT}] $line"
+                done < $outfile/scraping/aspurls.txt 
+                 echo -e "${NT}[${RD}*${NT}]${GR} Found Scraping ${NT}[${GR}$(cat $outfile/scraping/aspurls.txt | wc -l)${NT}]"
+    echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/scraping/$url-aspurls.txt]"
+
+            fi             
+
+    fi           
 fi
