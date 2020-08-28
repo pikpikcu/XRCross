@@ -43,6 +43,7 @@ function exec_Subdomains {
      VirusTotal && \
      CertSpotter && \
      threatminer && \
+     recondev && \
      alienvault && \
      ctsearch && \
      dnsdumpster && \
@@ -248,6 +249,8 @@ Help(){
                 -p /--proxy         | URL of the proxy server (default: http://127.0.0.1:8080)
                 -s /--subdo         | Check Subdomains Enumerations
                 -m /--map           | Domain Mapping with dnsdumster
+                -C /--cdir          | Get CDIR & Orgz from domain
+                -hs/--history       | Check Ip History 
                 -l /--live          | Check live the Subdomains for working HTTP and HTTPS servers
                 -hr/--header        | Host header injection 
                 -sm/--smuggling     | HTTP request smuggling 
@@ -291,7 +294,7 @@ Help(){
 
 while (( $# > 0 )); do
 args="${1}";
-    case "$( echo ${args} | tr '[:upper:]' '[:lower:]' )" in        
+    case "$( echo ${args} )" in        
         # Help
         "-h"|"--help")
             Help
@@ -307,6 +310,14 @@ args="${1}";
             logo
             url="${1#*=}";
              shift 1
+        ;;
+        "-C" | "--cdir")
+            cdir=true
+        shift
+        ;;
+        "-hs" | "--history")
+            hs=true
+        shift
         ;;
         "-pr" | "--param")
             wayback=true
@@ -1655,4 +1666,34 @@ if [[ ${data} == true ]];then
             fi             
 
     fi           
+fi
+
+if [[ ${hs} == true ]]; then
+    [ $outfile == true ] &&\
+    outfile="$url"
+    mkdir -p "$outfile"
+    echo -e "${NT}[${RD}!${NT}]${GR} Get IP's from subdomains...${NT}"
+    if [[ ${verbose} == true ]];then
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}$url"
+        curl --max-time 10 -s \
+        -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36' \
+            -H 'content-type: application/json;charset=UTF-8' \
+                -H 'accept: application/json, text/plain, */*' "https://viewdns.info/iphistory/?domain=$url" \
+                | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sort -u > $outfile/$url-ips.txt
+        echo -e "${NT}[${RD}*${NT}]${AB} IP history results for $url"
+        for out in $(cat $outfile/$url-ips.txt); do
+            echo -e "${NT}[${RD}*${NT}]${GR}${NT} $out"
+        done
+        echo -e "${NT}[${RD}*${NT}]${GR} Found ${NT}[${GR}$(cat $outfile/$url-ips.txt | wc -l)${NT}]"
+        echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/$url-ips.txt]"
+    else
+        echo -e "${NT}[${RD}*${NT}]${GR} Start On target:${NT}$url"
+        curl --max-time 10 -s \
+        -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36' \
+            -H 'content-type: application/json;charset=UTF-8' \
+                -H 'accept: application/json, text/plain, */*' "https://viewdns.info/iphistory/?domain=$url" \
+                | grep -o '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sort -u > $outfile/$url-ips.txt
+        echo -e "${NT}[${RD}*${NT}]${GR} Found ${NT}[${GR}$(cat $outfile/$url-ips.txt | wc -l)${NT}]"
+        echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/$url-ips.txt]"
+    fi
 fi
