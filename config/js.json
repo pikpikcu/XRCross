@@ -1,0 +1,33 @@
+{
+    "flags": "-iE",
+     "patterns": [
+
+        "api",
+        "google_api",
+        "google_captcha",
+        "google_oauth",
+        "amazon_aws_access_key_id",
+        "amazon_mws_auth_token",
+        "amazon_aws_url",
+        "facebook_access_token",
+        "authorization_basic",
+        "authorization_bearer",
+        "authorization_api",
+        "mailgun_api_key",
+        "twilio_api_key",
+        "twilio_account_sid",
+        "twilio_app_sid",
+        "paypal_braintree_access_token",
+        "square_oauth_secret",
+        "square_access_token",
+        "stripe_standard_api",
+        "stripe_restricted_api",
+        "github_access_token",
+        "rsa_private_key",
+        "ssh_dsa_private_key",
+        "ssh_dc_private_key",
+        "pgp_private_block",
+        "json_web_token",
+        "jwt"
+]
+}
