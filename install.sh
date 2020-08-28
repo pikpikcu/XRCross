@@ -112,7 +112,7 @@ if [[ -z "$XRCross" ]];then
                               # [ffuf]
                               echo -e "\n${red}[+]${green}Install ffuf "
                               go get -u github.com/ffuf/ffuf
-                              echo -e "${red}[+] Done Install ffuf "
+                              echo -e "${red}[+]gf Done Install ffuf "
                   
                         elif [ ! -f ~/go/bin/subfinder ];then 
                               # [subfinder]
@@ -138,8 +138,9 @@ if [[ -z "$XRCross" ]];then
                         elif [ ! -d ~/.gf/ ];then 
                               echo -e "\n${red}[+]${green}Install Gf-Patterns"
                               git clone https://github.com/1ndianl33t/Gf-Patterns
+                              mkdir -p ~/.gf/
                               mv Gf-Patterns/*.json ~/.gf
-                              cp config/cmd.json ~/.gf
+                              cp -r config/*.json ~/.gf
                               rm -rf Gf-Patterns
                               echo -e "${red}[+] Done Install Gf-Patterns"
                         
