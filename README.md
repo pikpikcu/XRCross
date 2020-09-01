@@ -88,10 +88,10 @@
 
 >       
    
-    Open folder confing/ and edit file:
-      |-> Api-github.txt <(inssert github token)
-      |-> ssrf.txt <(inssert ssrf payload)
-      |-> xss.ht <(inssert your.xss.ht)
+    Open folder config/ and edit file:
+      |-> Api-github.txt <(insert github token)
+      |-> ssrf.txt <(insert ssrf payload)
+      |-> xss.ht <(insert your.xss.ht)
 
 #### ✔️ ***Go language dependency***:
 
