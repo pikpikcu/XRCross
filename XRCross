@@ -35,163 +35,113 @@ _start=1
 _end=100
 
 function exec_Subdomains {
-    # export -f Github  && export -f RapidDNS && export -f BufferOver  && export -f Riddler  && export -f VirusTotal  && export -f CertSpotter && export -f web_archive && export -f jldc && export -f crtsh && export -f Api_Sublist3r && export -f hackertarget && export -f threatcrowd && export -f urlscan && export -f spyse && export -f openssl && export -f ptrarchive && export -f etc
-     Github && \
-     RapidDNS && \
-     BufferOver && \
-     Riddler && \
-     VirusTotal && \
-     CertSpotter && \
-     threatminer && \
-     recondev && \
-     alienvault && \
-     ctsearch && \
-     dnsdumpster && \
-     web_archive &&\
-     jldc && \
-     crtsh  Api_Sublist3r  && \
-     hackertarget  && \
-     threatcrowd && \
-     urlscan && \
-     spyse && \
-     openssl && \
-     ptrarchive && \
-     etc 
-}
-function Github {
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}Github${GR})"
     github-subs -d $url -api $GitHubApi > $outfile/subdo/$url.txt
-}
-function RapidDNS {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}RapidDNS${GR})" 
-    curl -s "https://rapiddns.io/subdomain/$url?full=1#result" \
-    | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | grep ".$url" | sort -u >> $outfile/subdo/$url.txt     
-}
-function BufferOver {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}BufferOver${GR})" 
-    curl -s "https://dns.bufferover.run/dns?q=.$url" \
-    | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | grep ".$url" | sort -u >> $outfile/subdo/$url.txt     
-}
-function Riddler {
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}RapidDNS${GR})"
+    curl -s "https://rapiddns.io/subdomain/$url?full=1#result" |
+        grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        grep ".$url" | sort -u   >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}BufferOver${GR})"
+    curl -s "https://dns.bufferover.run/dns?q=.$url" |
+        grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        grep ".$url" | sort -u   >> $outfile/subdo/$url.txt
+
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}Riddler${GR})"
-    curl -s "https://riddler.io/search/exportcsv?q=pld:$url" \
-        | grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-            | sort -u >> $outfile/subdo/$url.txt  
-}
-function VirusTotal {
+    curl -s "https://riddler.io/search/exportcsv?q=pld:$url" |
+        grep -Po "(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        sort -u   >> $outfile/subdo/$url.txt
+
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}VirusTotal${GR})"
-        curl -s "https://www.virustotal.com/ui/domains/$url/subdomains?limit=40" \
-        | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-            | sort -u | grep ".$url" >> $outfile/subdo/$url.txt
-}
-function CertSpotter {
+    curl -s "https://www.virustotal.com/ui/domains/$url/subdomains?limit=40" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        sort -u | grep ".$url"   >> $outfile/subdo/$url.txt
+
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}CertSpotter${GR})"
-    curl -s "https://certspotter.com/api/v0/certs?domain=$url" \
-    | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-    | sort -u | grep ".$url" >> $outfile/subdo/$url.txt
-}
-function web_archive {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}web.archive${GR})"
-    curl -s "http://web.archive.org/cdx/search/cdx?url=*.$url/*&output=text&fl=original&collapse=urlkey" \
-    | sed -e 's_https*://__' -e "s/\/.*//" \
-        | sort -u | grep ".$url" >> $outfile/subdo/$url.txt  
-}
-function jldc {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}jldc${GR})"
-        curl -s "https://jldc.me/anubis/subdomains/$url" \
-        | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-            | sort -u >> $outfile/subdo/$url.txt     
-}  
-function threatminer {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}threatminer${GR})"
-	curl -s "https://api.threatminer.org/v2/domain.php?q=$url&rt=5" \
-    | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-    | grep ".$url" | sort -u >> $outfile/subdo/$url.txt   
-} 
-function ctsearch {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}ctsearch${GR})"
-    curl -s "https://ctsearch.entrust.com/api/v1/certificates?fields=subjectDN&domain=$url&includeExpired=false&exactMatch=false&limit=5000" \
-    | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" | grep ".$url" | sort -u >> $outfile/subdo/$url.txt  
-}
-function dnsdumpster {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}dnsdumpster${GR})"
-	token=$(curl -ILs https://dnsdumpster.com | grep csrftoken | cut -d " " -f2 | cut -d "=" -f2 | tr -d ";")
-	curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com \
-    --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" \
-    --data "csrfmiddlewaretoken=$token&targetip=$url" \
-    --cookie "csrftoken=$token; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com > $outfile/subdo/dnsdum   
-	cat $outfile/subdo/dnsdum  | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-    | grep -o "\w.*$url" | sort -u | sed -e 's!http[s]\?://!!' >> $outfile/subdo/$url.txt  
-	rm $outfile/subdo/dnsdum   
-}
-function crtsh {
+    curl -s "https://certspotter.com/api/v0/certs?domain=$url" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        sort -u | grep ".$url"   >> $outfile/subdo/$url.txt
+
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}crt.sh${GR})"
-        curl -s "https://crt.sh/?q=%25.$url&output=json" \
-        | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | sort -u >> $outfile/subdo/$url.txt    
-}
-function Api_Sublist3r {
+    curl -s "https://crt.sh/?q=%25.$url&output=json" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        sort -u   >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}web.archive${GR})"
+    curl -s "http://web.archive.org/cdx/search/cdx?url=*.$url/*&output=text&fl=original&collapse=urlkey" |
+        sed -e 's_https*://__' -e "s/\/.*//" |
+        sort -u | grep ".$url"   >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}jldc${GR})"
+    curl -s "https://jldc.me/anubis/subdomains/$url" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        sort -u   >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}threatminer${GR})"
+    curl -s "https://api.threatminer.org/v2/domain.php?q=$url&rt=5" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        grep ".$url" | sort -u   >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}ctsearch${GR})"
+    curl -s "https://ctsearch.entrust.com/api/v1/certificates?fields=subjectDN&domain=$url&includeExpired=false&exactMatch=false&limit=5000" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        grep ".$url" | sort -u   >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}dnsdumpster${GR})"
+    token=$(curl -ILs https://dnsdumpster.com | grep csrftoken | cut -d " " -f2 | cut -d "=" -f2 | tr -d ";")
+    curl -s --header "Host:dnsdumpster.com" --referer https://dnsdumpster.com \
+        --user-agent "Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0" \
+        --data "csrfmiddlewaretoken=$token&targetip=$url" \
+        --cookie "csrftoken=$token; _ga=GA1.2.1737013576.1458811829; _gat=1" https://dnsdumpster.com >$outfile/subdo/dnsdum
+    cat $outfile/subdo/dnsdum | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        grep -o "\w.*$url" | sort -u | sed -e 's!http[s]\?://!!' >>$outfile/subdo/$url.txt
+    rm $outfile/subdo/dnsdum
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}crt.sh${GR})"
+    curl -s "https://crt.sh/?q=%25.$url&output=json" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        sort -u   >> $outfile/subdo/$url.txt
+
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}api.sublist3r${GR})"
-        curl -s "https://api.sublist3r.com/search.php?domain=$url" \
-        | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-         | sort -u >> $outfile/subdo/$url.txt 
-}
-function hackertarget {
+    curl -s "https://api.sublist3r.com/search.php?domain=$url" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        sort -u   >> $outfile/subdo/$url.txt
+
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}hackertarget${GR})"
-        curl -s "https://api.hackertarget.com/hostsearch/?q=$url" \
-        | cut -d',' -f1 | sort -u >> $outfile/subdo/$url.txt      
-}
-function threatcrowd {
+    curl -s "https://api.hackertarget.com/hostsearch/?q=$url" |
+        cut -d',' -f1 | sort -u   >> $outfile/subdo/$url.txt
+
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}threatcrowd${GR})"
-        curl -s "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$url" \
-        | jq -r '.subdomains | .[]' | sort -u >> $outfile/subdo/$url.txt
-       
-}
-function urlscan {
-     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}urlscan${GR})"
-        curl -s "https://urlscan.io/api/v1/search/?q=domain:$url" \
-        | jq -r '.results[].page.domain' | sort -u > $outfile/subdo/$url.txt
-        
-}
-function spyse {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}spyse${GR})"
-    curl -H "Host: spyse.com" -H "Cache-Control: max-age=0"\
-        -H "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"\
-            -H "User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:68.0) Gecko/20100101 Firefox/68.0" \
-                -H "HTTPS: 1" -H "DNT: 1" -H "TE: Trailers"  -H "Accept-Language: en-US,en;q=0.5" \
-                    --compressed "https://spyse.com/api/data/domain/subdomain?limit=15&offset=0&domain=$url" \
-                        | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-                            | grep ".$url" | cut -d '/' -f3 | sort -u >> $outfile/subdo/$url.txt
-}
-function alienvault {
-        echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}alienvault${GR})"
-		curl -s "https://otx.alienvault.com/api/v1/indicators/domain/$url/passive_dns" \
-        | grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | sort -u >> $outfile/subdo/$url.txt
-}
-function openssl {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}openssl${GR})"
-        #openssl s_client -showcerts -servername $url -connect $url:443 <<< "Q" 2>/dev/null | \
-        #openssl x509 -text -noout | \
-        #grep DNS | \
-        #tr ',' '\n' | \
-        #cut -d ':' -f 2 | \
-        #sort -u >> $outfile/subdo/$url.txt
-}
-function ptrarchive {
+    curl -s "https://www.threatcrowd.org/searchApi/v2/domain/report/?domain=$url" |
+        jq -r '.subdomains | .[]' | sort -u   >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}urlscan${GR})"
+    curl -s "https://urlscan.io/api/v1/search/?q=domain:$url" |
+        jq -r '.results[].page.domain' | sort -u >$outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}alienvault${GR})"
+    curl -s "https://otx.alienvault.com/api/v1/indicators/domain/$url/passive_dns" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        sort -u   >> $outfile/subdo/$url.txt
+
     echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}ptrarchive${GR})"
-        curl -s "http://ptrarchive.com/tools/search.htm?label=$url" \
-        |  grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" \
-        | grep ".$url" | sort -u >> $outfile/subdo/$url.txt     
+    curl -s "http://ptrarchive.com/tools/search.htm?label=$url" |
+        grep -Po "((http|https):\/\/)?(([\w.-]*)\.([\w]*)\.([A-z]))\w+" |
+        grep ".$url" | sort -u   >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}assetfinder${GR})"
+    assetfinder $url   >> $outfile/subdo/$url.txt
+    
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}subfinder${GR})"
+    subfinder -d $url -silent -all   >> $outfile/subdo/$url.txt
+    subfinder -d $url -silent -all -passive  >> $outfile/subdo/$url.txt
+    subfinder -d $url -silent -all -active  >> $outfile/subdo/$url.txt
+
+    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}amass${GR})"
+    amass enum -d $url -passive  >> $outfile/subdo/$url.txt
 }
-function etc {
-    echo -e "${NT}[${RD}~${NT}]${GR} Searching now in (${NT}etc${GR})"
-        echo -e "${RD}└──╼>${AB} assetfinder"
-        echo -e "${RD}└──╼>${AB} subfinder"
-        assetfinder $url | subfinder -silent >> $outfile/subdo/$url.txt
-}
+
 function ProgressBar {
 	let _progress=(${1}*100/${2}*100)/100
 	let _done=(${_progress}*4)/10
@@ -202,18 +152,20 @@ function ProgressBar {
 # 1.2.1.1 Progress : [########################################] 100%
 printf "\r${PP}Progress : ${NT}[${CY}${_done// />}${_left// /-}${NT}]${BD} ${_progress}%%"
 }
+
 function smuggling(){
    ip=`dig $url +short | grep -Po "^[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}$" | head -n1`
     echo -e "${NT}[${RD}*${NT}]${GR} Check HTTP smuggling ...${NT}"
     echo -e "${NT}[${RD}*${NT}]${GR} Start On target: ${NT} ${ip} $url" 
- if [ ! -f tools/http-smuggling-test.py ];then
+ if [ ! -f $HOME/tools/http-smuggling-test.py ];then
     echo -e "${NT}[${RD}!${NT}]${AB} Modules HTTP smuggling Not Found!!!${NT}"
     echo -e "${NT}[${RD}!${NT}]${NT} pleas run ./install.sh to install modules${NT}"
     exit 1
  else 
-    python3 tools/http-smuggling-test.py $url
+    python3 $HOME/tools/http-smuggling-test.py $url
 fi
 }
+
 logo(){
  echo -e "${RD}
 
@@ -248,7 +200,6 @@ Help(){
                 -a /--aws           | Amazon S3 bucket enumeration
                 -p /--proxy         | URL of the proxy server (default: http://127.0.0.1:8080)
                 -s /--subdo         | Check Subdomains Enumerations
-                -m /--map           | Domain Mapping with dnsdumster
                 -C /--cdir          | Get CDIR & Orgz from domain
                 -hs/--history       | Check Ip History 
                 -l /--live          | Check live the Subdomains for working HTTP and HTTPS servers
@@ -459,16 +410,20 @@ done
 
 if [ -z "${url}" ] ; then
     logo
-  echo -e "You need to specify a target to use. Type --help for command usage.\n"
-  exit
+    echo -e "You need to specify a target to use. Type --help for command usage.\n"
+    exit
 fi
+
+
 if [[ ${outfile} == true ]];then
     outfile="$out/$url"
     mkdir -p "$outfile"
 else
-   outfile="$url"
-   mkdir -p "$outfile"
+    outfile="$url"
+    mkdir -p "$outfile"
 fi
+
+
 if [[ ${subdo} == true ]];then
     [ $outfile == true ] && 
         outfile="$url"
@@ -494,6 +449,7 @@ if [[ ${subdo} == true ]];then
         fi
     fi
 fi
+
 
 if [[ ${header} == true ]];then
  [[ $outfile == true ]] && \
@@ -1054,21 +1010,21 @@ if [[ ${direnum} == true ]]; then
             echo -e "${NT}[${RD}!${NT}]${GR} Start On target Subdomains${NT} $outfile/subdo/$url-subdomains.txt"
             if [[ ${verbose} == true ]];then
                 while read line ;do
-                    dirsearch -url $line --wordlist $wordlist | tee -a $outfile/dir/$url-dir.txt
+                    $HOME/go/bin/dirsearch -url $line --wordlist $wordlist | tee -a $outfile/dir/$url-dir.txt
                 done < $outfile/subdo/$url-subdomains.txt
                 echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/dir/$url-dir.txt]"
             else
                 while read line ;do
-                    dirsearch -url $line --wordlist $wordlist > $outfile/dir/$url-dir.txt
+                    $HOME/go/bin/dirsearch -url $line --wordlist $wordlist > $outfile/dir/$url-dir.txt
                 done < $outfile/subdo/$url-subdomains.txt
                 echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/dir/$url-dir.txt]"
             fi
         else
             if [[ ${verbose} == true ]];then
-                dirsearch -url $url -wordlist $wordlist | tee -a $outfile/dir/$url-dir.txt
+                $HOME/go/bin/dirsearch -url $url -wordlist $wordlist | tee -a $outfile/dir/$url-dir.txt
                 echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/dir/$url-dir.txt]"
             else
-                dirsearch -url $url -wordlist $wordlist > $outfile/dir/$url-dir.txt
+                $HOME/go/bin/dirsearch -url $url -wordlist $wordlist > $outfile/dir/$url-dir.txt
                 echo -e "${NT}[${RD}*${NT}]${GR} Success Saved:${GR}[$outfile/dir/$url-dir.txt]"
             fi 
         fi 
